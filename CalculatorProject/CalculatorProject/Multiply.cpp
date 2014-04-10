@@ -1,6 +1,5 @@
 #include "Multiply.h"
-#include <iostream>
-using namespace std;
+
 
 Multiply::Multiply()
 {
@@ -10,7 +9,12 @@ Multiply::~Multiply()
 {
 }
 
-Multiply::evaluate()
-{
 
+
+Multiply::evaluate(Number a, Number b)
+{
+//distribution
+"(2+pi)"*3
+
+"3(2+pi)"
 }
