@@ -64,23 +64,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\Number.cpp" />
-    <ClCompile Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\Rational.cpp" />
-    <ClCompile Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\SpecialCase.cpp" />
     <ClCompile Include="Addition.cpp" />
     <ClCompile Include="Divide.cpp" />
     <ClCompile Include="Multiply.cpp" />
+    <ClCompile Include="Number.cpp" />
     <ClCompile Include="Operations.cpp" />
+    <ClCompile Include="Rational.cpp" />
+    <ClCompile Include="SpecialCase.cpp" />
     <ClCompile Include="Subtract.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\SpecialCase.h" />
     <ClInclude Include="Addition.h" />
     <ClInclude Include="Divide.h" />
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Operations.h" />
     <ClInclude Include="Rational.h" />
+    <ClInclude Include="SpecialCase.h" />
     <ClInclude Include="Subtract.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

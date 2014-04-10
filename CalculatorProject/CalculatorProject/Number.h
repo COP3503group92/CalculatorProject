@@ -11,7 +11,6 @@
 using namespace std;
 class Number {
 public:
-	virtual Number();
 	virtual ~Number();
 	virtual void simplify();
 	virtual string getType();

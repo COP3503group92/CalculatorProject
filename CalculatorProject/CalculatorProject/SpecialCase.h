@@ -11,7 +11,6 @@
 
 class SpecialCase:public Number {
 public:
-	virtual SpecialCase();
 	virtual string toString();
 	virtual ~SpecialCase();
 private:

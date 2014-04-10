@@ -7,6 +7,7 @@
 
 #ifndef RATIONAL_H_
 #define RATIONAL_H_
+#include "Number.h"
 
 class Rational:public Number {
 public:
