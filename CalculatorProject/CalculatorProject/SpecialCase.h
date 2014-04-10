@@ -8,14 +8,15 @@
 #ifndef SPECIALCASE_H_
 #define SPECIALCASE_H_
 #include "Number.h"
-
+using namespace std;
 class SpecialCase:public Number {
 public:
 	virtual string toString();
 	virtual ~SpecialCase();
 private:
-	Number coefficient;
-	Number power;
+	Number* coefficient;
+	Number* power;
+	string typeName;
 
 };
 

@@ -32,7 +32,7 @@
 	 * an option. We can always have a simplify function that outputs a SpecialCase with a modified
 	 * coefficient or modify that Rational.
 	 */
-	Rational::Rational(Number numeratorSpec, int denominatorInt){
+	Rational::Rational(Number* numeratorSpec, int denominatorInt){
 		this->numeratorSpec=numeratorSpec;
 		this->denominatorInt=denominatorInt;
 	}
@@ -42,7 +42,7 @@
 	 * will be able to simplify itself, and our special case can TECHNICALLY be just changed to
 	 * numerator*SpecialCase^-1 . Or we can keep it as a Rational.
 	 */
-	Rational::Rational(int numeratorInt, Number denominatorSpec){
+	Rational::Rational(int numeratorInt, Number* denominatorSpec){
 		this->numeratorInt=numeratorInt;
 		this->denominatorSpec=denominatorSpec;
 	}
@@ -51,11 +51,12 @@
 	 * The final case: dividing all sorts of SpecialCases. Later evaluation will determine whether
 	 * the numerator and denominator are compatible and perform the appropriate simplification.
 	 */
-	Rational::Rational(Number numeratorSpec, Number denominatorSpec){
+	Rational::Rational(Number* numeratorSpec, Number* denominatorSpec){
 		this->numeratorSpec=numeratorSpec;
 		this->denominatorSpec=denominatorSpec;
 	}
-Rational::~Rational() {
-	// TODO Auto-generated destructor stub
+	Rational::~Rational() {
+	numeratorSpec->~Number();
+	denominatorSpec->~Number();
 }
 
