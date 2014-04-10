@@ -7,8 +7,7 @@
 
 #ifndef SPECIALCASE_H_
 #define SPECIALCASE_H_
-#include <string>
-using namespace std;
+#include "Number.h"
 
 class SpecialCase:public Number {
 public:

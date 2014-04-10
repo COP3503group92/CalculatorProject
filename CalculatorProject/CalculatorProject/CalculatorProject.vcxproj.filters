@@ -41,12 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\Number.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\Rational.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Calculator Project\Calculator Project\Calculator Project\SpecialCase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,6 +57,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Subtract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Number.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rational.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
