@@ -17,6 +17,7 @@ public:
 	Rational(int numeratorInt, Number* denominatorSpec);
 	Rational(Number* numeratorSpec, Number* denominatorSpec);
 	virtual ~Rational();
+	void simplify();
 private:
 	int numeratorInt;
 	int denominatorInt;

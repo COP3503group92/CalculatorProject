@@ -13,6 +13,7 @@ class SpecialCase:public Number {
 public:
 	virtual string toString();
 	virtual ~SpecialCase();
+	virtual void simplify();
 private:
 	Number* coefficient;
 	Number* power;
