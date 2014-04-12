@@ -1,9 +1,10 @@
-#include<iostream>
-#include<stack>
-#include<vector>
-#include<string>
-#include<string.h>
-#include<stdio.h>
+#include <iostream>
+#include <stack>
+#include <vector>
+#include <string>
+#include <string.h>
+#include <stdio.h>
+#include <stdexcept>
 #include "ShuntingYard.h"
 
 using namespace std;
@@ -97,7 +98,7 @@ bool ComputeNewOperation() {
 	string input;
 	bool quit = false;
 	bool exitCompute = false;
-	bool firstRun = true;
+	bool ans = false;
 	
 	cout << "-----------------------------------------------------------" << endl;
 	cout << "                   <<   Calculate   >>                     " << endl << endl;
@@ -109,52 +110,61 @@ bool ComputeNewOperation() {
 		// Create an object of the class Shunting yard
 		ShuntingYard* op = new ShuntingYard();
 
-		cout << "Type \"back\" to go back to Main Menu: " << endl;
-		cout << "Type \"quit\" to exit Calculator 2.0!: " << endl << endl;
+		cout << "- Type \"back\" to go back to Main Menu: " << endl;
+		cout << "- Type \"quit\" to exit Calculator 2.0!: " << endl << endl;
 
 		cout << "Enter an expression: ";
 		getline(cin, input);
 
-		if(input == "quit") {
+		if (input == "ans") {
+			if( !result.empty() ) {
+				cout << "Enter an expression: ans ";
+				getline(cin, input);
+			}
+			else {
+				cout << "Error!\nNo operations have been performed yet!"<<endl <<endl;
+			}
+		}
+		else if(input == "quit") {
 			quit = true;
 			exitCompute = true;
-			// Delete the ShuntingYard object using the destructor
-			ShuntingYard();
 		}
 		else if(input == "back") {
 			// Do nothing because the user wish to go back
 			// to main menu
 			exitCompute = true;
-			// Delete the ShuntingYard object using the destructor
-			ShuntingYard();
 		}
 		else {
-			if(!input.empty()) {
-				// Call to the correponding operations goes inside
-				// this block
+			try {
 				op->setString(input);
-				op->removeSpaces();
-				op->addMissingOPerator();
-				op->finalStringCleanUp();
+			}
+			catch( exception &e ) {
+				cout << e.what() << endl;
+			}
+				
+			// Call to the correponding operations goes inside
+			// this block
+			op->removeSpaces();
+			op->addMissingOPerator();
+			op->finalStringCleanUp();
 
-				op->toVector();
-				op->reversePolish();
-				op->printInfo();
+			op->toVector();
+			op->reversePolish();
+			op->printInfo();
 				
 
-				expressionResult.push_back("hah");
-				expressionResult.push_back("lmao");
-				expressionResult.push_back("seriously");
+			expressionResult.push_back("hah");
+			expressionResult.push_back("lmao");
+			expressionResult.push_back("seriously");
 
-				result.push_back(45);
-				result.push_back(75);
-				result.push_back(65);
+			result.push_back(45);
+			result.push_back(75);
+			result.push_back(65);
 
-				// This is the  end of the block to the operations
-				cout << endl;
-				// Delete the ShuntingYard object using the destructor
-				ShuntingYard();
-			}
+			// This is the  end of the block to the operations
+			cout << endl;
+			// Delete the ShuntingYard object using the destructor
+			op->~ShuntingYard();
 			cout << endl;
 		}
 	} while( !exitCompute );

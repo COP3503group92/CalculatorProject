@@ -7,9 +7,9 @@
 
 using namespace std;
 
-ShuntingYard::ShuntingYard(void)
+ShuntingYard::ShuntingYard()
 {
-	string s = "";
+	string s;
 }
 
 ShuntingYard::~ShuntingYard(void)
@@ -17,9 +17,31 @@ ShuntingYard::~ShuntingYard(void)
 }
 
 // SET METHODS
-void ShuntingYard::setString(string input)
+void ShuntingYard::setString(string in)
 {
-	s = input;
+	/*
+	if( in.empty() ) {
+		throw exception ("Empty expression");
+	}
+
+	int i = 0;
+	while( i < in.length() ) {
+		if( (!isNumber(i) && in.at(i) != 'e' && in.at(i) != 'i' 
+			&& in.at(i) != 'l' && in.at(i) != 'o' && in.at(i) != 'g' && 
+			in.at(i) != 'p' && in.at(i) != 'q' && in.at(i) != 'r' && 
+			in.at(i) != 's' && in.at(i) != 't' && in.at(i) != '(' && 
+			in.at(i) != ')' && !isOperator(in.at(i))) ) {
+				throw exception ("Invalid character in expression");
+		}
+
+		// if( (i >= 0) && (in.at(i-1) == 'l' && (in.at(i) != 'o' && in.at(i) != 'n')) ) {
+			//throw ("Syntax Error");
+		//}
+	
+	}
+	*/
+
+	s = in;
 }
 void ShuntingYard::setQueue(vector<string> input)
 {
@@ -244,28 +266,42 @@ void ShuntingYard::finalStringCleanUp()
 	int i = 0;
 	while (i < s.length())
 	{
-		if( (i == 1) && (s.at(i-1) == '-') && isNumber(s.at(i)) ) {
+		if( (i == 1) && (s.at(i-1) == '-') && (isNumber(s.at(i)) || s.at(i) == 'p' || s.at(i) == 'e') ) {
 				out = "";
 				out.push_back('(');
 				out.push_back('-');
 				out.push_back(s.at(i));
 				i++;
-				while( (i < s.length()) && isNumber(s.at(i)) ) {
+
+				while( (i < s.length()) && (isNumber(s.at(i)) || !isOperator(s.at(i))) ) {
 					out.push_back(s.at(i));
 					i++;
 				}
 				out.push_back(')');
+		}
+		else if( (i -2 >= 0) && (!isNumber(s.at(i-2)) && s.at(i-2) != 'e' && s.at(i-2) != 'i' ) && 
+			(s.at(i-1) == '-') && (s.at(i) == 'l') ) {
+				out = "";
+				out = out + string("(-1)*");
+				out.push_back(s.at(i));
+				i++;
 		}
 		else if( (i > 0) && (isOperator(s.at(i-1)) || isOpenParen(s.at(i-1))) &&
 			(s.at(i)== '-') ) {
 				out.push_back('(');
 				out.push_back(s.at(i));
 				i++;
-				while( (i < s.length()) && isNumber(s.at(i)) ) {
+				while( (i < s.length()) && (isNumber(s.at(i)) || !isOperator(s.at(i))) && s.at(i) != 'l' ) {
 					out.push_back(s.at(i));
 					i++;
 				}
-				out.push_back(')');
+				if(s.at(i) == 'l') {
+					out.push_back(')');
+					out.push_back('*');
+				}
+				else {
+					out.push_back(')');
+				}
 		}
 		else {
 			out.push_back(s.at(i));
@@ -358,21 +394,35 @@ void ShuntingYard::toVector()
 			else if( temp == "sqrt" ) {
 				expression.push_back("2");
 				expression.push_back("rt");
+				temp = "";
+			}
+			else if( temp == "ln" ) {
+				expression.push_back("log_");
+				expression.push_back("e");
+				temp = "";
+			}
+			else if( temp == "log" ) {
+				expression.push_back("log_");
+				expression.push_back("10");
+				temp = "";
 			}
 			else if( (!expression.empty()) && (expression.back() == "ln") ) {
 				expression.pop_back();
 				expression.push_back("log_");
 				expression.push_back("e");
+				temp = "";
 			}
 			else if( (!expression.empty()) && (expression.back() == "log") ) {
 				expression.pop_back();
 				expression.push_back("log_");
 				expression.push_back("10");
+				temp = "";
 			}
 			else if( (!expression.empty()) && (expression.back() == "sqrt") ) {
 				expression.pop_back();
 				expression.push_back("2");
 				expression.push_back("rt");
+				temp = "";
 			}
 		}
 	}
@@ -410,19 +460,25 @@ void ShuntingYard::reversePolish()
 			else if( (!operations.empty()) && operations.top() == "log_" && removeLog && expression.at(i) != "^") {
 				queue.push_back(operations.top());
 				operations.pop();
-				operations.push(expression.at(i));
+				if( !isCloseParen(expression.at(i)) ) {
+					operations.push(expression.at(i));
+				}
 			}
-			else if( (!operations.empty()) && operations.top() == "rt" && expression.at(i) != "^") {
+			else if( (!operations.empty()) && operations.top() == "rt" && removeRt && expression.at(i) != "^") {
 				queue.push_back(operations.top());
 				operations.pop();
 				operations.push(expression.at(i));
 			}
 			else if( (!operations.empty()) && (precedence(operations.top()) > precedence(expression.at(i))) ) {
 				// Remove until operation top <= current operator or pararentheses
-				while( (!operations.empty()) && !isOpenParen(operations.top().at(0)) && 
-					((precedence(operations.top()) > precedence(expression.at(i)))) ) {
+				while( (!operations.empty()) && !isOpenParen(operations.top()) && operations.top() != "log_" && 
+					operations.top() != "rt" && ((precedence(operations.top()) > precedence(expression.at(i)))) ) {
 						queue.push_back( operations.top() );
 						operations.pop();
+				}
+				if(!operations.empty() && (operations.top() == "log_" || operations.top() == "rt" || operations.top() == "(") ) {
+				// If the top operation is ( or rt or log_
+					operations.pop();
 				}
 				// Now add the operator to operations stack
 				operations.push( expression.at(i) );
@@ -441,13 +497,16 @@ void ShuntingYard::reversePolish()
 		else if( (i > 0) && (i < expression.size()) && expression.at(i) == ")" ) {
 			// Loop as long as ( is not on the last element in operations
 			// or operations is not empty
-			while( (!operations.empty()) && (!isOpenParen(operations.top())) ) {
+			while( (!operations.empty()) && (!isOpenParen(operations.top())) && 
+				(operations.top() != "log_") && (operations.top() != "rt") ) {
 				queue.push_back( operations.top() );
 				operations.pop();
 			}
 			i++;
-			// Remove the left parenthese
-			operations.pop();
+			if( !operations.empty() && operations.top() == "(" ) {
+				// Remove the left parenthese
+				operations.pop();
+			}
 
 			// In case of rt, or logBase
 			if( !operations.empty() && operations.top() == "rt") {
@@ -478,6 +537,7 @@ void ShuntingYard::reversePolish()
 		else if( (expression.at(i) == "rt") ) {
 			// Add to the operation stack
 			operations.push(expression.at(i));
+			removeRt = true;
 			i++;
 		}
 		else if( (expression.at(i) == "log_") ) {

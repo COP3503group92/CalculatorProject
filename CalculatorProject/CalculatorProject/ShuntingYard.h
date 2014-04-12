@@ -11,7 +11,7 @@ using namespace std;
 class ShuntingYard
 {
 public:
-	ShuntingYard(void);
+	ShuntingYard();
 	~ShuntingYard(void);
 
 	// Usual Methods
