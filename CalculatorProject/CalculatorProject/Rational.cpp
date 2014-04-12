@@ -5,8 +5,7 @@
  *      Author: Michael Kemerer
  */
 
-#include "Rational.h"
-#include "Multiply.h"
+#include "Includes.h"
 
 Rational::Rational(){
 	this->numerator = new Integer(1);
@@ -55,7 +54,13 @@ void Rational::simplify(){
 			Pi* firstPi = dynamic_cast<Pi*>(this->numerator);
 			Pi* secondPi = dynamic_cast<Pi*>(this->denominator);
 			Rational* newCo = new Rational(firstPi->getCoefficent(), secondPi->getCoefficent());
-			Subtract* 
+			Subtract* exSub = new Subtract(firstPi->getExponent, secondPi->getExponent);
+			Number* newEx = exSub->evaluate();
+			Pi* answer = new Pi();
+			answer->setExponent(newEx);
+			answer->setCoefficient(newCo);
+			this->numerator = answer;
+			this->denominator
 		}
 	}
 }

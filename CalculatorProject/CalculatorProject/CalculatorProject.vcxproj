@@ -65,10 +65,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Addition.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Divide.cpp" />
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="Log.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Multiply.cpp" />
     <ClCompile Include="NatE.cpp" />
     <ClCompile Include="Number.cpp" />
@@ -77,11 +79,13 @@
     <ClCompile Include="Pi.cpp" />
     <ClCompile Include="Rational.cpp" />
     <ClCompile Include="Root.cpp" />
+    <ClCompile Include="ShuntingYard.cpp" />
     <ClCompile Include="SpecialCase.cpp" />
     <ClCompile Include="Subtract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Addition.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Divide.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Integer.h" />
@@ -95,6 +99,7 @@
     <ClInclude Include="Pi.h" />
     <ClInclude Include="Rational.h" />
     <ClInclude Include="Root.h" />
+    <ClInclude Include="ShuntingYard.h" />
     <ClInclude Include="SpecialCase.h" />
     <ClInclude Include="Subtract.h" />
   </ItemGroup>

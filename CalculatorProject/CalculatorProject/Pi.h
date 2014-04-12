@@ -11,6 +11,8 @@ public:
 	Number* getCoefficent();
 	void setCoefficient(Number* coefficient);
 	string getType();
+	Number* getExponent();
+	void setExponent(Number* exponent);
 	
 private:
 	Number* coefficient;

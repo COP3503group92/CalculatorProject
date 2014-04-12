@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdexcept>
-#include "ShuntingYard.h"
+#include "Controller.h"
 
 using namespace std;
 
@@ -108,7 +108,7 @@ bool ComputeNewOperation() {
 
 	do {
 		// Create an object of the class Shunting yard
-		ShuntingYard* op = new ShuntingYard();
+		Controller* op = new Controller();
 
 		cout << "- Type \"back\" to go back to Main Menu: " << endl;
 		cout << "- Type \"quit\" to exit Calculator 2.0!: " << endl << endl;
@@ -164,7 +164,7 @@ bool ComputeNewOperation() {
 			// This is the  end of the block to the operations
 			cout << endl;
 			// Delete the ShuntingYard object using the destructor
-			op->~ShuntingYard();
+			op->~Controller();
 			cout << endl;
 		}
 	} while( !exitCompute );
