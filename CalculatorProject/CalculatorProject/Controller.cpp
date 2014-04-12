@@ -1,278 +1,497 @@
 #include "Controller.h"
-#include "Multiply.h"
 
-vector<string> Controller::parseQueue(vector<string> input){
+vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 
-	for (int i = 0; i < input.size(); i++){
+	vector<Number*> numberVector;
 
-		if (input[i] == "*"){
+	for(int i = 0; i < queue.size(); i++){
 
-			// FIRST TERM ==================================================================
+		if((queue[i][0] == '-' && queue[i][1] == 'p') || queue[i][0] == 'p'){
 
-			if (input[i - 2].size() >= 3){
-
-				bool fraction = false;
-				bool negFraction = false;
-
-				for (int j = 1; j < input[i - 2].size(); j++){
-
-					if (input[i - 2][j] == '/'){
-
-						fraction = true;
-
-						if (input[i - 2][0] == '-'){
-
-							negFraction = true;
-
-						}
-
-						if (input[i - 2][j + 1] == '-'){
-
-							negFraction = true;
-
-						}
-
-						if (negFraction == false){
-
-							string numerator = "";
-
-							for (int k = 0; k < j; k++){
-
-								numerator += input[i - 2][k];
-
-							}
-
-							string denomenator = "";
-
-							for (int l = j + 1; l < input[i - 2].size(); l++){
-
-								denomenator += input[i - 1][l];
-
-							}
-
-							Fraction* firstFraction = new Fraction(numerator, denomenator);
-
-						}
-						else if (negFraction == true) {
-
-							string numerator = "-";
-
-							for (int k = 1; k < j; k++){
-
-								numerator += input[i - 1][k];
-
-							}
-
-							string denomenator = "";
-
-							for (int l = j + 1; l < input[i - 1].size(); l++){
-
-								denomenator += input[i - 1][l];
-
-							}
-
-							Fraction* firstFraction = new Fraction(numerator, denomenator);
-
-						}
-
-					}
-
-					if (fraction == false){
-
-						bool neg = false;
-
-						if (input[i - 2][0] == '-'){
-							neg = true;
-							input[i - 2].erase(input[i - 2].begin());
-						}
-
-						int first = 0;
-						istringstream(input[i - 2]) >> first;
-
-						if (neg == true){
-							first = first * (-1);
-						}
-
-						stringstream ss;
-						ss << first;
-						string firstString = ss.str();
-
-						ss.clear();
-
-						Fraction* firstFraction = new Fraction(firstString);
-
-					}
-
-				}
-
-			} // END 3 TERM IF(1) ==================================================================
-			else {
-
-				bool neg = false;
-
-				if (input[i - 2][0] == '-'){
-					neg = true;
-					input[i - 2].erase(input[i - 2].begin());
-				}
-
-				int first = 0;
-				istringstream(input[i - 2]) >> first;
-
-				if (neg == true){
-					first = first * (-1);
-				}
-
-				stringstream ss;
-				ss << first;
-				string firstString = ss.str();
-
-				ss.clear();
-
-				Fraction* firstFraction = new Fraction(firstString);
-
+			bool neg = false;
+			if(queue[i][0] == '-'){
+				neg = true;
 			}
 
-			// SECOND TERM ==================================================================
+			Pi* piObject = new Pi(neg);
+			piObject->simplify();
 
-			if (input[i - 1].size() >= 3){
+			numberVector.push_back(piObject);
 
-				bool fraction = false;
-				bool negFraction = false;
+		} else if(queue[i][0] == 'l'){
 
-				for (int j = 1; j < input[i - 1].size(); j++){
+			// go back for complexities later
 
-					if (input[i - 1][j] == '/'){
+			Log* logObject = new Log(numberVector[numberVector.size() - 1], numberVector[numberVector.size() - 2]);
+			logObject->simplify();
 
-						fraction = true;
+			numberVector.push_back(logObject);
 
-						if (input[i - 1][0] == '-'){
+		} else if((queue[i][0] == '-' && queue[i][1] == 'e') || queue[i][0] == 'e'){
 
-							negFraction = true;
-
-						}
-
-						if (input[i - 1][j + 1] == '-'){
-
-							negFraction = true;
-
-						}
-
-						if (negFraction == false){
-
-							string numerator = "";
-
-							for (int k = 0; k < j; k++){
-
-								numerator += input[i - 1][k];
-
-							}
-
-							string denomenator = "";
-
-							for (int l = j + 1; l < input[i - 1].size(); l++){
-
-								denomenator += input[i - 1][l];
-
-							}
-
-							Fraction* secondFraction = new Fraction(numerator, denomenator);
-
-						}
-						else if (negFraction == true) {
-
-							string numerator = "-";
-
-							for (int k = 1; k < j; k++){
-
-								numerator += input[i - 1][k];
-
-							}
-
-							string denomenator = "";
-
-							for (int l = j + 1; l < input[i - 1].size(); l++){
-
-								denomenator += input[i - 1][l];
-
-							}
-
-							Fraction* secondFraction = new Fraction(numerator, denomenator);
-
-						}
-
-					}
-
-					if (fraction == false){
-
-						bool neg = false;
-
-						if (input[i - 1][0] == '-'){
-							neg = true;
-							input[i - 1].erase(input[i - 1].begin());
-						}
-
-						int second = 0;
-						istringstream(input[i - 1]) >> second;
-
-						if (neg == true){
-							second = second * (-1);
-						}
-
-						stringstream ss;
-						ss << second;
-						string secondString = ss.str();
-
-						ss.clear();
-
-						Fraction* secondFraction = new Fraction(secondString);
-
-					}
-
-				}
-
-			} // END 3 TERM IF(2) ==================================================================
-			else {
-
-				bool neg = false;
-
-				if (input[i - 1][0] == '-'){
-					neg = true;
-					input[i - 1].erase(input[i - 1].begin());
-				}
-
-				int second = 0;
-				istringstream(input[i - 1]) >> second;
-
-				if (neg == true){
-					second = second * (-1);
-				}
-
-				stringstream ss;
-				ss << second;
-				string secondString = ss.str();
-
-				ss.clear();
-
-				Fraction* secondFraction = new Fraction(secondString);
-
+			bool neg = false;
+			if(queue[i[0] == '-'){
+				neg = true;
 			}
 
-			// OPERATIONS HANDLING ==================================================================
+			NatE* eObject = new NatE(neg);
+			eObject->simplify();
 
-			Fraction resultFraction = Multiply().evaluate(firstFraction, secondFraction); // MULTIPLY HERE
+			numberVector.push_back(eObject);
 
-			string temp_string = resultFraction.toString;
+		} else if(queue[i][0] == 'r'){
 
-			input.erase(input.begin() + i - 1);
-			input.erase(input.begin() + i - 1);
+			Root* rtObject = new Root(numberVector[numberVector.size() - 1], numberVector[numberVector.size() - 2]);
+			rtObject->simplify();
 
-			input[i - 2] = temp_string;
+			numberVector.push_back(rtObject);
 
-			i = 0;
+		} else if(queue[i][0] == '+' || queue[i][0] == '-' || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
 
-		} // END OPERATOR SECTION ==================================================================
+			Operator* opObject = new Operator(queue[i]);
 
-	} // END MAIN FOR ==================================================================
+			numberVector.push_back(opObject);
+
+		} else {
+
+			Integer* intObject = new Integer(queue[i]);
+
+			numberVector.push_back(intObject);
+
+		}
+
+	}
+
+	return numberVector;
+
+}
+
+vector<Number*> Controller::parseQueue(vector<string> queue){
+
+	vector<Number*> input = convertToNumberVector(queue);
+
+	for(int i = 0; i < input.size(); i++){
+
+		if(input[i]->getType() == "Operator"){
+
+			if(input[i]->getOperator() == "+"){
+
+				if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+
+					Integer* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
+
+					Rational* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+
+					Expression* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
+
+					NatE* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = Add::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				}
+
+			} // END + OPERATOR ===============================================================================
+
+			if(input[i]->getOperator() == "-"){
+
+				if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+
+					Integer* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
+
+					Rational* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+
+					Expression* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
+
+					NatE* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				}
+
+			} // END - OPERATOR ===============================================================================
+
+			if(input[i]->getOperator() == "*"){
+
+				if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+
+					Integer* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
+
+					Rational* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+
+					Expression* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
+
+					NatE* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				}
+
+			} // END * OPERATOR ===============================================================================
+
+			if(input[i]->getOperator() == "/"){
+
+				if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+
+					Integer* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
+
+					Rational* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+
+					Expression* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
+
+					NatE* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = Divide::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				}
+
+			} // END / OPERATOR ===============================================================================
+
+			if(input[i]->getOperator() == "^"){
+
+				if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+
+					Integer* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
+
+					Rational* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+
+					Expression* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
+
+					NatE* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				}
+
+			} // END ^ OPERATOR ===============================================================================
+
+		}
+
+	}
 
 	return input;
 
