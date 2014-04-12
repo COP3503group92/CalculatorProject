@@ -12,6 +12,6 @@ Operations::~Operations()
 {
 }
 
-Operations::evaluate(Number a, Number b)
+Operations::evaluate(Number* a, Number* b)
 {
 }

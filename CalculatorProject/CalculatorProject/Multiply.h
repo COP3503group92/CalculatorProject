@@ -11,9 +11,10 @@ class Multiply : public Operations
     public:
         Multiply();
         virtual ~Multiply();
-        void evaluate();
+        Number evaluate();
     protected:
     private:
+        string cl = "*";
 };
 
 #endif // MULTIPLY_H

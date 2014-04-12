@@ -11,9 +11,10 @@ class Subtract : public Operations
     public:
         Subtract();
         virtual ~Subtract();
-        void evaluate();
+        Number evaluate();
     protected:
     private:
+        string cl = "-";
 };
 
 #endif // SUBTRACT_H

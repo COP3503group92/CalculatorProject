@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 using namespace std;
+#include "Number.h"
 
 
 class Operations
@@ -11,7 +12,7 @@ class Operations
     public:
         Operations();
         virtual ~Operations();
-        virtual void evaluate(Number a, Number b)=0;
+        virtual static Number evaluate(Number* a, Number* b)=0;
 
     private:
 };
