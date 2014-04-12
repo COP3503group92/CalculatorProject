@@ -521,7 +521,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 // Shunting Yard Methods ====================================================================================================================================
 
 // SET METHODS
-void ShuntingYard::setString(string in)
+void Controller::setString(string in)
 {
 	/*
 	if( in.empty() ) {
@@ -547,22 +547,22 @@ void ShuntingYard::setString(string in)
 
 	s = in;
 }
-void ShuntingYard::setQueue(vector<string> input)
+void Controller::setQueue(vector<string> input)
 {
 	queue = input;
 }
 
 // GET METHODS
-string ShuntingYard::getS()
+string Controller::getS()
 {
 	return s;
 }
-vector<string> ShuntingYard::getQueue()
+vector<string> Controller::getQueue()
 {
 	return queue;
 }
 
-void ShuntingYard::removeSpaces(){
+void Controller::removeSpaces(){
     //creates a new expression string without any spaces
     string out;
     int i = 0;
@@ -582,7 +582,7 @@ void ShuntingYard::removeSpaces(){
 // Description:	Take an input and check to see if it is
 //				a digit. Return true if true else return false
 // Return		true or false
-bool ShuntingYard::isNumber(char in){
+bool Controller::isNumber(char in){
     //if statement checks if value is a number
     int character = (int)in;
     if ( (character >= 48) && (character <= 57) ){
@@ -597,7 +597,7 @@ bool ShuntingYard::isNumber(char in){
 // Description:	Take an input and check to see if it is
 //				a digit. Return true if true else return false
 // Return		true or false
-bool ShuntingYard::isSpecialNumber(string in){
+bool Controller::isSpecialNumber(string in){
     //if statement checks if input is pi or e
     if ( (in == "PI") || (in == "Pi") || (in == "pI") || (in == "pi")){
         return true;
@@ -615,7 +615,7 @@ bool ShuntingYard::isSpecialNumber(string in){
 // Desrciption:	Check if the chararacter is one of the assigned character +,-,*,/
 //				return true if it is and false if not
 // return:		bool
-bool ShuntingYard::isOperator(char op)
+bool Controller::isOperator(char op)
 {
 	if((op == '+') || (op == '-') || (op == '*') ||
 	   (op == '^') || (op == '/') ) {
@@ -626,7 +626,7 @@ bool ShuntingYard::isOperator(char op)
 		return false;
 	}
 }
-bool ShuntingYard::isOperator(string op)
+bool Controller::isOperator(string op)
 {
 	if((op == "+") || (op == "-") || (op == "*") ||
 	   (op == "^") || (op == "/") ) {
@@ -637,7 +637,7 @@ bool ShuntingYard::isOperator(string op)
 		return false;
 	}
 }
-bool ShuntingYard::isOpenParen(char in){
+bool Controller::isOpenParen(char in){
     //returns true if the char in is a '('
     int character = (int)in;
     if (character == 40) {
@@ -647,7 +647,7 @@ bool ShuntingYard::isOpenParen(char in){
         return false;
     }
 }
-bool ShuntingYard::isOpenParen(string in){
+bool Controller::isOpenParen(string in){
     //returns true if the char in is a '('
     if (in == "(") {
         return true;
@@ -656,7 +656,7 @@ bool ShuntingYard::isOpenParen(string in){
         return false;
     }
 }
-bool ShuntingYard::isCloseParen(char in){
+bool Controller::isCloseParen(char in){
     //returns true if the char in is a ')'
     int character = (int)in;
     if (character == 41) {
@@ -666,7 +666,7 @@ bool ShuntingYard::isCloseParen(char in){
         return false;
     }
 }
-bool ShuntingYard::isCloseParen(string in){
+bool Controller::isCloseParen(string in){
     //returns true if the char in is a ')'
     if (in == ")") {
         return true;
@@ -680,7 +680,7 @@ bool ShuntingYard::isCloseParen(string in){
 // Parameter:	char op
 // Description:	This method converts the operation sign
 //				to string types so that it can be stored in the string vector
-std::string ShuntingYard::operatorToString(char op)
+std::string Controller::operatorToString(char op)
 {
 	string temp;
 	temp.push_back(op);
@@ -693,7 +693,7 @@ std::string ShuntingYard::operatorToString(char op)
 //				except in the case that it is log_. It returns a number corresponding
 //				to the operation string.
 // Return:		int a number
-int ShuntingYard::precedence(std::string operation)
+int Controller::precedence(std::string operation)
 {
 	if ((operation == "^")) {
 		return 2;
@@ -712,7 +712,7 @@ int ShuntingYard::precedence(std::string operation)
 }
 
 // Method:		addMissingOperator(string)
-void ShuntingYard::addMissingOPerator()
+void Controller::addMissingOPerator()
 {
 	string out = "";
 	for(int i = 0; i < s.length(); i++) {
@@ -764,7 +764,7 @@ void ShuntingYard::addMissingOPerator()
 // Description:	This methods clean up the final string by adding extra parentheses
 //				around the negative numbers to make ease the shunting yard method
 //				Example: if the user entered 2*-7
-void ShuntingYard::finalStringCleanUp()
+void Controller::finalStringCleanUp()
 {
 	string out = "";
 	int i = 0;
@@ -825,7 +825,7 @@ void ShuntingYard::finalStringCleanUp()
 //				to make sure that every number is seperated correctly
 //				Ex: (25*89-100)^79
 // return:		None
-void ShuntingYard::toVector()
+void Controller::toVector()
 {
 	string temp = "";
 
@@ -940,7 +940,7 @@ void ShuntingYard::toVector()
 //				the rules of PEMDAS, and put it in a way that is acceptable to
 //				the computer
 // Return:		None
-void ShuntingYard::reversePolish()
+void Controller::reversePolish()
 {
 	stack<string> operations;
 	bool logInStack = false;
@@ -1075,7 +1075,7 @@ void ShuntingYard::reversePolish()
 	}
 }
 
-void ShuntingYard::calculate()
+void Controller::calculate()
 {
 	// loop through the polish vector
 	for(int i = 0; i < queue.size(); i++) {
@@ -1083,7 +1083,7 @@ void ShuntingYard::calculate()
 	}
 }
 
-void ShuntingYard::printInfo()
+void Controller::printInfo()
 {
 	cout << "Expression in vector" << endl;
 	for(int i = 0; i < expression.size(); i++) {
