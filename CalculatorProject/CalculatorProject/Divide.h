@@ -3,7 +3,7 @@
 
 #include <iostream>
 using namespace std;
-#include <Operations.h>
+#include "Operations.h"
 
 
 class Divide : public Operations
