@@ -60,7 +60,7 @@ void Rational::simplify(){
 			answer->setExponent(newEx);
 			answer->setCoefficient(newCo);
 			this->numerator = answer;
-			this->denominator
+			this->denominator = new Integer(1)
 		}
 	}
 }

@@ -7,6 +7,7 @@ public:
 	Root();
 	~Root();
 	string getType;
+	void simplify();
 private:
 	const string typeName = "Root";
 };

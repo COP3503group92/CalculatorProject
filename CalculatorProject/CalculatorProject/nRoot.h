@@ -11,7 +11,7 @@ class nRoot : public Operations
     public:
         nRoot();
         virtual ~nRoot();
-        Number evaluate();
+        Number* evaluate();
     protected:
     private:
         string cl = "rt";

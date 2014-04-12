@@ -1,10 +1,13 @@
 #include "Add.h"
+#include "Controller.h"
 #include "Divide.h"
+#include "Exponentiate.h"
 #include "Expression.h"
 #include "Integer.h"
 #include "Log.h"
 #include "Multiply.h"
 #include "NatE.h"
+
 #include "Number.h"
 #include "Operations.h"
 #include "Operator.h"

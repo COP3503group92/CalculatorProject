@@ -5,14 +5,13 @@
 #include <sstream>
 using namespace std;
 #include "Number.h"
-
+#include "Integer.h"
 
 class Operations
 {
-    public:
-        Operations();
+public:
         virtual ~Operations();
-        virtual static Number evaluate(Number* a, Number* b)=0;
+        virtual Number* evaluate(Number* a, Number* b)=0;
 
     private:
 };

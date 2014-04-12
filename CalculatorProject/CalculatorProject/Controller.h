@@ -10,6 +10,7 @@
 
 #include "Number.h"
 #include "Integer.h"
+/*
 #include "Rational.h"
 
 #include "SpecialCase.h"
@@ -18,7 +19,7 @@
 #include "Log.h"
 #include "Root.h"
 #include "Expression.h"
-
+*/
 #include "Operations.h"
 #include "Add.h"
 #include "Subtract.h"

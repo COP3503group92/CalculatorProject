@@ -4,14 +4,10 @@
 
 using namespace std;
 
-Operations::Operations()
-{
-}
-
 Operations::~Operations()
 {
 }
 
-Operations::evaluate(Number* a, Number* b)
+ Number* Operations::evaluate(Number* a, Number* b)
 {
 }

@@ -14,8 +14,8 @@ public:
 	virtual ~Number();
 	//Considering returning a Number* for below. Let Rationals with Pi numerators
 	//become Pis with rational coefficients.
-	virtual void simplify()=0; 
-	virtual string getType()=0;
+	virtual void simplify(); 
+	virtual string getType();
 private:
 	string typeName;
 };
