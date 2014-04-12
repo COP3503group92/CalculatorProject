@@ -6,5 +6,9 @@ class NatE :
 public:
 	NatE();
 	~NatE();
+	string getType();
+private:
+	bool negative;
+	const string typeName = "NatE";
 };
 

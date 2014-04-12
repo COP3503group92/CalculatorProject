@@ -12,7 +12,9 @@ using namespace std;
 class Number {
 public:
 	virtual ~Number();
-	virtual void simplify()=0;
+	//Considering returning a Number* for below. Let Rationals with Pi numerators
+	//become Pis with rational coefficients.
+	virtual void simplify()=0; 
 	virtual string getType()=0;
 private:
 	string typeName;

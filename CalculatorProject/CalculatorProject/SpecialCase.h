@@ -14,6 +14,7 @@ public:
 	virtual string toString();
 	virtual ~SpecialCase();
 	virtual void simplify();
+	virtual string getType();
 private:
 	Number* coefficient;
 	Number* power;

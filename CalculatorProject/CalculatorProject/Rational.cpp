@@ -6,57 +6,66 @@
  */
 
 #include "Rational.h"
+#include "Multiply.h"
 
-/*
- * A rational number can be a simple integer, with a denominator of 1.
- */
-	Rational::Rational(int numeratorInt){
-		this->numeratorInt=numeratorInt;
-		this->denominatorInt=1;
-
-	}
-
-	/*
-	 * A rational number can also be a traditional fraction. It should not matter whether the fraction
-	 * is improper or not.
-	 */
-	Rational::Rational(int numeratorInt, int denominatorInt){
-		this->numeratorInt=numeratorInt;
-		this->denominatorInt=denominatorInt;
-	}
-
-	/*
-	 * It is possible to have one of our special cases (logs, pi's, e's, etc.) or even another
-	 * Rational be divided by an integer. I don't expect us to be handling Special Cases like this,
-	 * but if we decide to create a rational whenever we see a "/", then I figured this should be
-	 * an option. We can always have a simplify function that outputs a SpecialCase with a modified
-	 * coefficient or modify that Rational.
-	 */
-	Rational::Rational(Number* numeratorSpec, int denominatorInt){
-		this->numeratorSpec=numeratorSpec;
-		this->denominatorInt=denominatorInt;
-	}
-
-	/*
-	 * We can also have one of our SpecialCases or Rationals to be a denominator. Our new Rational
-	 * will be able to simplify itself, and our special case can TECHNICALLY be just changed to
-	 * numerator*SpecialCase^-1 . Or we can keep it as a Rational.
-	 */
-	Rational::Rational(int numeratorInt, Number* denominatorSpec){
-		this->numeratorInt=numeratorInt;
-		this->denominatorSpec=denominatorSpec;
-	}
-
-	/*
-	 * The final case: dividing all sorts of SpecialCases. Later evaluation will determine whether
-	 * the numerator and denominator are compatible and perform the appropriate simplification.
-	 */
-	Rational::Rational(Number* numeratorSpec, Number* denominatorSpec){
-		this->numeratorSpec=numeratorSpec;
-		this->denominatorSpec=denominatorSpec;
-	}
-	Rational::~Rational() {
-	numeratorSpec->~Number();
-	denominatorSpec->~Number();
+Rational::Rational(){
+	this->numerator = new Integer(1);
+	this->denominator = new Integer(2);
 }
 
+Rational::Rational(Number* numerator){
+	this->numerator = numerator;
+	this->denominator = new Integer(1);
+}
+
+Rational::Rational(Number* numerator, Number* denominator){
+	this->numerator = numerator;
+	this->denominator = denominator;
+}
+Rational::~Rational() {
+		this->numerator->~Number();
+		this->denominator->~Number();
+}
+
+void Rational::simplify(){
+	if (this->numerator->getType() == this->denominator->getType()){
+		if (this->numerator->getType() == "Integer"){
+			Integer* numer = dynamic_cast<Integer*>(this->numerator);
+			Integer* denom = dynamic_cast<Integer*>(this->denominator);
+			int num = numer->getValue();
+			int den = denom->getValue();
+			int& n = num;
+			int& d = den;
+			leastCommonDenom(n, d);
+			numer->setValue(num);
+			denom->setValue(den);
+			this->numerator = numer;
+			this->denominator = denom;
+		}
+		else if (this->numerator->getType()=="Rational")
+		{
+			Rational* rat1 = dynamic_cast<Rational*>(this->numerator);
+			Rational* rat2 = dynamic_cast<Rational*>(this->denominator);
+			Multiply* numMult = new Multiply(rat1->numerator, rat2 - denominator);
+			Multiply* denomMult = new Multiply(rat1->denominator, rat2->numerator);
+			Rational* simplerRat = new Rational(numMult->evaluate(), denomMult->evaluate());
+			simplerRat->simplify();
+		}
+		else if (this->numerator->getType() == "Pi"){
+			Pi* firstPi = dynamic_cast<Pi*>(this->numerator);
+			Pi* secondPi = dynamic_cast<Pi*>(this->denominator);
+			Rational* newCo = new Rational(firstPi->getCoefficent(), secondPi->getCoefficent());
+			Subtract* 
+		}
+	}
+}
+
+void Rational::leastCommonDenom(int& n, int& d){
+	for (int i = 0; i < d; i++){
+		if (n%i == 0 && d%i == 0){
+			n = n / i;
+			d = d / i;
+			leastCommonDenom(n, d);
+		}
+	}
+}

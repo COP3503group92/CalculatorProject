@@ -8,21 +8,28 @@
 #ifndef RATIONAL_H_
 #define RATIONAL_H_
 #include "Number.h"
+#include "Integer.h"
+#include "Multiply.h"
+#include "Pi.h"
 
 class Rational:public Number {
 public:
-	Rational(int numeratorInt);
-	Rational(Number* numeratorSpec, int denominatorInt);
-	Rational(int numeratorInt, int denominatorInt);
-	Rational(int numeratorInt, Number* denominatorSpec);
-	Rational(Number* numeratorSpec, Number* denominatorSpec);
-	virtual ~Rational();
-	void simplify();
+	Rational();
+	Rational(Number* numerator);
+	Rational(Number* numerator, Number* denominator);
+	~Rational();
+	void simplify(); 
+	string getType();
+	Number* getNumerator();
+	Number* getDenominator();
+	void setNumerator(Number*);
+	void setDenominator(Number*);
+	
 private:
-	int numeratorInt;
-	int denominatorInt;
-	Number* numeratorSpec;
-	Number* denominatorSpec;
+	Number* numerator;
+	Number* denominator;
+	const string typeName="Rational";
+	void leastCommonDenom(int& n, int& d);
 };
 
 #endif /* RATIONAL_H_ */

@@ -5,6 +5,18 @@ class Pi :
 {
 public:
 	Pi();
+	Pi(bool negative);
 	~Pi();
+	void simplify();
+	Number* getCoefficent();
+	void setCoefficient(Number* coefficient);
+	string getType();
+	
+private:
+	Number* coefficient;
+	Number* power;
+	bool negative;
+	const string typeName = "Pi"
+
 };
 

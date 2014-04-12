@@ -66,26 +66,35 @@
   <ItemGroup>
     <ClCompile Include="Addition.cpp" />
     <ClCompile Include="Divide.cpp" />
+    <ClCompile Include="Expression.cpp" />
+    <ClCompile Include="Integer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Multiply.cpp" />
     <ClCompile Include="NatE.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Operations.cpp" />
+    <ClCompile Include="Operator.cpp" />
     <ClCompile Include="Pi.cpp" />
     <ClCompile Include="Rational.cpp" />
+    <ClCompile Include="Root.cpp" />
     <ClCompile Include="SpecialCase.cpp" />
     <ClCompile Include="Subtract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Addition.h" />
     <ClInclude Include="Divide.h" />
+    <ClInclude Include="Expression.h" />
+    <ClInclude Include="Integer.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="NatE.h" />
     <ClInclude Include="Number.h" />
+    <ClInclude Include="Includes.h" />
     <ClInclude Include="Operations.h" />
+    <ClInclude Include="Operator.h" />
     <ClInclude Include="Pi.h" />
     <ClInclude Include="Rational.h" />
+    <ClInclude Include="Root.h" />
     <ClInclude Include="SpecialCase.h" />
     <ClInclude Include="Subtract.h" />
   </ItemGroup>
