@@ -64,15 +64,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Addition.cpp" />
+    <ClCompile Include="Add.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Divide.cpp" />
+    <ClCompile Include="Exponentiate.cpp" />
     <ClCompile Include="Expression.cpp" />
     <ClCompile Include="Integer.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Multiply.cpp" />
     <ClCompile Include="NatE.cpp" />
+    <ClCompile Include="nRoot.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Operations.cpp" />
     <ClCompile Include="Operator.cpp" />
@@ -84,14 +86,16 @@
     <ClCompile Include="Subtract.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Addition.h" />
+    <ClInclude Include="Add.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Divide.h" />
+    <ClInclude Include="Exponentiate.h" />
     <ClInclude Include="Expression.h" />
     <ClInclude Include="Integer.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="NatE.h" />
+    <ClInclude Include="nRoot.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Operations.h" />
