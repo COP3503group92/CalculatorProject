@@ -87,20 +87,11 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			if(input[i]->getOperator() == "+"){
 
-				if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+				Add addObject = Add();
 
-					Integer* result = Add::evaluate(input[i - 2], input[i - 1]);
+				if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
 
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
-
-					Rational* result = Add::evaluate(input[i - 2], input[i - 1]);
+					Integer* result = addObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -109,20 +100,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+				} else if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
 
-					Expression* result = Add::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
-
-					NatE* result = Add::evaluate(input[i - 2], input[i - 1]);
+					Rational* result = addObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -131,20 +111,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+				} else if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
 
-					Pi* result = Add::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
-
-					Log* result = Add::evaluate(input[i - 2], input[i - 1]);
+					Expression* result = addObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -153,9 +122,42 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Add::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+				} else if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
 
-					Rational* result = Add::evaluate(input[i - 2], input[i - 1]);
+					NatE* result = addObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = addObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = addObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(addObject.evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = addObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -170,20 +172,11 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			if(input[i]->getOperator() == "-"){
 
-				if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+				Subtract subtractObject = Subtract();
 
-					Integer* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+				if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
 
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
-
-					Rational* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+					Integer* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -192,20 +185,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+				} else if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
 
-					Expression* result = Subtract::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
-
-					NatE* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+					Rational* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -214,20 +196,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+				} else if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
 
-					Pi* result = Subtract::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
-
-					Log* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+					Expression* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -236,9 +207,42 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Subtract::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+				} else if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
 
-					Rational* result = Subtract::evaluate(input[i - 2], input[i - 1]);
+					NatE* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(subtractObject.evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -253,20 +257,11 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			if(input[i]->getOperator() == "*"){
 
-				if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+				Multiply multiplyObject = Multiply();
 
-					Integer* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+				if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
 
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
-
-					Rational* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+					Integer* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -275,20 +270,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+				} else if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
 
-					Expression* result = Multiply::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
-
-					NatE* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+					Rational* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -297,20 +281,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+				} else if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
 
-					Pi* result = Multiply::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
-
-					Log* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+					Expression* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -319,9 +292,42 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Multiply::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+				} else if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
 
-					Rational* result = Multiply::evaluate(input[i - 2], input[i - 1]);
+					NatE* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(multiplyObject.evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -336,20 +342,11 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			if(input[i]->getOperator() == "/"){
 
-				if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+				Divide divideObject = Divide();
 
-					Integer* result = Divide::evaluate(input[i - 2], input[i - 1]);
+				if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
 
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
-
-					Rational* result = Divide::evaluate(input[i - 2], input[i - 1]);
+					Integer* result = divideObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -358,20 +355,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+				} else if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
 
-					Expression* result = Divide::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
-
-					NatE* result = Divide::evaluate(input[i - 2], input[i - 1]);
+					Rational* result = divideObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -380,20 +366,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+				} else if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
 
-					Pi* result = Divide::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
-
-					Log* result = Divide::evaluate(input[i - 2], input[i - 1]);
+					Expression* result = divideObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -402,9 +377,42 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Divide::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+				} else if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
 
-					Rational* result = Divide::evaluate(input[i - 2], input[i - 1]);
+					NatE* result = divideObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = divideObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = divideObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(divideObject.evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = divideObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -419,20 +427,11 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			if(input[i]->getOperator() == "^"){
 
-				if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
+				Exponentiate exponentiateObject = Exponentiate();
 
-					Integer* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+				if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "Integer"){
 
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
-
-					Rational* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+					Integer* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -441,20 +440,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
+				} else if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "Rational"){
 
-					Expression* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
-
-					NatE* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+					Rational* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -463,20 +451,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+				} else if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "Expression"){
 
-					Pi* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
-
-					input.erase(input.begin() + i - 1);
-					input.erase(input.begin() + i - 1);
-
-					input[i - 2] = result;
-
-					i = 0;
-
-				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
-
-					Log* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+					Expression* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
@@ -485,9 +462,42 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 					i = 0;
 
-				} else if(Exponentiate::evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+				} else if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "NatE"){
 
-					Rational* result = Exponentiate::evaluate(input[i - 2], input[i - 1]);
+					NatE* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "Pi"){
+
+					Pi* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "Log"){
+
+					Log* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
+
+					input.erase(input.begin() + i - 1);
+					input.erase(input.begin() + i - 1);
+
+					input[i - 2] = result;
+
+					i = 0;
+
+				} else if(exponentiateObject.evaluate(input[i - 2], input[i - 1])->getType() == "Root"){
+
+					Rational* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
 
 					input.erase(input.begin() + i - 1);
 					input.erase(input.begin() + i - 1);
