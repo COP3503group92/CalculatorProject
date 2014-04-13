@@ -20,5 +20,4 @@ public:
 private:
 	string typeName;
 };
-
 #endif /* NUMBER_H_ */
