@@ -1,14 +1,18 @@
-#ifndef ADD_H_
-#define ADD_H_
+#ifndef ADD_H
+#define ADD_H
 
-#include "Includes.h"
+#include <iostream>
+using namespace std;
+#include "Operations.h"
+
+
 
 class Add : public Operations
 {
     public:
         Add();
         virtual ~Add();
-        Number* evaluate(Number* a, Number* b);
+        Number* evaluate();
     protected:
     private:
         string cl = "+";

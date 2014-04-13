@@ -1,14 +1,17 @@
-#ifndef MULTIPLY_H_
-#define MULTIPLY_H_
+#ifndef MULTIPLY_H
+#define MULTIPLY_H
 
-#include "Includes.h"
+#include <iostream>
+using namespace std;
+#include "Operations.h"
+
 
 class Multiply : public Operations
 {
     public:
         Multiply();
         virtual ~Multiply();
-        Number* evaluate(Number* a, Number* b);
+        Number* evaluate();
     protected:
     private:
         string cl = "*";

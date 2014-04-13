@@ -164,5 +164,85 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		Number* result = new Root(aCast->getOperand(), aCast->getRoot(), coefficient, b);
 
 	} // END ROOT ^ INTEGER
+	else if (a->getType() == "NatE" && b->getType() == "Rational"){
+
+		
+
+	} // END NATE ^ INTEGER
+	else if (a->getType() == "Pi" && b->getType() == "Integer"){
+
+		Pi* aCast = dynamic_cast<Pi*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		Number* coefficientNumber = aCast->getCoefficient();
+
+		Number* coefficient;
+
+		if (coefficientNumber->getType() == "Integer"){
+
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
+
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
+
+		}
+		else {
+
+			coefficient = evaluate(coefficientNumber, b);
+
+		}
+
+		Number* result = new Pi(coefficient, b);
+
+	} // END PI ^ INTEGER
+	else if (a->getType() == "Log" && b->getType() == "Integer"){
+
+		Log* aCast = dynamic_cast<Log*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		Number* coefficientNumber = aCast->getCoefficient();
+
+		Number* coefficient;
+
+		if (coefficientNumber->getType() == "Integer"){
+
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
+
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
+
+		}
+		else {
+
+			coefficient = evaluate(coefficientNumber, b);
+
+		}
+
+		Number* result = new Log(aCast->getBase(), aCast->getOperand(), coefficient, b);
+
+	} // END LOG ^ INTEGER
+	else if (a->getType() == "Root" && b->getType() == "Integer"){
+
+		Root* aCast = dynamic_cast<Root*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		Number* coefficientNumber = aCast->getCoefficient();
+
+		Number* coefficient;
+
+		if (coefficientNumber->getType() == "Integer"){
+
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
+
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
+
+		}
+		else {
+
+			coefficient = evaluate(coefficientNumber, b);
+
+		}
+
+		Number* result = new Root(aCast->getOperand(), aCast->getRoot(), coefficient, b);
+
+	} // END ROOT ^ INTEGER
 
 }

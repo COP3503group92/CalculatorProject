@@ -1,4 +1,6 @@
 #include "Add.h"
+#include "Includes.h"
+
 
 Add::Add()
 {
@@ -10,7 +12,7 @@ Add::~Add()
 
 Number* Add::evaluate(Number* a, Number* b)
 {
-/0) All cases where "a" is an "Integer"
+/*0) All cases where "a" is an "Integer"
 //    -->if both numbers are "Integer"
 //    -->first int, second rational
 //    -->first int, second Special(separate conditions for each special)
@@ -28,57 +30,58 @@ Number* Add::evaluate(Number* a, Number* b)
         -->if first Pi, second (NatE, Log, Root, Expression)
         -->etc...
 */
-/***************************************************************/
-
-    string numTypeA = a->getNumerator()->getType();
-    string denomTypeA = a->getDenomerator()->getType();
-    string numTypeB = b->getNumerator()->getType();
-    string denomTypeB = b->getNumerator()->getType();
-    Operator* op = new Operator(cl);
+//***************************************************************/
 
     //Case #0
     //if Number "a" == "Integer"
-    if(a->getType=="Integer")
+    if(a->getType()=="Integer")
     {
-        if(b->getType=="Integer")
+        if(b->getType()=="Integer")
         {
-            int sum = a->getValue() + b->getValue();
+            Integer* first = dynamic_cast<Integer*>(a);
+            Integer* second = dynamic_cast<Integer*>(b);
+            int sum = first->getValue() + second->getValue();
             Integer* i = new Integer(sum);
             return i;
         }
-        if(b->getType=="Rational")
+        else if(b->getType()=="Rational")
         {
-            Rational* i = new Rational(a);
+            Rational* i = dynamic_cast<Rational*>(a);
             i->simplify();
             evaluate(i, b);
             return 0;
         }
-        if(b->getType=="NatE")
+        else if(b->getType()=="NatE")
         {
+            Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             Expression.add(a, b, op);
             return ee;
         }
-        if(b->getType=="Pi")
+        else if(b->getType()=="Pi")
         {
+            Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             Expression.add(a, b, op);
             return ee;
         }
-        if(b->getType=="Log")
+        else if(b->getType()=="Log")
         {
+            Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             Expression.add(a, b, op);
             return ee;
         }
-        if(b->getType=="Root")
+        else if(b->getType()=="Root")
         {
+            Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             Expression.add(a, b, op);
             return ee;
         }
-        if(b->getType=="Expression")
+        else if(b->getType()=="Expression")
         {
+            Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             Expression.add(a, b, op);
             return ee;
@@ -89,137 +92,524 @@ Number* Add::evaluate(Number* a, Number* b)
     //Case #1
     //Number "a" == Rational
         //ie: (3/1) + (3/1)
-    if(a->getType()=="Rational" && b->getType()=="Rational")
+    else if(a->getType()=="Rational" && b->getType()=="Rational")
     {
+        Rational* first = dynamic_cast<Rational*>(a);
+        Rational* second = dynamic_cast<Rational*>(b);
 
-        if(numTypeA=="Integer" && denomTypeA=="Integer" && numTypeB=="Integer" && denomTypeB=="Integer")
-            {
-            int subNumerA = b->getDenominator() * a->getNumerator();
-            int subDenomA = a->getDenominator() * b->getDenominator();
-            int subNumerB = a->getDenominator() * b->getNumerator();
 
-            int newNumer = subNumerA + subNumerB;
+        if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Integer")
+        {
+            Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+            Integer* firD = dynamic_cast<Integer*>(first->getDenominator());
+            Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+            Integer* secD = dynamic_cast<Integer*>(second->getDenominator());
 
-            Number *sum = new Number();
+            Integer* subNumerA = new Integer(secD->getValue() * firN->getValue());
+            Integer* subDenomA = new Integer(firD->getValue() * secD->getValue());
+            Integer* subNumerB = new Integer(firD->getValue() * secN->getValue());
+
+            Add* p = new Add(subNumerA, subNumerB);
+            Integer* newNumer = new Integer(p->evaluate());
+
+            Rational* sum = new Rational(newNumer, subDenomA);
             sum->setNumerator(newNumer);
             sum->setDenominator(subDenomA);
             sum->simplify();
-            }
-        //ie: (3/1) + (1/pi)
-       /* if(numTypeA=="Rational" && denomTypeA=="Rational" && numTypeB=="Rational" && denomTypeB=="SpecialCase")
+            return sum;
+        }
+       //ie: (3/1) + (1/e)
+       else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
+       {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+       }
+       //ie: (3/1) + (1/pi)
+       else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Pi")
+       {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+       }
+       //ie: (3/1) + (1/Log)
+       else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Log")
+       {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+       }
+       //ie: (3/1) + (1/root)
+       else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Root")
+       {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+       }
+       //ie: (3/1) + (1/Expression)
+       else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Expression")
+       {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+       }
+
+
+      //ie: (1/e) + (3/1)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="NatE"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Integer")
             {
-            ostringstream os;
-            os << a->getDenominator() * b->getNumerator() << " + " << a->getNumerator() << b->getDenominator();
-            string newNumer = os.str();
-
-            ostringstream s;
-            s << a->getDenominator() << b->getDenominator();
-            string newDenom = s.str();
-
-            Number* sum = new Number();
-            sum->setNumerator(os.str());
-            sum->setDenominator(s.str());
-            sum->simplify();
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
             }
-        //ie: (1/pi) + (3/1)
-        if(numTypeA=="Rational" && denomTypeA=="SpecialCase" && numTypeB=="Rational" && denomTypeB=="Rational")
+        //ie: (1/pi + (3/1)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Pi"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Integer")
             {
-            ostringstream os;
-            os << b->getDenominator() * a->getNumerator() << " + " << b->getNumerator() << a->getDenominator();
-            string newNumer = os.str();
-
-            ostringstream s;
-            s << b->getDenominator() << a->getDenominator();
-            string newDenom = s.str();
-
-            Number* sum = new Number();
-            sum->setNumerator(os.str());
-            sum->setDenominator(s.str());
-            sum->simplify();
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
             }
+        //ie: (1/log) + (3/1)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Log"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Integer")
+            {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+            }
+        //ie: (1/root) + (3/1)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Root"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Integer")
+            {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+            }
+        //ie: (1/Expression) + (3/1)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Expression"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Integer")
+            {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+            }
+
+        //if Denominators are same special
+        //-------------------------
+        //ie: (1/e) + (1/e)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="NatE"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
         //ie: (1/pi) + (1/pi)
-        if(numTypeA=="Rational" && denomTypeA=="SpecialCase" && numTypeB=="Rational" && denomTypeB=="SpecialCase")
-            {
-                if(denominators both pi put 2 pi, etc,)
-                if(denominators different)
-            ostringstream os;
-            os << a->getNumerator() << b->getDenominator() << " + " << b->getNumerator() << a->getDenominator();
-            string newNumer = os.str();
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Pi"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Pi")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/log) + (1/log)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Log"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Log")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/root) + (1/root)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Root"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Root")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/expression) + (1/expression)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Expression"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Expression")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
 
-            ostringstream s;
-            s << a->getDenominator() << b->getDenominator();
-            string newDenom = s.str();
 
-            Number* sum = new Number();
-            sum->setNumerator(os.str());
-            sum->setDenominator(s.str());
-            sum->simplify();
-            }
-            */
-      //(2/1 + (Log)(e)(pi))
-      if(a->getType()=="Rational" && b->getType()=="NatE")
-      {
-        Expression* ee = new Expression();
-        Expression.add(a, b, op);
-        return ee;
-      }
-      if(a->getType()=="Rational" && b->getType()=="Pi")
-      {
-        Expression* ee = new Expression();
-        Expression.add(a, b, op);
-        return ee;
-      }
-      if(a->getType()=="Rational" && b->getType()=="Log")
-      {
-        Expression* ee = new Expression();
-        Expression.add(a, b, op);
-        return ee;
-      }
-      if(a->getType()=="Rational" && b->getType()=="Root")
-      {
-        Expression* ee = new Expression();
-        Expression.add(a, b, op);
-        return ee;
-      }
-      if(a->getType()=="Rational" && b->getType()=="Expression")
-      {
-        Expression* ee = new Expression();
-        Expression.add(a, b, op);
-        return ee;
-      }
-     return 0;
+        //if Denominators are different specials
+        //-------------------------------
+        //ie:(1/e) + (1/pi)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="NatE"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Pi")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/e) + (1/ Log)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="NatE"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Log")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie:(1/e) + (1/root)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="NatE"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Root")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/e) + (1/expression)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="NatE"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Expression")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/pi) + (1/e)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Pi"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/pi) + (1/log)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Pi"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Log")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/pi) + (1/root)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Pi"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Root")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/pi) + (1/expression)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Pi"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Expression")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/log) + (1/e)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Log"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/log) + (1/pi)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Log"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Pi")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/log) + (1/root)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Log"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Root")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/log) + (1/expression)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Log"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Expression")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/root) + (1/e)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Root"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/root) + (1/pi)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Root"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Pi")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/root) + (1/log)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Root"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Log")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/root) + (1/expression)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Root"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Expression")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/express) + (1/e)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Expression"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/express) + (1/pi)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Expression"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Pi")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/express) + (1/log)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Expression"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Log")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+        //ie: (1/express) + (1/root)
+        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Expression"
+            && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="Root")
+               {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* ee = new Expression();
+                ee->add(first, second, op);
+                return ee;
+               }
+
+      return 0;
     }
 
+      //(2/1 + SpecialCase)
+      else if(a->getType()=="Rational" && b->getType()=="NatE")
+      {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+      }
+      else if(a->getType()=="Rational" && b->getType()=="Pi")
+      {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+      }
+      else if(a->getType()=="Rational" && b->getType()=="Log")
+      {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+      }
+      else if(a->getType()=="Rational" && b->getType()=="Root")
+      {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+      }
+      else if(a->getType()=="Rational" && b->getType()=="Expression")
+      {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
+        Expression* ee = new Expression();
+        ee->add(first, second, op);
+        return ee;
+      }
+
+
   //Case #2
-  //e(pi)(log)(rt)(3+e) + 2
-      if(a->getType()=="NatE" && b->getType()=="Rational")
+  //(SpecialCase) + 2
+      else if(a->getType()=="NatE" && b->getType()=="Rational")
       {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
         Expression* ee = new Expression();
-        Expression.add(a, b, op);
+        ee->add(first, second, op);
         return ee;
       }
-      if(a->getType()=="Pi" && b->getType()=="Rational")
+      else if(a->getType()=="Pi" && b->getType()=="Rational")
       {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
         Expression* ee = new Expression();
-        Expression.add(a, b, op);
+        ee->add(first, second, op);
         return ee;
       }
-      if(a->getType()=="Log" && b->getType()=="Rational")
+      else if(a->getType()=="Log" && b->getType()=="Rational")
       {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
         Expression* ee = new Expression();
-        Expression.add(a, b, op);
+        ee->add(first, second, op);
         return ee;
       }
-      if(a->getType()=="Root" && b->getType()=="Rational")
+      else if(a->getType()=="Root" && b->getType()=="Rational")
       {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
         Expression* ee = new Expression();
-        Expression.add(a, b, op);
+        ee->add(first, second, op);
         return ee;
       }
-      if(a->getType()=="Expression" && b->getType()=="Rational")
+      else if(a->getType()=="Expression" && b->getType()=="Rational")
       {
+        Operator* op = new Operator(cl);
+        a->simplify();
+        b->simplify();
         Expression* ee = new Expression();
-        Expression.add(a, b, op);
+        ee->add(first, second, op);
         return ee;
       }
 
@@ -228,14 +618,218 @@ Number* Add::evaluate(Number* a, Number* b)
   //both "SpecialCase"
 
       //both the same kind of "SpecialCase"
-      if(a->getType()=="pi" && b->getType()=="pi")
+      //-----------------------------------
+      //ie: e + e
+      else if(a->getType()=="NatE" && b->getType()=="NatE")
+      {
+        NatE* first = dynamic_cast<NatE*>(a);
+        NatE* second = dynamic_cast<NatE*>(b);
+        Add* p = new Add(first->getCoefficient(), second->getCoefficient());
+        NatE* e = new NatE(p->evaluate());
+        return e;
+      }
+      //ie: pi + pi
+      else if(a->getType()=="Pi" && b->getType()=="Pi")
+      {
+        Pi* first = dynamic_cast<Pi*>(a);
+        Pi* second = dynamic_cast<Pi*>(b);
+        Add* p = new Add(first->getCoefficient(), second->getCoefficient());
+        Pi* e = new Pi(p->evaluate());
+        return e;
+      }
+      //ie: log + log
+
+      else if(a->getType()=="Log" && b->getType()=="Log")
+      {
+        Log* first = dynamic_cast<Log*>(a);
+        Log* second = dynamic_cast<Log*>(b);
+          if(first->getBase()==second->getBase() && first->getOperand()==second->getOperand())
+          {
+            Add* p = new Add(first->getCoefficient(), second->getCoefficient());
+            Log* e = new Log(p->evaluate());
+          }
+          else
+            {
+                Operator* op = new Operator(cl);
+                first->simplify();
+                second->simplify();
+                Expression* e = new Expression();
+                e->add(first, second, op);
+            }
+        return e;
+      }
+      //ie: root + root
+      else if(a->getType()=="Root" && b->getType()=="Root")
+      {
+        Root* first = dynamic_cast<Root*>(a);
+        Root* second = dynamic_cast<Root*>(b);
+          if(first->getRoot()==second->getRoot() && first->getOperand()==second->getOperand())
+          {
+            Add* p = new Add(first->getCoefficient(), second->getCoefficient());
+            Root* e = new Root(p->evaluate());
+          }
+          else
+          {
+            Operator* op = new Operator(cl);
+            first->simplify();
+            second->simplify();
+            Expression* e = new Expression();
+            e->add(first, second, op);
+          }
+        return e;
+      }
+      //ie: expression + expression
+      else if(a->getType()=="Expression" && b->getType()=="Expression")
       {
 
       }
+
+
       //both different "SpecialCases"
-      if(a->getType()=="Rational" && b->getType()=="")
+      //ie: e + pi
+      else if(a->getType()=="NatE" && b->getType()=="Pi")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: e + log
+      else if(a->getType()=="NatE" && b->getType()=="Log")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: e + Root
+      else if(a->getType()=="NatE" && b->getType()=="Root")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: e + Expression
+      else if(a->getType()=="NatE" && b->getType()=="Expression")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: pi + e
+      else if(a->getType()=="Pi" && b->getType()=="NatE")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: pi + log
+      else if(a->getType()=="Pi" && b->getType()=="Log")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: pi + root
+      else if(a->getType()=="Pi" && b->getType()=="Root")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: pi + expression
+      else if(a->getType()=="Pi" && b->getType()=="Expression")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: log + e
+      else if(a->getType()=="Log" && b->getType()=="NatE")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: log + pi
+      else if(a->getType()=="Log" && b->getType()=="Pi")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: log + root
+      else if(a->getType()=="Log" && b->getType()=="Root")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: log + express
+      else if(a->getType()=="Log" && b->getType()=="Expression")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: root + e
+      else if(a->getType()=="Root" && b->getType()=="NatE")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: root + pi
+      else if(a->getType()=="Root" && b->getType()=="Pi")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: root + log
+      else if(a->getType()=="Root" && b->getType()=="Log")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
+      //ie: root + expression
+      else if(a->getType()=="Root" && b->getType()=="Expression")
+      {
+        Operator* op = new Operator(cl);
+        first->simplify();
+        second->simplify();
+        Expression* e = new Expression();
+        e->add(first, second, op);
+      }
 
-    return sum;
-
-
+ return 0;
 }
