@@ -1,6 +1,9 @@
 #ifndef INCLUDES_H_
 #define INCLUDES_H_
 
+// CONTROLLER
+#include "Controller.h"
+
 // BASIC INCLUDES
 #include <iostream>
 #include <string>
@@ -28,9 +31,7 @@
 #include "Log.h"
 #include "Root.h"
 #include "Expression.h"
-
-// CONTROLLER
-#include "Controller.h"
+#include "Operator.h"
 
 using namespace std;
 

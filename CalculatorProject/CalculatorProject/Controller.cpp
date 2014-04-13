@@ -1,4 +1,5 @@
 #include "Controller.h"
+#include "Add.h"
 
 Controller::Controller()
 {
@@ -83,7 +84,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 		if (input[i]->getType() == "Operator"){
 
-			Operator* inputCast = dynamic_cast<Operator*> (input[i]);
+			Operator* inputCast = dynamic_cast<Operator*>(input[i]);
 
 			if (inputCast->getOperator() == "+"){
 
