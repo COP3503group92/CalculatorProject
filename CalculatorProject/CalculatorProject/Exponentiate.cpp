@@ -10,10 +10,108 @@ Exponentiate::~Exponentiate()
 
 Number* Exponentiate::evaluate(Number* a, Number* b)
 {
-    string numTypeA = a->getNumerator()->getType();
-    string denomTypeA = a->getDenomerator()->getType();
-    string numTypeB = b->getNumerator()->getType();
-    string denomTypeB = b->getNumerator()->getType();
-    Operator* op = new Operator(cl);
+
+	if (a->getType() == "Integer" && b->getType() == "Integer"){
+
+		Integer* aCast = dynamic_cast<Integer*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		int base = aCast->getValue();
+		int exponent = bCast->getValue();
+
+		Number* result = new Integer(pow(base, exponent));
+
+		return result;
+
+	}
+	else if (a->getType == "Integer" && b->getType() == "Rational"){
+
+		Integer* aCast = dynamic_cast<Integer*>(a);
+		Rational* bCast = dynamic_cast<Rational*>(b);
+
+		Number* nNumber = bCast->getDenominator();
+		Number* numberExponent = bCast->getNumerator();
+
+		Integer* exponentCast = dynamic_cast<Integer*>(numberExponent);
+
+		int base = aCast->getValue();
+		int exponent = exponentCast->getValue();
+
+		Number* root = new Integer(pow(base, exponent));
+
+		Number* result = new Root(nNumber, root);
+		result->simplify();
+
+		return result;
+
+	}
+	else if (a->getType == "Rational" && b->getType == "Integer"){
+
+		Rational* aCast = dynamic_cast<Rational*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		Number* numeratorInput = aCast->getNumerator();
+		Number* denomenatorInput = aCast->getDenominator();
+
+		Number* numerator;
+		Number* denomenator;
+
+		if (numeratorInput->getType() == "Integer"){
+
+			Integer* numeratorInputCast = dynamic_cast<Integer*>(numeratorInput);
+			numerator = new Integer(pow(numeratorInputCast->getValue(), bCast->getValue()));
+
+		}
+		else if (numeratorInput->getType() == "NatE"){
+
+			NatE* numeratorInputCast = dynamic_cast<NatE*>(numeratorInput);
+
+			Number* coefficientNumber = numeratorInputCast->getCoefficient();
+			
+			Number* coefficient;
+
+			if (coefficientNumber->getType() == "Integer"){
+
+				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
+
+				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
+
+			}
+
+			// OTHER COEFFICIENT TYPES HERE
+
+			numerator = new NatE(coefficient, bCast);
+
+		}
+		else if (numeratorInput->getType() == "Pi"){
+
+			Pi* numeratorInputCast = dynamic_cast<Pi*>(numeratorInput);
+
+			Number* coefficientNumber = numeratorInputCast->getCoefficient();
+
+			Number* coefficient;
+
+			if (coefficientNumber->getType() == "Integer"){
+
+				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
+
+				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
+
+			}
+
+			// OTHER COEFFICIENT TYPES HERE
+
+			numerator = new Pi(coefficient, bCast);
+
+		}
+
+		if (denomenatorInput->getType() == "Integer"){
+
+			Integer* denomenatorInputCast = dynamic_cast<Integer*>(denomenatorInput);
+			denomenator = new Integer(pow(denomenatorInputCast->getValue(), bCast->getValue()));
+
+		}
+
+	}
 
 }

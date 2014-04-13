@@ -1,5 +1,5 @@
-#ifndef nROOT_H
-#define nROOT_H
+#ifndef nROOT_H_
+#define nROOT_H_
 
 #include "Includes.h"
 
