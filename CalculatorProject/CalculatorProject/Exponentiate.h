@@ -11,8 +11,8 @@ class Exponentiate : public Operations
     public:
         Exponentiate();
         virtual ~Exponentiate();
-        Number* evaluate();
-		void set
+        Number* evaluate(Number* a, Number* b);
+		void set;
     protected:
     private:
         string cl = "^";

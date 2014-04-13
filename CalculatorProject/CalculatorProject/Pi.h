@@ -8,7 +8,7 @@ public:
 	Pi(bool negative);
 	~Pi();
 	void simplify();
-	Number* getCoefficent();
+	Number* getCoefficient();
 	void setCoefficient(Number* coefficient);
 	string getType();
 	Number* getExponent();

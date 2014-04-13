@@ -11,7 +11,7 @@ class Divide : public Operations
     public:
         Divide();
         virtual ~Divide();
-        Number evaluate();
+        Number* evaluate(Number* a, Number* b);
     protected:
     private:
         string cl = "/";

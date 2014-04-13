@@ -9,14 +9,11 @@ class Multiply : public Operations
 {
     public:
         Multiply();
-		Multiply(Number* a, Number* b);
         virtual ~Multiply();
-        Number* evaluate();
+        Number* evaluate(Number* a, Number* b);
     protected:
     private:
         string cl = "*";
-		Number* a;
-		Number* b;
 };
 
 #endif // MULTIPLY_H
