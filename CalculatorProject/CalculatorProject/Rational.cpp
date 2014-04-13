@@ -60,7 +60,7 @@ void Rational::simplify(){
 		else if (this->numerator->getType() == "Pi"){
 			Pi* firstPi = dynamic_cast<Pi*>(this->numerator);
 			Pi* secondPi = dynamic_cast<Pi*>(this->denominator);
-			Rational* newCo = new Rational(firstPi->getCoefficent(), secondPi->getCoefficent());
+			Rational* newCo = new Rational(firstPi->getCoefficient(), secondPi->getCoefficient());
 			Subtract* exSub = new Subtract();
 			Number* newEx = exSub->evaluate(firstPi->getExponent(), secondPi->getExponent());
 			newEx->simplify();
@@ -127,6 +127,7 @@ void Rational::simplify(){
 		}
 		else if (this->numerator->getType() == "Expression"){
 
+
 		}
 	}//End same-type check
 	else if (this->numerator->getType() == "Integer"&&this->denominator->getType() == "Rational"){
@@ -140,7 +141,7 @@ void Rational::simplify(){
 	else if (this->numerator->getType() == "Integer"&&this->denominator->getType() == "Pi"){
 		Integer* newNum = dynamic_cast<Integer*>(this->numerator);
 		Pi* newDenom = dynamic_cast<Pi*>(this->denominator);
-		Rational* toSimp = new Rational(newNum, newDenom->getCoefficent());
+		Rational* toSimp = new Rational(newNum, newDenom->getCoefficient());
 		toSimp->simplify();
 		newDenom->setCoefficient(toSimp->getDenominator());
 		this->numerator = toSimp->getNumerator();
@@ -229,7 +230,7 @@ void Rational::simplify(){
 		Pi* newNum = dynamic_cast<Pi*>(this->numerator);
 		Rational* newDenom = dynamic_cast<Rational*>(this->denominator);
 		Rational* newerDenom = new Rational(newDenom->getDenominator(), newDenom->getNumerator());
-		Multiply* mult = new Multiply;
+		Multiply* mult = new Multiply();
 		newNum->setCoefficient(mult->evaluate(newerDenom->getNumerator, newNum->getCoefficient()));
 		this->numerator = newNum;
 		this->denominator = newerDenom->getDenominator();
@@ -255,8 +256,193 @@ void Rational::simplify(){
 		this->denominator = newDenom;
 
 	}
-	else if (this->numerator->getType() == "Pi"&&this->)
+	else if (this->numerator->getType() == "Pi"&&this->denominator->getType() == "Root"){
+		Pi* newNum = dynamic_cast<Pi*>(this->numerator);
+		Root* newDenom = dynamic_cast<Root*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Pi"&&this->denominator->getType() == "Expression"){
+
+	}
+	else if (this->numerator->getType() == "NatE"&&this->denominator->getType() == "Integer"){
+		NatE* newNum = dynamic_cast<NatE*>(this->numerator);
+		Integer* newDenom = dynamic_cast<Integer*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom);
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		this->numerator = newNum;
+		this->denominator = newCo->getDenominator();
+	}
+	else if (this->numerator->getType() == "NatE"&&this->denominator->getType() == "Rational"){
+		NatE* newNum = dynamic_cast<NatE*>(this->numerator);
+		Rational* newDenom = dynamic_cast<Rational*>(this->denominator);
+		Rational* newerDenom = new Rational(newDenom->getDenominator(), newDenom->getNumerator());
+		Multiply* mult = new Multiply();
+		newNum->setCoefficient(mult->evaluate(newerDenom, newNum->getCoefficient()));
+		this->numerator = newNum;
+		this->denominator = new Integer();
+	}
+	else if (this->numerator->getType() == "NatE" && this->denominator->getType() == "Pi"){
+		NatE* newNum = dynamic_cast<NatE*>(this->numerator);
+		Pi* newDenom = dynamic_cast<Pi*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "NatE"&&this->denominator->getType() == "Log"){
+		NatE* newNum = dynamic_cast<NatE*>(this->numerator);
+		Log* newDenom = dynamic_cast<Log*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "NatE"&& this->denominator->getType() == "Root"){
+		NatE* newNum = dynamic_cast<NatE*>(this->numerator);
+		Root* newDenom = dynamic_cast<Root*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "NatE"&& this->denominator->getType() == "Expression"){
+
+	}
+	else if (this->numerator->getType() == "Log"&&this->denominator->getType() == "Integer"){
+		Log* newNum = dynamic_cast<Log*>(this->numerator);
+		Integer* newDenom = dynamic_cast<Integer*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom);
+		newCo->simplify();
+		newNum->setCoefficient(newCo);
+		this->numerator = newNum;
+		this->denominator = new Integer();
+	}
+	else if (this->numerator->getType() == "Log"&& this->denominator->getType() == "Rational"){
+		Log* newNum = dynamic_cast<Log*>(this->numerator);
+		Rational* newDenom = dynamic_cast<Rational*>(this->denominator);
+		Rational* newerDenom = new Rational(newDenom->getDenominator(), newDenom->getNumerator());
+		Multiply* mult = new Multiply();
+		newNum->setCoefficient(mult->evaluate(newNum->getCoefficient(), newerDenom->getNumerator()));
+		this->numerator = newNum;
+		this->denominator = newerDenom->getDenominator();
+	}
+	else if (this->numerator->getType() == "Log"&& this->denominator->getType() == "Pi"){
+		Log* newNum = dynamic_cast<Log*>(this->numerator);
+		Pi* newDenom = dynamic_cast<Pi*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Log"&& this->denominator->getType() == "NatE"){
+		Log* newNum = dynamic_cast<Log*>(this->numerator);
+		NatE* newDenom = dynamic_cast<NatE*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Log"&&this->denominator->getType() == "Root"){
+		Log* newNum = dynamic_cast<Log*>(this->numerator);
+		Root* newDenom = dynamic_cast<Root*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator());
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Log"&& this->denominator->getType() == "Expression"){
+
+	}
+	//GO BACK AND CHANGE ROOT IN DENOMINATOR CASES!!!!!!!
+	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "Integer"){
+		Root* newNum = dynamic_cast<Root*>(this->numerator);
+		Integer* newDenom = dynamic_cast<Integer*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom);
+		newCo->simplify();
+		newNum->setCoefficient(newCo);
+		this->numerator = newNum;
+		this->denominator = new Integer();
+	}
+	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "Rational"){
+		Root* newNum = dynamic_cast<Root*>(this->numerator);
+		Rational* newDenom = dynamic_cast<Rational*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom);
+		newCo->simplify();
+		newNum->setCoefficient(newCo);
+		this->numerator = newNum;
+		this->denominator = new Integer();
+	}
+	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "Pi"){
+		Root* newNum = dynamic_cast<Root*>(this->numerator);
+		Pi* newDenom = dynamic_cast<Pi*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator);
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "NatE"){
+		Root* newNum = dynamic_cast<Root*>(this->numerator);
+		NatE* newDenom = dynamic_cast<NatE*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator);
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "Log"){
+		Root* newNum = dynamic_cast<Root*>(this->numerator);
+		Log* newDenom = dynamic_cast<Log*>(this->denominator);
+		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
+		newCo->simplify();
+		newNum->setCoefficient(newCo->getNumerator());
+		newDenom->setCoefficient(newCo->getDenominator);
+		this->numerator = newNum;
+		this->denominator = newDenom;
+	}
+	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "Expression"){
+	}
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Integer"){
+		//Distributes integer through expression; for loop should cover it.
+	}
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Rational"){
+		//distributes denominator by multiplication, does another Rational with the denominator on the bottom
+	}
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Pi"){
+		//i don't even knowwwww
+	}
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "NatE"){
+		//ewwwwwwww
+	}
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Log"){
+		//Why do I hate myself?
+	}
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Root"){
+		// *vomits*
+	}
+	
 }
+
 
 void Rational::leastCommonDenom(int& n, int& d){
 	for (int i = 0; i < d; i++){

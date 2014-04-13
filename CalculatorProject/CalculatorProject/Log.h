@@ -9,6 +9,7 @@ class Log :
 public:
 	Log();
 	Log(Number* base,Number* operand);
+	Log(Number* base, Number* operand, Number* coefficient, Number* exponent);
 	void simplify();
 	string getType();
 	~Log();

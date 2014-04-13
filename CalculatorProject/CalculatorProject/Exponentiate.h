@@ -8,7 +8,7 @@ class Exponentiate : public Operations
     public:
         Exponentiate();
         virtual ~Exponentiate();
-        Number* evaluate();
+        Number* evaluate(Number* a, Number* b);
 		void set;
 
     private:

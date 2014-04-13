@@ -10,6 +10,7 @@ public:
 	Root();
 	~Root();
 	Root(Number* operand, Number* root);
+	Root(Number* operand, Number* root, Number* coefficient);
 	string getType();
 	void simplify();
 	string toString();
