@@ -83,7 +83,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 		if (input[i]->getType() == "Operator"){
 
-			if (input[i]->getOperator() == "+"){
+			Operator* inputCast = dynamic_cast<Operator*> (input[i]);
+
+			if (inputCast->getOperator() == "+"){
 
 				Add addObject = Add();
 
@@ -98,7 +100,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			} // END + OPERATOR ===============================================================================
 
-			else if (input[i]->getOperator() == "-"){
+			else if (inputCast->getOperator() == "-"){
 
 				Subtract subtractObject = Subtract();
 
@@ -113,7 +115,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			} // END - OPERATOR ===============================================================================
 
-			else if (input[i]->getOperator() == "*"){
+			else if (inputCast->getOperator() == "*"){
 
 				Multiply multiplyObject = Multiply();
 
@@ -128,7 +130,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			} // END * OPERATOR ===============================================================================
 
-			else if (input[i]->getOperator() == "/"){
+			else if (inputCast->getOperator() == "/"){
 
 				Divide divideObject = Divide();
 
@@ -143,7 +145,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			} // END / OPERATOR ===============================================================================
 
-			else if (input[i]->getOperator() == "^"){
+			else if (inputCast->getOperator() == "^"){
 
 				Exponentiate exponentiateObject = Exponentiate();
 
