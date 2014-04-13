@@ -1,13 +1,4 @@
-#include <iostream>
-#include <stack>
-#include <vector>
-#include <string>
-#include <string.h>
-#include <stdio.h>
-#include <stdexcept>
-#include "Controller.h"
-
-using namespace std;
+#include "Includes.h"
 
 // Storage
 vector <string> inputExpression;	// To Store the input that user entered at first

@@ -7,10 +7,8 @@
 
 #ifndef RATIONAL_H_
 #define RATIONAL_H_
-#include "Number.h"
-#include "Integer.h"
-#include "Multiply.h"
-#include "Pi.h"
+
+#include "Includes.h"
 
 class Rational:public Number {
 public:

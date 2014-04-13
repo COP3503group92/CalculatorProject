@@ -1,11 +1,7 @@
 #ifndef OPERATIONS_H
 #define OPERATIONS_H
-#include <iostream>
-#include <string>
-#include <sstream>
-using namespace std;
-#include "Number.h"
-#include "Integer.h"
+
+#include "Includes.h"
 
 class Operations
 {

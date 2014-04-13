@@ -1,6 +1,10 @@
-#pragma once
-#include "Number.h"
+#ifndef OPERATOR_H_
+#define OPERATOR_H_
+
 #define TYPE_NAME "Operator"
+
+#include "Includes.h"
+
 class Operator :
 	public Number
 {
@@ -17,4 +21,6 @@ public:
 private:
 	string op;
 };
+
+#endif
 

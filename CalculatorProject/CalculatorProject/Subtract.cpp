@@ -1,6 +1,5 @@
 #include "Subtract.h"
 
-
 Subtract::Subtract()
 {
 }
@@ -9,7 +8,7 @@ Subtract::~Subtract()
 {
 }
 
-static Number Subtract::evaluate(Number* a, Number* b)
+Number* Subtract::evaluate(Number* a, Number* b)
 {
 //0) if both numbers are "integer"
 //1) If both numbers are "Rational"

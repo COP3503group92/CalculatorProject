@@ -7,8 +7,9 @@
 
 #ifndef SPECIALCASE_H_
 #define SPECIALCASE_H_
-#include "Number.h"
-using namespace std;
+
+#include "Includes.h"
+
 class SpecialCase:public Number {
 public:
 	virtual string toString();

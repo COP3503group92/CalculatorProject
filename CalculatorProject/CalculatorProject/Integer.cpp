@@ -1,6 +1,5 @@
 #include "Integer.h"
 
-
 Integer::Integer()
 {
 	value = 1;

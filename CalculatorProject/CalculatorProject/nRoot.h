@@ -1,10 +1,7 @@
 #ifndef nROOT_H
 #define nROOT_H
 
-#include <iostream>
-using namespace std;
-#include "Operations.h"
-
+#include "Includes.h"
 
 class nRoot : public Operations
 {

@@ -1,5 +1,8 @@
-#pragma once
-#include "SpecialCase.h"
+#ifndef ROOT_H_
+#define ROOT_H_
+
+#include "Includes.h"
+
 class Root :
 	public SpecialCase
 {
@@ -11,4 +14,6 @@ public:
 private:
 	const string typeName = "Root";
 };
+
+#endif
 

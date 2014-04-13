@@ -1,9 +1,7 @@
 #ifndef MULTIPLY_H
 #define MULTIPLY_H
 
-#include <iostream>
-using namespace std;
-#include "Operations.h"
+#include "Includes.h"
 
 class Multiply : public Operations
 {

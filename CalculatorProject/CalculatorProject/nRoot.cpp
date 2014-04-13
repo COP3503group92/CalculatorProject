@@ -8,7 +8,7 @@ nRoot::~nRoot()
 {
 }
 
-static Number nRoot::evaluate(Number* a, Number* b)
+Number* nRoot::evaluate(Number* a, Number* b)
 {
     string numTypeA = a->getNumerator()->getType();
     string denomTypeA = a->getDenomerator()->getType();

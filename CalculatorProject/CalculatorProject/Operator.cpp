@@ -1,6 +1,5 @@
 #include "Operator.h"
 
-
 Operator::Operator()
 {
 	this->op = "+";

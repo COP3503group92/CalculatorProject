@@ -1,5 +1,4 @@
 #include "Add.h"
-#include "Include.h"
 
 Add::Add()
 {
@@ -9,7 +8,7 @@ Add::~Add()
 {
 }
 
-static Number Add::evaluate(Number* a, Number* b)
+Number* Add::evaluate(Number* a, Number* b)
 {
 /0) All cases where "a" is an "Integer"
 //    -->if both numbers are "Integer"

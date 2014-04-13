@@ -1,7 +1,8 @@
-#pragma once
-#include "Number.h"
-#define TYPE_NAME "Integer"
-using namespace std;
+#ifndef INTEGER_H_
+#define INTEGER_H_
+
+#include "Includes.h"
+
 class Integer :
 	public Number
 {
@@ -20,4 +21,6 @@ public:
 private:
 	int value;
 };
+
+#endif
 

@@ -1,6 +1,5 @@
 #include "NatE.h"
 
-
 NatE::NatE()
 {
 }

@@ -8,7 +8,7 @@ Exponentiate::~Exponentiate()
 {
 }
 
-static Number Exponentiate::evaluate(Number* a, Number* b)
+Number* Exponentiate::evaluate(Number* a, Number* b)
 {
     string numTypeA = a->getNumerator()->getType();
     string denomTypeA = a->getDenomerator()->getType();

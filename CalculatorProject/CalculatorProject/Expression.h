@@ -1,5 +1,8 @@
-#pragma once
-#include "SpecialCase.h"
+#ifndef EXPRESSION_H_
+#define EXPRESSION_H_
+
+#include "Includes.h"
+
 class Expression :
 	public SpecialCase
 {
@@ -12,3 +15,4 @@ private:
 	const string typeName = "Expression";
 };
 
+#endif

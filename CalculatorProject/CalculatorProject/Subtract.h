@@ -1,10 +1,7 @@
 #ifndef SUBTRACT_H
 #define SUBTRACT_H
 
-#include <iostream>
-using namespace std;
-#include "Operations.h"
-
+#include "Includes.h"
 
 class Subtract : public Operations
 {
