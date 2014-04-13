@@ -18,7 +18,7 @@ private:
 	Number* coefficient;
 	Number* power;
 	bool negative;
-	const string typeName = "Pi"
+	const string typeName = "Pi";
 
 };
 

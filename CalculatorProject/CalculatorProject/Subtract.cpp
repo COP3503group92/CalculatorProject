@@ -5,11 +5,15 @@ Subtract::Subtract()
 {
 }
 
+Subtract::Subtract(Number* a, Number* b){
+	this->a = a;
+	this->b = b;
+}
 Subtract::~Subtract()
 {
 }
 
-static Number Subtract::evaluate(Number* a, Number* b)
+Number* Subtract::evaluate()
 {
 //0) if both numbers are "integer"
 //1) If both numbers are "Rational"

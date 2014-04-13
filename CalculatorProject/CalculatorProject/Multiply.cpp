@@ -11,8 +11,9 @@ Multiply::~Multiply()
 
 
 
-static Number Multiply::evaluate(Number* a, Number* b)
+ Number* Multiply::evaluate()
 {
+	 /*
     string numTypeA = a->getNumerator()->getType();
     string denomTypeA = a->getDenomerator()->getType();
     string numTypeB = b->getNumerator()->getType();
@@ -48,7 +49,8 @@ static Number Multiply::evaluate(Number* a, Number* b)
 
   }
   return product;
-
+  */
+	 return new Integer();
 
 
 }

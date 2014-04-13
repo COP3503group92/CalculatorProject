@@ -24,6 +24,7 @@ public:
 	Number* getDenominator();
 	void setNumerator(Number*);
 	void setDenominator(Number*);
+	string toString();
 	
 private:
 	Number* numerator;
