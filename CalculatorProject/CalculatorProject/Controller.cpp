@@ -98,7 +98,67 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 			} // END + OPERATOR ===============================================================================
 
-		}
+			else if (input[i]->getOperator() == "-"){
+
+				Subtract subtractObject = Subtract();
+
+				Number* result = subtractObject.evaluate(input[i - 2], input[i - 1]);
+
+				input.erase(input.begin() + i - 1);
+				input.erase(input.begin() + i - 1);
+
+				input[i - 2] = result;
+
+				i = 0;
+
+			} // END - OPERATOR ===============================================================================
+
+			else if (input[i]->getOperator() == "*"){
+
+				Multiply multiplyObject = Multiply();
+
+				Number* result = multiplyObject.evaluate(input[i - 2], input[i - 1]);
+
+				input.erase(input.begin() + i - 1);
+				input.erase(input.begin() + i - 1);
+
+				input[i - 2] = result;
+
+				i = 0;
+
+			} // END * OPERATOR ===============================================================================
+
+			else if (input[i]->getOperator() == "/"){
+
+				Divide divideObject = Divide();
+
+				Number* result = divideObject.evaluate(input[i - 2], input[i - 1]);
+
+				input.erase(input.begin() + i - 1);
+				input.erase(input.begin() + i - 1);
+
+				input[i - 2] = result;
+
+				i = 0;
+
+			} // END / OPERATOR ===============================================================================
+
+			else if (input[i]->getOperator() == "^"){
+
+				Exponentiate exponentiateObject = Exponentiate();
+
+				Number* result = exponentiateObject.evaluate(input[i - 2], input[i - 1]);
+
+				input.erase(input.begin() + i - 1);
+				input.erase(input.begin() + i - 1);
+
+				input[i - 2] = result;
+
+				i = 0;
+
+			} // END ^ OPERATOR ===============================================================================
+
+		} // END OPERATOR CHECK SECTION =======================================================================
 	}
 }
 
