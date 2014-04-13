@@ -1,17 +1,14 @@
 #ifndef SUBTRACT_H
 #define SUBTRACT_H
 
-#include <iostream>
-using namespace std;
-#include "Operations.h"
-
+#include "Includes.h"
 
 class Subtract : public Operations
 {
     public:
         Subtract();
         virtual ~Subtract();
-        Number* evaluate();
+		Number* evaluate(Number* a, Number* b);
     protected:
     private:
         string cl = "-";
