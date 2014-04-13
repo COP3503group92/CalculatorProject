@@ -8,6 +8,7 @@ class Pi :
 {
 public:
 	Pi();
+	Pi(Number* coefficient, Number* exponent);
 	Pi(bool negative);
 	~Pi();
 	void simplify();

@@ -8,6 +8,7 @@ class NatE :
 {
 public:
 	NatE();
+	NatE(Number* coefficient, Number* exponent);
 	NatE(bool negative);
 	~NatE();
 	string getType();

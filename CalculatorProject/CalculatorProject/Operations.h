@@ -7,7 +7,7 @@ class Operations
 {
 public:
         virtual ~Operations();
-        virtual Number* evaluate() = 0;
+        virtual Number* evaluate(Number*a, Number* b) = 0;
 
 };
 
