@@ -69,9 +69,6 @@
     <ClCompile Include="Exponentiate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="nRoot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Add.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Exponentiate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nRoot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Add.h">

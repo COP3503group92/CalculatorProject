@@ -74,7 +74,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Multiply.cpp" />
     <ClCompile Include="NatE.cpp" />
-    <ClCompile Include="nRoot.cpp" />
     <ClCompile Include="Number.cpp" />
     <ClCompile Include="Operations.cpp" />
     <ClCompile Include="Operator.cpp" />
@@ -95,7 +94,6 @@
     <ClInclude Include="Log.h" />
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="NatE.h" />
-    <ClInclude Include="nRoot.h" />
     <ClInclude Include="Number.h" />
     <ClInclude Include="Includes.h" />
     <ClInclude Include="Operations.h" />

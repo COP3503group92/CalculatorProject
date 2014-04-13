@@ -19,11 +19,11 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		int base = aCast->getValue();
 		int exponent = bCast->getValue();
 
-		Number* result = new Integer(pow(base, exponent));
+		Number* result = new Integer((int)pow(base, exponent));
 
 		return result;
 
-	}
+	} // END INTEGER ^ INTEGER
 	else if (a->getType == "Integer" && b->getType() == "Rational"){
 
 		Integer* aCast = dynamic_cast<Integer*>(a);
@@ -37,14 +37,14 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		int base = aCast->getValue();
 		int exponent = exponentCast->getValue();
 
-		Number* root = new Integer(pow(base, exponent));
+		Number* root = new Integer((int)pow(base, exponent));
 
 		Number* result = new Root(nNumber, root);
 		result->simplify();
 
 		return result;
 
-	}
+	} // END INTEGER ^ RATIONAL
 	else if (a->getType == "Rational" && b->getType == "Integer"){
 
 		Rational* aCast = dynamic_cast<Rational*>(a);
@@ -53,215 +53,116 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		Number* numeratorInput = aCast->getNumerator();
 		Number* denomenatorInput = aCast->getDenominator();
 
-		Number* numerator;
-		Number* denomenator;
+		Number* numerator = evaluate(numeratorInput, b);
+		Number* denomenator = evaluate(denomenatorInput, b);
 
-		if (numeratorInput->getType() == "Integer"){
+		Number* result = new Rational(numerator, denomenator);
 
-			Integer* numeratorInputCast = dynamic_cast<Integer*>(numeratorInput);
-			numerator = new Integer(pow(numeratorInputCast->getValue(), bCast->getValue()));
+	} // END RATIONAL ^ INTEGER
+	else if (a->getType() == "Rational" && b->getType() == "Rational"){
+	
+		
+	
+	} // END RATIONAL ^ RATIONAL
+	else if (a->getType() == "NatE" && b->getType() == "Integer"){
 
-		}
-		else if (numeratorInput->getType() == "NatE"){
+		NatE* aCast = dynamic_cast<NatE*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
 
-			NatE* numeratorInputCast = dynamic_cast<NatE*>(numeratorInput);
+		Number* coefficientNumber = aCast->getCoefficient();
 
-			Number* coefficientNumber = numeratorInputCast->getCoefficient();
-			
-			Number* coefficient;
+		Number* coefficient;
 
-			if (coefficientNumber->getType() == "Integer"){
+		if (coefficientNumber->getType() == "Integer"){
 
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
 
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			numerator = new NatE(coefficient, b);
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
 
 		}
-		else if (numeratorInput->getType() == "Pi"){
+		else {
 
-			Pi* numeratorInputCast = dynamic_cast<Pi*>(numeratorInput);
-
-			Number* coefficientNumber = numeratorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			numerator = new Pi(coefficient, b);
-
-		}
-		else if (numeratorInput->getType() == "Log"){
-
-			Log* numeratorInputCast = dynamic_cast<Log*>(numeratorInput);
-
-			Number* coefficientNumber = numeratorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			numerator = new Log(numeratorInputCast->getBase(), numeratorInputCast->getOperand(), coefficient, bCast);
-
-		}
-		else if (numeratorInput->getType() == "Root"){
-
-			Root* numeratorInputCast = dynamic_cast<Root*>(numeratorInput);
-
-			Number* coefficientNumber = numeratorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			numerator = new Root(numeratorInputCast->getOperand(), numeratorInputCast->getRoot(), coefficient, b);
+			coefficient = evaluate(coefficientNumber, b);
 
 		}
 
-		if (denomenatorInput->getType() == "Integer"){
+		Number* result = new NatE(coefficient, b);
 
-			Integer* denomenatorInputCast = dynamic_cast<Integer*>(denomenatorInput);
-			denomenator = new Integer(pow(denomenatorInputCast->getValue(), bCast->getValue()));
+	} // END NATE ^ INTEGER
+	else if (a->getType() == "Pi" && b->getType() == "Integer"){
 
-		}
-		else if (denomenatorInput->getType() == "NatE"){
+		Pi* aCast = dynamic_cast<Pi*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
 
-			NatE* denomenatorInputCast = dynamic_cast<NatE*>(denomenatorInput);
+		Number* coefficientNumber = aCast->getCoefficient();
 
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
+		Number* coefficient;
 
-			Number* coefficient;
+		if (coefficientNumber->getType() == "Integer"){
 
-			if (coefficientNumber->getType() == "Integer"){
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
 
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new NatE(coefficient, b);
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
 
 		}
-		else if (denomenatorInput->getType() == "Pi"){
+		else {
 
-			Pi* denomenatorInputCast = dynamic_cast<Pi*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new Pi(coefficient, b);
-
-		}
-		else if (denomenatorInput->getType() == "Log"){
-
-			Log* denomenatorInputCast = dynamic_cast<Log*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new Log(denomenatorInputCast->getBase(), denomenatorInputCast->getOperand(), coefficient, bCast);
-
-		}
-		else if (denomenatorInput->getType() == "Root"){
-
-			Root* denomenatorInputCast = dynamic_cast<Root*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new Root(denomenatorInputCast->getOperand(), denomenatorInputCast->getRoot(), coefficient, b);
+			coefficient = evaluate(coefficientNumber, b);
 
 		}
 
-	}
+		Number* result = new Pi(coefficient, b);
+
+	} // END PI ^ INTEGER
+	else if (a->getType() == "Log" && b->getType() == "Integer"){
+
+		Log* aCast = dynamic_cast<Log*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		Number* coefficientNumber = aCast->getCoefficient();
+
+		Number* coefficient;
+
+		if (coefficientNumber->getType() == "Integer"){
+
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
+
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
+
+		}
+		else {
+
+			coefficient = evaluate(coefficientNumber, b);
+
+		}
+
+		Number* result = new Log(aCast->getBase(), aCast->getOperand(), coefficient, b);
+
+	} // END LOG ^ INTEGER
+	else if (a->getType() == "Root" && b->getType() == "Integer"){
+
+		Root* aCast = dynamic_cast<Root*>(a);
+		Integer* bCast = dynamic_cast<Integer*>(b);
+
+		Number* coefficientNumber = aCast->getCoefficient();
+
+		Number* coefficient;
+
+		if (coefficientNumber->getType() == "Integer"){
+
+			Integer* coefficientNumberCast = dynamic_cast<Integer*>(coefficientNumber);
+
+			coefficient = new Integer((int)pow(coefficientNumberCast->getValue(), bCast->getValue()));
+
+		}
+		else {
+
+			coefficient = evaluate(coefficientNumber, b);
+
+		}
+
+		Number* result = new Root(aCast->getOperand(), aCast->getRoot(), coefficient, b);
+
+	} // END ROOT ^ INTEGER
 
 }
