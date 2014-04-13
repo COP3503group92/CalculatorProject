@@ -5,8 +5,6 @@
 #include <vector>
 #include <sstream>
 
-using namespace std;
-
 ShuntingYard::ShuntingYard()
 {
 	string s;

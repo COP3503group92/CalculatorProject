@@ -1,5 +1,8 @@
-#pragma once
-#include "SpecialCase.h"
+#ifndef LOG_H_
+#define LOG_H_
+
+#include "Includes.h"
+
 class Log :
 	public SpecialCase
 {
@@ -24,4 +27,5 @@ private:
 	Number* operand;
 	const string typeName = "Log";
 };
+#endif
 

@@ -1,19 +1,14 @@
 #include "Subtract.h"
 
-
 Subtract::Subtract()
 {
 }
 
-Subtract::Subtract(Number* a, Number* b){
-	this->a = a;
-	this->b = b;
-}
 Subtract::~Subtract()
 {
 }
 
-Number* Subtract::evaluate()
+Number* Subtract::evaluate(Number* a, Number* b)
 {
 //0) if both numbers are "integer"
 //1) If both numbers are "Rational"

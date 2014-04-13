@@ -5,7 +5,8 @@
  *      Author: Michael Kemerer
  */
 
-#include "Includes.h"
+#include "Rational.h"
+
 
 Rational::Rational(){
 	this->numerator = new Integer(1);

@@ -1,5 +1,8 @@
-#pragma once
-#include "SpecialCase.h"
+#ifndef ROOT_H_
+#define ROOT_H_
+
+#include "Includes.h"
+
 class Root :
 	public SpecialCase
 {
@@ -22,4 +25,6 @@ private:
 	Number* coefficient;
 	const string typeName = "Root";
 };
+
+#endif
 

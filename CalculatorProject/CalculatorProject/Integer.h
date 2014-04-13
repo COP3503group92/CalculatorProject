@@ -1,6 +1,8 @@
-#pragma once
-#include "Number.h"
-using namespace std;
+#ifndef INTEGER_H_
+#define INTEGER_H_
+
+#include "Includes.h"
+
 class Integer :
 	public Number
 {
@@ -21,4 +23,4 @@ private:
 	int value;
 	const string typeName = "Integer";
 };
-
+#endif

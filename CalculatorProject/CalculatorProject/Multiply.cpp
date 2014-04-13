@@ -1,6 +1,5 @@
 #include "Multiply.h"
 
-
 Multiply::Multiply()
 {
 }
@@ -11,9 +10,8 @@ Multiply::~Multiply()
 
 
 
- Number* Multiply::evaluate()
+Number* Multiply::evaluate(Number* a, Number* b)
 {
-	 /*
     string numTypeA = a->getNumerator()->getType();
     string denomTypeA = a->getDenomerator()->getType();
     string numTypeB = b->getNumerator()->getType();
@@ -49,8 +47,7 @@ Multiply::~Multiply()
 
   }
   return product;
-  */
-	 return new Integer();
+
 
 
 }

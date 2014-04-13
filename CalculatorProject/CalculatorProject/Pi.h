@@ -1,5 +1,8 @@
-#pragma once
-#include "SpecialCase.h"
+#ifndef PI_H_
+#define PI_H_
+
+#include "Includes.h"
+
 class Pi :
 	public SpecialCase
 {
@@ -21,4 +24,7 @@ private:
 	const string typeName = "Pi";
 
 };
+
+
+#endif
 

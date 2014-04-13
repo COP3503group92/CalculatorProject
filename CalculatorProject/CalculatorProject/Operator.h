@@ -1,5 +1,8 @@
-#pragma once
-#include "Number.h"
+#ifndef OPERATOR_H_
+#define OPERATOR_H_
+
+#include "Includes.h"
+
 class Operator :
 	public Number
 {
@@ -19,3 +22,4 @@ private:
 	const string typeName = "Operator";
 };
 
+#endif

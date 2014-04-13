@@ -1,6 +1,5 @@
 #include "Divide.h"
 
-
 Divide::Divide()
 {
 }
@@ -9,7 +8,7 @@ Divide::~Divide()
 {
 }
 
-static Number Divide::evaluate(Number* a, Number* b)
+Number* Divide::evaluate(Number* a, Number* b)
 {
     string numTypeA = a->getNumerator()->getType();
     string denomTypeA = a->getDenomerator()->getType();

@@ -7,8 +7,9 @@
 
 #ifndef NUMBER_H_
 #define NUMBER_H_
-#include <string>
-using namespace std;
+
+#include "Includes.h"
+
 class Number {
 public:
 	virtual ~Number();
@@ -19,5 +20,4 @@ public:
 private:
 	string typeName;
 };
-
 #endif /* NUMBER_H_ */

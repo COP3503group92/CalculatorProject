@@ -1,5 +1,8 @@
-#pragma once
-#include "SpecialCase.h"
+#ifndef NATE_H_
+#define NATE_H_
+
+#include "Includes.h"
+
 class NatE :
 	public SpecialCase
 {
@@ -20,3 +23,4 @@ private:
 	const string typeName = "NatE";
 };
 
+#endif

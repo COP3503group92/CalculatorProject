@@ -1,8 +1,4 @@
 #include "Operations.h"
-#include "Number.h"
-
-
-using namespace std;
 
 Operations::~Operations()
 {
