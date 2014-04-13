@@ -11,6 +11,7 @@
 #include <vector>
 #include <stdexcept>
 #include <stack>
+#include <cmath>
 
 // OPERATIONS
 #include "Operations.h"
@@ -19,7 +20,6 @@
 #include "Multiply.h"
 #include "Divide.h"
 #include "Exponentiate.h"
-#include "nRoot.h"
 
 // NUMBER
 #include "Number.h"
