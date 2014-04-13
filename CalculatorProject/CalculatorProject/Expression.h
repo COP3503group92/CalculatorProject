@@ -14,5 +14,4 @@ public:
 private:
 	const string typeName = "Expression";
 };
-
 #endif
