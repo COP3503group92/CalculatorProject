@@ -125,11 +125,8 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
 
 			}
-			else {
 
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
+			// OTHER COEFFICIENT TYPES HERE
 
 			numerator = new Log(numeratorInputCast->getBase(), numeratorInputCast->getOperand(), coefficient, bCast);
 
@@ -149,13 +146,10 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
 
 			}
-			else {
 
-				coefficient = evaluate(coefficientNumber, b);
+			// OTHER COEFFICIENT TYPES HERE
 
-			}
-
-			numerator = new Root(numeratorInputCast->getOperand(), numeratorInputCast->getRoot(), coefficient, b);
+			numerator = new Root(numeratorInputCast->getOperand(), numeratorInputCast->getRoot(), coefficient, bCast);
 
 		}
 
@@ -163,102 +157,6 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 			Integer* denomenatorInputCast = dynamic_cast<Integer*>(denomenatorInput);
 			denomenator = new Integer(pow(denomenatorInputCast->getValue(), bCast->getValue()));
-
-		}
-		else if (denomenatorInput->getType() == "NatE"){
-
-			NatE* denomenatorInputCast = dynamic_cast<NatE*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new NatE(coefficient, b);
-
-		}
-		else if (denomenatorInput->getType() == "Pi"){
-
-			Pi* denomenatorInputCast = dynamic_cast<Pi*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new Pi(coefficient, b);
-
-		}
-		else if (denomenatorInput->getType() == "Log"){
-
-			Log* denomenatorInputCast = dynamic_cast<Log*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new Log(denomenatorInputCast->getBase(), denomenatorInputCast->getOperand(), coefficient, bCast);
-
-		}
-		else if (denomenatorInput->getType() == "Root"){
-
-			Root* denomenatorInputCast = dynamic_cast<Root*>(denomenatorInput);
-
-			Number* coefficientNumber = denomenatorInputCast->getCoefficient();
-
-			Number* coefficient;
-
-			if (coefficientNumber->getType() == "Integer"){
-
-				Integer* coefficientNumber = dynamic_cast<Integer*>(coefficientNumber);
-
-				coefficient = new Integer(pow(coefficientNumber->getValue(), bCast->getValue()));
-
-			}
-			else {
-
-				coefficient = evaluate(coefficientNumber, b);
-
-			}
-
-			denomenator = new Root(denomenatorInputCast->getOperand(), denomenatorInputCast->getRoot(), coefficient, b);
 
 		}
 
