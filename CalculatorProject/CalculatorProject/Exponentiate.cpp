@@ -61,7 +61,16 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 	} // END RATIONAL ^ INTEGER
 	else if (a->getType() == "Rational" && b->getType() == "Rational"){
 	
-		
+		Rational* aCast = dynamic_cast<Rational*>(a);
+		Rational* bCast = dynamic_cast<Rational*>(b);
+
+		Number* numerator = evaluate(aCast->getNumerator(), bCast->getNumerator());
+		Number* denomenator = evaluate(aCast->getDenominator(), bCast->getDenominator());
+
+		Number* result = new Rational(numerator, denomenator);
+
+		return result;
+
 	
 	} // END RATIONAL ^ RATIONAL
 	else if (a->getType() == "NatE" && b->getType() == "Integer"){
@@ -164,5 +173,33 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		Number* result = new Root(aCast->getOperand(), aCast->getRoot(), coefficient, b);
 
 	} // END ROOT ^ INTEGER
+	else if (a->getType() == "NatE" && b->getType() == "Rational"){
+
+		NatE* aCast = dynamic_cast<NatE*>(a);
+		aCast->setExponent(b);
+		return aCast;
+
+	} // END NATE ^ RATIONAL
+	else if (a->getType() == "Pi" && b->getType() == "Pi"){
+
+		Pi* aCast = dynamic_cast<Pi*>(a);
+		aCast->setExponent(b);
+		return aCast;
+
+	} // END PI ^ RATIONAL
+	else if (a->getType() == "Log" && b->getType() == "Rational"){
+
+		Log* aCast = dynamic_cast<Log*>(a);
+		aCast->setExponent(b);
+		return aCast;
+
+	} // END LOG ^ RATIONAL
+	else if (a->getType() == "Root" && b->getType() == "Rational"){
+
+		Root* aCast = dynamic_cast<Root*>(a);
+		aCast->setExponent(b);
+		return aCast;
+
+	} // END NATE ^ RATIONAL
 
 }

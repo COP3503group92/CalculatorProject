@@ -1,5 +1,5 @@
-#ifndef MULTIPLY_H_
-#define MULTIPLY_H_
+#ifndef MULTIPLY_H
+#define MULTIPLY_H
 
 #include "Includes.h"
 
@@ -8,7 +8,7 @@ class Multiply : public Operations
     public:
         Multiply();
         virtual ~Multiply();
-        Number* evaluate(Number* a, Number* b);
+		Number* evaluate(Number* a, Number* b);
     protected:
     private:
         string cl = "*";

@@ -8,7 +8,7 @@ class Subtract : public Operations
     public:
         Subtract();
         virtual ~Subtract();
-        Number* evaluate(Number* a, Number* b);
+		Number* evaluate(Number* a, Number* b);
     protected:
     private:
         string cl = "-";
