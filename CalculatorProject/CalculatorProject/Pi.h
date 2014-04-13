@@ -11,7 +11,7 @@ public:
 	Pi(bool negative);
 	~Pi();
 	void simplify();
-	Number* getCoefficent();
+	Number* getCoefficient();
 	void setCoefficient(Number* coefficient);
 	string getType();
 	Number* getExponent();
@@ -21,9 +21,10 @@ private:
 	Number* coefficient;
 	Number* power;
 	bool negative;
-	const string typeName = "Pi"
+	const string typeName = "Pi";
 
 };
+
 
 #endif
 
