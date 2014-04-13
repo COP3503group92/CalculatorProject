@@ -20,7 +20,7 @@ public:
 	
 private:
 	Number* coefficient;
-	Number* power;
+	Number* exponent;
 	bool negative;
 	const string typeName = "Pi";
 

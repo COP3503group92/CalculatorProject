@@ -10,7 +10,7 @@ public:
 	Root();
 	~Root();
 	Root(Number* operand, Number* root);
-	Root(Number* operand, Number* root, Number* coefficient);
+	Root(Number* operand, Number* root, Number* coefficient, Number* exponent);
 	string getType();
 	void simplify();
 	string toString();
@@ -24,6 +24,7 @@ private:
 	Number* operand;
 	Number* root;
 	Number* coefficient;
+	Number* exponent;
 	const string typeName = "Root";
 };
 
