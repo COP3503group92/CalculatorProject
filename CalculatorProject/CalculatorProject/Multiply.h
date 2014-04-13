@@ -3,7 +3,7 @@
 
 #include <iostream>
 using namespace std;
-#include <Operations.h>
+#include "Operations.h"
 
 
 class Multiply : public Operations
@@ -11,7 +11,7 @@ class Multiply : public Operations
     public:
         Multiply();
         virtual ~Multiply();
-        Number evaluate();
+        Number* evaluate();
     protected:
     private:
         string cl = "*";

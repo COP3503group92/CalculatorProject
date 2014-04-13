@@ -3,7 +3,7 @@
 
 #include <iostream>
 using namespace std;
-#include <Operations.h>
+#include "Operations.h"
 
 
 
@@ -12,7 +12,7 @@ class Add : public Operations
     public:
         Add();
         virtual ~Add();
-        Number evaluate();
+        Number* evaluate();
     protected:
     private:
         string cl = "+";

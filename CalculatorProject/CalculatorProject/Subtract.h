@@ -3,7 +3,7 @@
 
 #include <iostream>
 using namespace std;
-#include <Operations.h>
+#include "Operations.h"
 
 
 class Subtract : public Operations
@@ -11,7 +11,7 @@ class Subtract : public Operations
     public:
         Subtract();
         virtual ~Subtract();
-        Number evaluate();
+        Number* evaluate();
     protected:
     private:
         string cl = "-";
