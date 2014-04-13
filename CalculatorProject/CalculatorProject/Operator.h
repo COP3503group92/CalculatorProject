@@ -1,10 +1,5 @@
-#ifndef OPERATOR_H_
-#define OPERATOR_H_
-
-#define TYPE_NAME "Operator"
-
-#include "Includes.h"
-
+#pragma once
+#include "Number.h"
 class Operator :
 	public Number
 {
@@ -18,9 +13,9 @@ public:
 	//To appease the Number god
 	void simplify();
 	~Operator();
+	string toString();
 private:
 	string op;
+	const string typeName = "Operator";
 };
-
-#endif
 

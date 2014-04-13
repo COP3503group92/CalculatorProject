@@ -9,9 +9,13 @@ class Root :
 public:
 	Root();
 	~Root();
-	string getType;
+	Root(Number* operand, Number* root);
+	string getType();
 	void simplify();
+	string toString();
 private:
+	Number* operand;
+	Number* root;
 	const string typeName = "Root";
 };
 

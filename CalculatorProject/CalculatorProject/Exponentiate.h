@@ -8,7 +8,8 @@ class Exponentiate : public Operations
     public:
         Exponentiate();
         virtual ~Exponentiate();
-        Number evaluate();
+        Number* evaluate();
+		void set
     protected:
     private:
         string cl = "^";

@@ -1,8 +1,6 @@
-#ifndef INTEGER_H_
-#define INTEGER_H_
-
-#include "Includes.h"
-
+#pragma once
+#include "Number.h"
+using namespace std;
 class Integer :
 	public Number
 {
@@ -18,9 +16,9 @@ public:
 	//To appease the Number god
 	void simplify();
 	string getType();
+	string toString();
 private:
 	int value;
+	const string typeName = "Integer";
 };
-
-#endif
 

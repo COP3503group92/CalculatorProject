@@ -29,5 +29,5 @@ void Integer::simplify(){
 }
 
 string Integer::getType(){
-	return TYPE_NAME;
+	return typeName;
 }

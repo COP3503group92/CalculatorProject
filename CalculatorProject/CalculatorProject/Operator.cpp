@@ -15,13 +15,16 @@ Operator::Operator(string oper){
 }
 
 string Operator::getOperator(){
-	return op;
+	return this->op;
 }
 
 string Operator::getType(){
-	return TYPE_NAME;
+	return typeName;
 }
 
+string Operator::toString(){
+	return this->op;
+}
 void Operator::simplify(){
 
 }

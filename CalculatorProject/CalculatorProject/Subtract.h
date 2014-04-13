@@ -7,10 +7,13 @@ class Subtract : public Operations
 {
     public:
         Subtract();
+		Subtract(Number* a, Number* b);
         virtual ~Subtract();
-        Number evaluate();
+        Number* evaluate();
     protected:
     private:
+		Number* a;
+		Number* b;
         string cl = "-";
 };
 
