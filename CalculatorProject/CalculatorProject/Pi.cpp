@@ -32,7 +32,8 @@ void Pi::simplify(){
 	if (this->coefficient->getType() == "Rational"){
 		Rational* newCo = dynamic_cast<Rational*>(this->coefficient);
 		if (newCo->getNumerator()->getType() == "Pi"){
-			Multiply
+			Multiply* mult = new Multiply();
+
 		}
 	}
 }
