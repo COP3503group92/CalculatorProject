@@ -1,6 +1,5 @@
 #pragma once
 #include "Number.h"
-#define TYPE_NAME "Integer"
 using namespace std;
 class Integer :
 	public Number
@@ -17,7 +16,9 @@ public:
 	//To appease the Number god
 	void simplify();
 	string getType();
+	string toString();
 private:
 	int value;
+	const string typeName = "Integer";
 };
 

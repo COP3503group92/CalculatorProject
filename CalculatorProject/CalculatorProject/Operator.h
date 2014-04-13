@@ -1,6 +1,5 @@
 #pragma once
 #include "Number.h"
-#define TYPE_NAME "Operator"
 class Operator :
 	public Number
 {
@@ -14,7 +13,9 @@ public:
 	//To appease the Number god
 	void simplify();
 	~Operator();
+	string toString();
 private:
 	string op;
+	const string typeName = "Operator";
 };
 

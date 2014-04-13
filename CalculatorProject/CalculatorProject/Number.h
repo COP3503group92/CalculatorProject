@@ -12,10 +12,10 @@ using namespace std;
 class Number {
 public:
 	virtual ~Number();
-	//Considering returning a Number* for below. Let Rationals with Pi numerators
-	//become Pis with rational coefficients.
+	//May need to consider having an == overload for every class.
 	virtual void simplify(); 
 	virtual string getType();
+	virtual string toString();
 private:
 	string typeName;
 };
