@@ -17,9 +17,11 @@ public:
 	Number* getRoot();
 	Number* getCoefficient();
 	Number* getOperand();
+	Number* getexponent();
 	void setRoot(Number* root);
 	void setOperand(Number* oper);
 	void setCoefficient(Number* coef);
+	void setExponent(Number* exp);
 private:
 	Number* operand;
 	Number* root;

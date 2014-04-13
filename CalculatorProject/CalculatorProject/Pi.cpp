@@ -50,11 +50,23 @@ void Pi::simplify(){
 		
 	}
 }
-Number* Pi::getCoefficient(){
 
+Number* Pi::getCoefficient(){
+	return this->coefficient;
 }
-void setCoefficient(Number* coefficient);
-string getType();
-Number* getExponent();
-void setExponent(Number* exponent);
+
+void Pi::setCoefficient(Number* coefficient){
+	this->coefficient = coefficient;
+}
+
+string Pi::getType(){
+	return this->typeName;
+}
+
+Number* Pi::getExponent(){
+	return this->exponent;
+}
+void Pi::setExponent(Number* exponent){
+	this->exponent = exponent;
+}
 
