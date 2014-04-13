@@ -32,9 +32,29 @@ void Pi::simplify(){
 	if (this->coefficient->getType() == "Rational"){
 		Rational* newCo = dynamic_cast<Rational*>(this->coefficient);
 		if (newCo->getNumerator()->getType() == "Pi"){
-			Multiply* mult = new Multiply();
-
+			Pi* newPi = dynamic_cast<Pi*>(newCo->getNumerator());
+			Add* add = new Add();
+			this->exponent = add->evaluate(this->exponent, newPi->getExponent());
+			newCo->setNumerator(newPi->getCoefficient());
+			newCo->simplify();
+			this->coefficient = newCo;
 		}
+		else if (newCo->getDenominator()->getType() == "Pi"){
+			Pi* newPi = dynamic_cast<Pi*>(newCo->getDenominator());
+			Subtract* sub = new Subtract();
+			this->exponent = sub->evaluate(this->exponent, newPi->getExponent());
+			newCo->setDenominator(newPi->getCoefficient());
+			newCo->simplify();
+			this->coefficient = newCo;
+		}
+		
 	}
 }
+Number* Pi::getCoefficient(){
+
+}
+void setCoefficient(Number* coefficient);
+string getType();
+Number* getExponent();
+void setExponent(Number* exponent);
 

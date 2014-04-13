@@ -15,6 +15,7 @@ public:
 	vector<Number*> getExpression();
 	void setExpression(vector<Number*> expr);
 private:
+	Number* coefficent;
 	vector<Number*> expr;
 	const string typeName = "Expression";
 };
