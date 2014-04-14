@@ -28,5 +28,6 @@ private:
 	Number* operand;
 	const string typeName = "Log";
 };
+
 #endif
 
