@@ -65,7 +65,7 @@ void Root::simplify(){
 				}
 			}
 		}
-		if (op->getExponent->getType() == "Integer"&& this->root->getType() == "Integer"){
+		if (op->getExponent()->getType() == "Integer"&& this->root->getType() == "Integer"){
 			Integer* exp = dynamic_cast<Integer*>(op->getExponent());
 			Integer* rt = dynamic_cast<Integer*>(this->root);
 			if (exp->getValue() % rt->getValue()==0){
@@ -95,7 +95,7 @@ void Root::simplify(){
 				}
 			}
 		}
-		if (op->getExponent->getType() == "Integer"&& this->root->getType()== "Integer"){
+		if (op->getExponent()->getType() == "Integer"&& this->root->getType()== "Integer"){
 			Integer* exp = dynamic_cast<Integer*>(op->getExponent());
 			Integer* rt = dynamic_cast<Integer*>(this->root);
 			if (exp->getValue() % rt->getValue() == 0){
@@ -125,7 +125,7 @@ void Root::simplify(){
 				}
 			}
 		}
-		if (op->getExponent->getType() == "Integer"&& this->root->getType() == "Integer"){
+		if (op->getExponent()->getType() == "Integer"&& this->root->getType() == "Integer"){
 			Integer* exp = dynamic_cast<Integer*>(op->getExponent());
 			Integer* rt = dynamic_cast<Integer*>(this->root);
 			if (exp->getValue() % rt->getValue() == 0){
