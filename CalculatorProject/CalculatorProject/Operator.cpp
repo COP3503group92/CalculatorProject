@@ -26,7 +26,15 @@ string Operator::toString(){
 	return this->op;
 }
 void Operator::simplify(){
-
+}
+bool Operator::operator==(Number* a){
+	if (a->getType() == "Operator"){
+		Operator* b = dynamic_cast<Operator*>(a);
+		if (b->getOperator() == this->op){
+			return true;
+		}
+	}
+	return false;
 }
 
 

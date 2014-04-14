@@ -31,3 +31,16 @@ void Integer::simplify(){
 string Integer::getType(){
 	return typeName;
 }
+bool Integer::operator==(Number* a){
+	if (a->getType() == "Integer"){
+		Integer* in = dynamic_cast<Integer*>(a);
+		if (in->getValue() == this->value){
+			return true;
+		}
+	}
+	return false;
+}
+string Integer::toString(){
+	string str = to_string(this->value);
+	return str;
+}

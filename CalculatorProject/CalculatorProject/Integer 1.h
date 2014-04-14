@@ -1,11 +1,6 @@
 #pragma once
 
-#include "Number.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class Integer :
 	public Number
@@ -28,3 +23,5 @@ private:
 	int value;
 	const string typeName = "Integer";
 };
+
+#endif

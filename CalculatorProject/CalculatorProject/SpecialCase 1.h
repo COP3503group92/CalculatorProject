@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Number.h"
+#include "Includes.h"
 
 class SpecialCase:public Number {
 public:
@@ -14,3 +14,5 @@ private:
 	string typeName;
 
 };
+
+#endif /* SPECIALCASE_H_ */

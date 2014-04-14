@@ -1,18 +1,6 @@
 #pragma once
 
-#include "SpecialCase.h"
-#include "Integer.h"
-#include "Rational.h"
-#include "Pi.h"
-#include "Log.h"
-#include "Root.h"
-#include "Expression.h"
-#include "Operator.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class NatE :
 	public SpecialCase
@@ -36,3 +24,5 @@ private:
 	Number* exponent;
 	const string typeName = "NatE";
 };
+
+#endif

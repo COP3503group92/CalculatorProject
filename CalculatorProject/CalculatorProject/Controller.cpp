@@ -1,5 +1,4 @@
 #include "Controller.h"
-#include "Add.h"
 
 Controller::Controller()
 {
@@ -163,6 +162,9 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 
 		} // END OPERATOR CHECK SECTION =======================================================================
 	}
+
+	return input;
+
 }
 
 // Shunting Yard Methods ====================================================================================================================================

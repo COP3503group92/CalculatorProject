@@ -1,18 +1,6 @@
 #pragma once
 
-#include "SpecialCase.h"
-#include "Integer.h"
-#include "Rational.h"
-#include "NatE.h"
-#include "Log.h"
-#include "Root.h"
-#include "Expression.h"
-#include "Operator.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class Pi :
 	public SpecialCase
@@ -39,3 +27,6 @@ private:
 	const string typeName = "Pi";
 
 };
+
+#endif
+

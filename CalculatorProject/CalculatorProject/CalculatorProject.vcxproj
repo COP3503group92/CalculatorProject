@@ -95,7 +95,7 @@
     <ClInclude Include="Multiply.h" />
     <ClInclude Include="NatE.h" />
     <ClInclude Include="Number.h" />
-    <ClInclude Include="Includes.h" />
+    <ClInclude Include="LibraryIncludes.h" />
     <ClInclude Include="Operations.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Pi.h" />

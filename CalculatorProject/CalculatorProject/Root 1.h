@@ -1,18 +1,6 @@
 #pragma once
 
-#include "SpecialCase.h"
-#include "Integer.h"
-#include "Rational.h"
-#include "Pi.h"
-#include "NatE.h"
-#include "Log.h"
-#include "Expression.h"
-#include "Operator.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class Root :
 	public SpecialCase
@@ -40,3 +28,6 @@ private:
 	Number* exponent;
 	const string typeName = "Root";
 };
+
+#endif
+

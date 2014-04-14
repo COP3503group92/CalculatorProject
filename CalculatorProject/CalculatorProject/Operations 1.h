@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Number.h"
+#include "Includes.h"
 
 class Operations
 {
@@ -11,3 +11,5 @@ class Operations
 
     private:
 };
+
+#endif // OPERATIONS_H

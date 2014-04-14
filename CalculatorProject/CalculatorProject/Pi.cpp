@@ -1,5 +1,4 @@
-#include "Includes.h"
-
+#include "Pi.h"
 
 Pi::Pi()
 {
@@ -68,5 +67,37 @@ Number* Pi::getExponent(){
 }
 void Pi::setExponent(Number* exponent){
 	this->exponent = exponent;
+}
+
+string Pi::toString(){
+	string str;
+	str += this->coefficient->toString();
+	if (this->exponent->getType() == "Integer"){
+		Integer* exp = dynamic_cast<Integer*>(this->exponent);
+		if (exp->getValue() == 0){
+			return str;
+		}
+		else if (exp->getValue() == 1){
+			str += "pi";
+			return str;
+		}
+
+	}
+	else{
+		str += "(pi^";
+		str += this->exponent->toString();
+		str += ")";
+		return str;
+	}
+}
+bool Pi::operator==(Number* a){
+	if (a->getType() == "Pi"){
+		Pi* check = dynamic_cast<Pi*>(a);
+		if (check->getCoefficient() == this->coefficient&& check->getExponent == this->exponent){
+			return true;
+		}
+	}
+	return false;
+	//Time permitting, check if a has a coefficient of a Pi type.
 }
 
