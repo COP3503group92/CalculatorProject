@@ -1,6 +1,4 @@
 #include "Add.h"
-#include "Includes.h"
-
 
 Add::Add()
 {
@@ -34,7 +32,7 @@ Number* Add::evaluate(Number* a, Number* b)
 
     //Case #0
     //if Number "a" == "Integer"
-    if(a->getType()=="Integer")
+    if(a->getType() == "Integer")
     {
         if(b->getType()=="Integer")
         {
@@ -94,6 +92,9 @@ Number* Add::evaluate(Number* a, Number* b)
         //ie: (3/1) + (3/1)
     else if(a->getType()=="Rational" && b->getType()=="Rational")
     {
+
+
+
         Rational* first = dynamic_cast<Rational*>(a);
         Rational* second = dynamic_cast<Rational*>(b);
 
@@ -124,7 +125,8 @@ Number* Add::evaluate(Number* a, Number* b)
        //ie: (3/1) + (1/e)
        else if(first->getNumerator()->getType()=="Integer" && first->getDenominator()->getType()=="Integer"
             && second->getNumerator()->getType()=="Integer" && second->getDenominator()->getType()=="NatE")
-       {
+		{
+
         Operator* op = new Operator(cl);
         first->simplify();
         second->simplify();
@@ -647,9 +649,9 @@ Number* Add::evaluate(Number* a, Number* b)
         Log* second = dynamic_cast<Log*>(b);
           if(first->getBase()==second->getBase() && first->getOperand()==second->getOperand())
           {
-			Add* p = new Add();
-			first->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
-            return first;
+            Add* p = new Add();
+            Log* e = new Log(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+            return e;
           }
           else
             {
@@ -663,26 +665,26 @@ Number* Add::evaluate(Number* a, Number* b)
 
       }
       //ie: root + root
-      else if(a->getType()=="Root" && b->getType()=="Root")
-      {
-        Root* first = dynamic_cast<Root*>(a);
-        Root* second = dynamic_cast<Root*>(b);
-          if(first->getRoot()==second->getRoot() && first->getOperand()==second->getOperand())
-          {
-            Add* p = new Add();
-            first->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
-            return first;
-          }
-          else
-          {
-            Operator* op = new Operator(cl);
-            first->simplify();
-            second->simplify();
-            Expression* e = new Expression();
-            e->add(first, second, op);
-            return e;
-          }
-      }
+	  else if (a->getType() == "Root" && b->getType() == "Root")
+	  {
+		  Root* first = dynamic_cast<Root*>(a);
+		  Root* second = dynamic_cast<Root*>(b);
+		  if (first->getRoot() == second->getRoot() && first->getOperand() == second->getOperand())
+		  {
+			  Add* p = new Add();
+			  Root* e = new Root(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+			  return e;
+		  }
+		  else
+		  {
+			  Operator* op = new Operator(cl);
+			  first->simplify();
+			  second->simplify();
+			  Expression* e = new Expression();
+			  e->add(first, second, op);
+			  return e;
+		  }
+	  }
       //ie: expression + expression
       else if(a->getType()=="Expression" && b->getType()=="Expression")
       {
@@ -694,161 +696,225 @@ Number* Add::evaluate(Number* a, Number* b)
       //ie: e + pi
       else if(a->getType()=="NatE" && b->getType()=="Pi")
       {
+
+		NatE* first = dynamic_cast<NatE*>(a);
+		Pi* second = dynamic_cast<Pi*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: e + log
       else if(a->getType()=="NatE" && b->getType()=="Log")
       {
+
+		NatE* first = dynamic_cast<NatE*>(a);
+		Log* second = dynamic_cast<Log*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: e + Root
       else if(a->getType()=="NatE" && b->getType()=="Root")
       {
+
+		NatE* first = dynamic_cast<NatE*>(a);
+		Root* second = dynamic_cast<Root*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: e + Expression
       else if(a->getType()=="NatE" && b->getType()=="Expression")
       {
+
+		NatE* first = dynamic_cast<NatE*>(a);
+		Expression* second = dynamic_cast<Expression*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: pi + e
       else if(a->getType()=="Pi" && b->getType()=="NatE")
       {
+
+		  Pi* first = dynamic_cast<Pi*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: pi + log
       else if(a->getType()=="Pi" && b->getType()=="Log")
       {
+
+		  Pi* first = dynamic_cast<Pi*>(a);
+		  Log* second = dynamic_cast<Log*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: pi + root
       else if(a->getType()=="Pi" && b->getType()=="Root")
       {
+
+		  Pi* first = dynamic_cast<Pi*>(a);
+		  Root* second = dynamic_cast<Root*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: pi + expression
       else if(a->getType()=="Pi" && b->getType()=="Expression")
       {
+
+		  Pi* first = dynamic_cast<Pi*>(a);
+		  Expression* second = dynamic_cast<Expression*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: log + e
       else if(a->getType()=="Log" && b->getType()=="NatE")
       {
+
+		  Log* first = dynamic_cast<Log*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: log + pi
       else if(a->getType()=="Log" && b->getType()=="Pi")
       {
+
+		  Log* first = dynamic_cast<Log*>(a);
+		  Pi* second = dynamic_cast<Pi*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: log + root
       else if(a->getType()=="Log" && b->getType()=="Root")
       {
+
+		  Log* first = dynamic_cast<Log*>(a);
+		  Root* second = dynamic_cast<Root*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: log + express
       else if(a->getType()=="Log" && b->getType()=="Expression")
       {
+
+		  Log* first = dynamic_cast<Log*>(a);
+		  Expression* second = dynamic_cast<Expression*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: root + e
       else if(a->getType()=="Root" && b->getType()=="NatE")
       {
+
+		  Root* first = dynamic_cast<Root*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: root + pi
       else if(a->getType()=="Root" && b->getType()=="Pi")
       {
+
+		  Root* first = dynamic_cast<Root*>(a);
+		  Pi* second = dynamic_cast<Pi*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: root + log
       else if(a->getType()=="Root" && b->getType()=="Log")
       {
+
+		  Root* first = dynamic_cast<Root*>(a);
+		  Log* second = dynamic_cast<Log*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
       //ie: root + expression
       else if(a->getType()=="Root" && b->getType()=="Expression")
       {
+
+		  Root* first = dynamic_cast<Root*>(a);
+		  Expression* second = dynamic_cast<Expression*>(b);
+
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
+        first->simplify();
+        second->simplify();
         Expression* e = new Expression();
-        e->add(a, b, op);
+        e->add(first, second, op);
         return e;
       }
 

@@ -13,7 +13,7 @@ public:
 	virtual Number* getCoefficient();
 	virtual Number* getExponent();
 	virtual void setExponent(Number* exp);
-	virtual void setCoefficient(Number coef);
+	virtual void setCoefficient(Number* coef);
 private:
 	string typeName;
 };
