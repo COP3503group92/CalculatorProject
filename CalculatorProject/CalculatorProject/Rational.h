@@ -28,6 +28,10 @@ public:
 	void setDenominator(Number* denom);
 	string toString();
 	bool operator==(Number* a);
+	Number* getCoefficient();
+	Number* getExponent();
+	void setExponent(Number* exp);
+	void setCoefficient(Number* coef);
 private:
 	Number* numerator;
 	Number* denominator;

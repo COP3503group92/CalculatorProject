@@ -23,7 +23,7 @@ string Operator::getType(){
 }
 
 string Operator::toString(){
-	return this->op;
+	return " "+this->op+ " ";
 }
 void Operator::simplify(){
 }
@@ -36,5 +36,16 @@ bool Operator::operator==(Number* a){
 	}
 	return false;
 }
+Number* Operator::getCoefficient(){
+	return this;
+}
+Number* Operator::getExponent(){
+	return this;
+}
+void Operator::setExponent(Number* exp){
 
+}
+void Operator::setCoefficient(Number coef){
+
+}
 

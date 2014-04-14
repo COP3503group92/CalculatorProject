@@ -62,6 +62,9 @@ void Log::setOperand(Number* oper){
 	this->operand = oper;
 }
 void Log::simplify(){
+	this->coefficient->simplify();
+	this->operand->simplify();
+	this->base->simplify();
 	if (this->operand->getType() == "Rational"){
 		Rational* op = dynamic_cast<Rational*>(operand);
 		complex.push_back(new Operator("-"));
@@ -69,10 +72,10 @@ void Log::simplify(){
 		this->operand = op->getNumerator();
 		simplify();
 	}
-	if (this->operand->getType() == "Integer"&&this->base->getType() == "Integer"){
+	else if (this->operand->getType() == "Integer"&&this->base->getType() == "Integer"){
 		Integer* op = dynamic_cast<Integer*>(this->operand);
 		Integer* ba = dynamic_cast<Integer*>(this->base);
-		if (op->getValue() % ba->getValue()== 0){
+		if (op->getValue() % ba->getValue() == 0){
 			int bas = ba->getValue();
 			int oper = op->getValue();
 			int result = 0;
@@ -88,9 +91,211 @@ void Log::simplify(){
 
 		}
 	}
-	if (this->operand->getType() == "NatE"&& this->base->getType() == "NatE"){
+	else if (this->operand->getType() == "NatE"&& this->base->getType() == "NatE"){
 		NatE* op = dynamic_cast<NatE*>(this->operand);
-		NatE* ba = dynamic_cast<NatE*>(this->base);
-		
+		complex.push_back(new Operator("+"));
+		complex.push_back(op->getExponent());
+		this->operand = op->getCoefficient();
 	}
+	else if (this->operand->getType() == "Pi"){
+		Pi* op = dynamic_cast<Pi*>(this->operand);
+		if (op->getCoefficient()->getType() == "Integer"){
+			Integer* co = dynamic_cast<Integer*>(op->getCoefficient());
+			if (co->getValue() != 1 && co->getValue() != 0){
+				complex.push_back(new Operator("+"));
+				complex.push_back(new Log(this->base, co, new Integer(), new Integer()));
+				op->setCoefficient(new Integer());
+				this->operand = op;
+				simplify();
+			}
+		}
+		else{
+			complex.push_back(new Operator("+"));
+			complex.push_back(new Log(this->base, op->getCoefficient(), new Integer(), new Integer()));
+			op->setCoefficient(new Integer());
+			this->operand = op;
+			simplify();
+		}
+		if (op->getExponent()->getType() == "Integer"){
+			Integer* ex = dynamic_cast<Integer*>(op->getExponent());
+			if (ex->getValue() != 1 && ex->getValue() != 0){
+				Multiply* mult = new Multiply();
+				this->coefficient = mult->evaluate(this->coefficient, op->getExponent());
+				op->setExponent(new Integer());
+				this->operand = op;
+			}
+		}
+		else{
+			Multiply* mult = new Multiply();
+			this->coefficient = mult->evaluate(this->coefficient, op->getExponent());
+			op->setExponent(new Integer());
+			this->operand = op;
+		}
+
+	}
+
+	else if (this->operand->getType() == "NatE"){
+		NatE* op = dynamic_cast<NatE*>(this->operand);
+		if (op->getCoefficient()->getType() == "Integer"){
+			Integer* co = dynamic_cast<Integer*>(op->getCoefficient());
+			if (co->getValue() != 1 && co->getValue() != 0){
+				complex.push_back(new Operator("+"));
+				complex.push_back(new Log(this->base, co, new Integer(), new Integer()));
+				op->setCoefficient(new Integer());
+				this->operand = op;
+				simplify();
+			}
+		}
+		else{
+			complex.push_back(new Operator("+"));
+			complex.push_back(new Log(this->base, op->getCoefficient(), new Integer(), new Integer()));
+			op->setCoefficient(new Integer());
+			this->operand = op;
+			simplify();
+		}
+		if (op->getExponent()->getType() == "Integer"){
+			Integer* ex = dynamic_cast<Integer*>(op->getExponent());
+			if (ex->getValue() != 1 && ex->getValue() != 0){
+				Multiply* mult = new Multiply();
+				this->coefficient = mult->evaluate(this->coefficient, op->getExponent());
+				op->setExponent(new Integer());
+				this->operand = op;
+			}
+		}
+		else{
+			Multiply* mult = new Multiply();
+			this->coefficient = mult->evaluate(this->coefficient, op->getExponent());
+			op->setExponent(new Integer());
+			this->operand = op;
+		}
+	}
+	else if (this->operand->getType() == "Root"){
+		Root* op = dynamic_cast<Root*>(this->operand);
+		if (op->getCoefficient()->getType() == "Integer"){
+			Integer* co = dynamic_cast<Integer*>(op->getCoefficient());
+			if (co->getValue() != 1 && co->getValue() != 0){
+				complex.push_back(new Operator("+"));
+				complex.push_back(new Log(this->base, co, new Integer(), new Integer()));
+				op->setCoefficient(new Integer());
+				this->operand = op;
+				simplify();
+			}
+		}
+		else{
+			complex.push_back(new Operator("+"));
+			complex.push_back(new Log(this->base, op->getCoefficient(), new Integer(), new Integer()));
+			op->setCoefficient(new Integer());
+			this->operand = op;
+			simplify();
+		}
+		if (op->getExponent()->getType() == "Integer"){
+			Integer* ex = dynamic_cast<Integer*>(op->getExponent());
+			if (ex->getValue() != 1 && ex->getValue() != 0){
+				Multiply* mult = new Multiply();
+				this->coefficient = mult->evaluate(this->coefficient, op->getExponent());
+				op->setExponent(new Integer());
+				this->operand = op;
+			}
+		}
+		else{
+			Multiply* mult = new Multiply();
+			this->coefficient = mult->evaluate(this->coefficient, op->getExponent());
+			op->setExponent(new Integer());
+			this->operand = op;
+		}
+		Multiply* mult = new Multiply();
+		this->coefficient = mult->evaluate(this->coefficient, new Rational(new Integer(), op->getRoot()));
+		op->setRoot(new Integer());
+		this->operand = op;
+	}
+	else if (this->operand->getType() == "Expression"){
+		Expression* op = dynamic_cast<Expression*>(this->operand);
+		if (op->getCoefficient()->getType() == "Integer"){
+			Integer* co = dynamic_cast<Integer*>(op->getCoefficient());
+			if (co->getValue() != 1 || co->getValue() != 0){
+				complex.push_back(new Operator("+"));
+				complex.push_back(new Log(this->base, op->getCoefficient(), this->coefficient, this->exponent));
+				op->setCoefficient(new Integer());
+				this->operand = op;
+				simplify();
+			}
+		}
+	}
+	for (int i = 0; i < complex.size(); i++){
+		complex[i]->simplify();
+	}
+}
+
+bool Log::operator==(Number*a){
+	a->simplify();
+	simplify();
+	if (a->getType() == "Log"){
+		Log* b = dynamic_cast<Log*>(a);
+		if (b->getBase() == this->base&&b->getCoefficient == this->coefficient&& this->exponent == b->getExponent() 
+			&& b->getOperand == this->operand){
+			vector<Number*> otherComp = b->getComplex();
+			if (this->complex.size() == otherComp.size()){
+				for (int i = 0; i < complex.size(); i++){
+					if (complex[i] != otherComp[i]){
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+vector<Number*> Log::getComplex(){
+	return this->complex;
+}
+
+string Log::toString(){
+	string str;
+	if (this->exponent->getType() != "Integer"){
+		str += "((";
+		str += this->coefficient->toString();
+		str += "log_";
+		str += this->base->toString();
+		str += ":";
+		str += this->operand->toString;
+		for (int i = 0; i < this->complex.size; i++){
+			str += complex[i]->toString();
+		}
+		str += ")^";
+		str += this->exponent->toString();
+		str += ")";
+	}
+	else{
+		Integer* a = dynamic_cast<Integer*>(this->exponent);
+		if (a->getValue() != 0 && a->getValue() != 1){
+			str += "((";
+			str += this->coefficient->toString();
+			str += "log_";
+			str += this->base->toString();
+			str += ":";
+			str += this->operand->toString;
+			for (int i = 0; i < this->complex.size; i++){
+				str += complex[i]->toString();
+			}
+			str += ")^";
+			str += this->exponent->toString();
+			str += ")";
+		}
+		else if(a->getValue() == 1){
+			str += this->coefficient->toString();
+			str += "log_";
+			str += this->base->toString();
+			str += ":";
+			str += this->operand->toString;
+			for (int i = 0; i < this->complex.size; i++){
+				str += complex[i]->toString();
+			}
+		}
+		else{
+			str = "1";
+		}
+
+	}
+	return str;
 }

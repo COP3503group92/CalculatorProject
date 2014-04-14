@@ -10,6 +10,10 @@ public:
 	virtual string getType();
 	virtual string toString();
 	virtual bool operator==(Number* a);
+	virtual Number* getCoefficient();
+	virtual Number* getExponent();
+	virtual void setExponent(Number* exp);
+	virtual void setCoefficient(Number coef);
 private:
 	string typeName;
 };
