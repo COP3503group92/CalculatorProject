@@ -1,4 +1,5 @@
 #include "Multiply.h"
+#include "Includes.h"
 
 Multiply::Multiply()
 {
@@ -111,6 +112,13 @@ Number* Multiply::evaluate(Number* a, Number* b)
             pro->simplify();
             return pro;
         }
+        //add the rest of the cases.............
+
+        return 0;
+    }
+    else if(a->getType()=="Rational" && b->getType()=="")
+    {
+        return 0;
     }
 
 
