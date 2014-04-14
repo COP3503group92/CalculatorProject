@@ -501,6 +501,9 @@ string Rational::toString(){
 	simplify();
 	str += "(";
 	str += this->numerator->toString();
+	if (this->denominator->getType() == "Integer"){
+		Integer* denom= dynamic_cast<Integer*>
+	}
 	str += "/";
 	str += this->denominator->toString();
 	str += ")";

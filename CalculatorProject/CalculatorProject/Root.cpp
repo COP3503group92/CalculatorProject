@@ -49,7 +49,7 @@ Number* Root::getOperand(){
 	return this->operand;
 }
 
-Number* Root::getexponent(){
+Number* Root::getExponent(){
 	return this->exponent;
 }
 

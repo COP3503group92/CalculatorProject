@@ -17,6 +17,7 @@ public:
 	Number* getExponent();
 	Number* getBase();
 	Number* getOperand();
+	vector<Number*> getComplex();
 	void setCoefficient(Number* co);
 	void setExponent(Number* ex);
 	void setBase(Number* ba);

@@ -13,6 +13,8 @@ public:
 	string getType();
 	vector<Number*> getExpression();
 	void setExpression(vector<Number*> expr);
+	Number* getCoefficient();
+	void setCoefficient(Number*);
 private:
 	Number* coefficent;
 	vector<Number*> expr;
