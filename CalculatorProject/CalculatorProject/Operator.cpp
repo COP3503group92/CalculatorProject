@@ -36,5 +36,16 @@ bool Operator::operator==(Number* a){
 	}
 	return false;
 }
+Number* Operator::getCoefficient(){
+	return this;
+}
+Number* Operator::getExponent(){
+	return this;
+}
+void Operator::setExponent(Number* exp){
 
+}
+void Operator::setCoefficient(Number coef){
+
+}
 

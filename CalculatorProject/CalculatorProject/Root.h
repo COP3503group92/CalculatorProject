@@ -22,6 +22,7 @@ public:
 	void setOperand(Number* oper);
 	void setCoefficient(Number* coef);
 	void setExponent(Number* exp);
+	bool operator==(Number*a);
 private:
 	Number* operand;
 	Number* root;

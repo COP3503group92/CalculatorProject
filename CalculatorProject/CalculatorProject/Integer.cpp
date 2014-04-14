@@ -44,3 +44,17 @@ string Integer::toString(){
 	string str = to_string(this->value);
 	return str;
 }
+Number* Integer::getCoefficient(){
+	return this;
+}
+
+Number* Integer::getExponent(){
+	return new Integer(1);
+}
+
+void Integer::setExponent(exp){
+
+}
+void Integer::setCoefficient(coef){
+
+}

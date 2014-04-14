@@ -20,6 +20,10 @@ public:
 	string getType();
 	string toString();
 	bool operator==(Number* a);
+	Number* getCoefficient();
+	Number* getExponent();
+	void setCoefficient(Number* coef);
+	void setExponent(Number* exp);
 private:
 	int value;
 	const string typeName = "Integer";

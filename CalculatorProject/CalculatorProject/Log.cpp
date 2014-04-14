@@ -282,7 +282,7 @@ string Log::toString(){
 			str += this->exponent->toString();
 			str += ")";
 		}
-		else(if a->getValue() == 1){
+		else if(a->getValue() == 1){
 			str += this->coefficient->toString();
 			str += "log_";
 			str += this->base->toString();
@@ -292,6 +292,10 @@ string Log::toString(){
 				str += complex[i]->toString();
 			}
 		}
+		else{
+			str = "1";
+		}
 
 	}
+	return str;
 }

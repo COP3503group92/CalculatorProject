@@ -84,23 +84,51 @@ bool NatE::operator==(Number* a){
 	//Time permitting, check a for a coefficient of type NatE.
 }
 string NatE::toString(){
-	string str;
-	str += this->coefficient->toString();
-	if (this->exponent->getType() == "Integer"){
-		Integer* exp = dynamic_cast<Integer*>(this->exponent);
-		if (exp->getValue() == 0){
+	string str="";
+	if (this->coefficient->getType() == "Integer"){
+		Integer* co = dynamic_cast<Integer*>(this->coefficient);
+		if (co->getValue() == 0){
+			str += "0";
 			return str;
 		}
-		else if (exp->getValue() == 1){
-			str += "e";
-			return str;
-		}
+		else if (co->getValue() == 1){
+			if (this->exponent->getType() == "Integer"){
+				Integer* exp = dynamic_cast<Integer*>(this->exponent);
+				if (exp->getValue() == 0){
+					return str;
+				}
+				else if (exp->getValue() == 1){
+					str += "e";
+					return str;
+				}
 
+			}
+			else{
+				str += "e^(";
+				str += this->exponent->toString();
+				str += ")";
+				return str;
+			}
+		}
 	}
 	else{
-		str += "(e^";
-		str += this->exponent->toString();
-		str += ")";
-		return str;
+		str += this->coefficient->toString();
+		if (this->exponent->getType() == "Integer"){
+			Integer* exp = dynamic_cast<Integer*>(this->exponent);
+			if (exp->getValue() == 0){
+				return str;
+			}
+			else if (exp->getValue() == 1){
+				str += "e";
+				return str;
+			}
+
+		}
+		else{
+			str += "(e^";
+			str += this->exponent->toString();
+			str += ")";
+			return str;
+		}
 	}
 }

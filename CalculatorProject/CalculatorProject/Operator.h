@@ -17,6 +17,11 @@ public:
 	void simplify();
 	~Operator();
 	string toString();
+	Number* getCoefficient();
+	Number* getExponent();
+	void setExponent(Number* exp);
+	void setCoefficient(Number coef);
+private:
 private:
 	string op;
 	const string typeName = "Operator";
