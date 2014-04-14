@@ -1,6 +1,4 @@
 #include "Add.h"
-#include "Includes.h"
-
 
 Add::Add()
 {
@@ -34,7 +32,7 @@ Number* Add::evaluate(Number* a, Number* b)
 
     //Case #0
     //if Number "a" == "Integer"
-    if(a->getType()=="Integer")
+    if(a->getType() == "Integer")
     {
         if(b->getType()=="Integer")
         {

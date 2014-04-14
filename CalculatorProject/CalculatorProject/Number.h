@@ -1,14 +1,6 @@
-/*
- * Number.h
- *
- *  Created on: Apr 5, 2014
- *      Author: mikeykem
- */
+#pragma once
 
-#ifndef NUMBER_H_
-#define NUMBER_H_
-
-#include "Includes.h"
+#include "LibraryIncludes.h"
 
 class Number {
 public:
@@ -25,5 +17,3 @@ public:
 private:
 	string typeName;
 };
-
-#endif /* NUMBER_H_ */

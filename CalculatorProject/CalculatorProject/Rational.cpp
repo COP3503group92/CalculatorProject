@@ -1,10 +1,3 @@
-/*
- * Rational.cpp
- *
- *  Created on: Apr 5, 2014
- *      Author: Michael Kemerer
- */
-
 #include "Rational.h"
 
 

@@ -1,10 +1,3 @@
-/*
- * Number.cpp
- *
- *  Created on: Apr 5, 2014
- *      Author: mikeykem
- */
-
 #include "Number.h"
 
 Number::Number() {

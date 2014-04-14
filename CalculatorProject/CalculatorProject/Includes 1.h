@@ -1,5 +1,4 @@
-#ifndef INCLUDES_H_
-#define INCLUDES_H_
+#pragma once
 
 // CONTROLLER
 #include "Controller.h"

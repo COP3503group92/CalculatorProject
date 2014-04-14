@@ -1,18 +1,6 @@
 #pragma once
 
-#include "SpecialCase.h"
-#include "Integer.h"
-#include "Rational.h"
-#include "Pi.h"
-#include "NatE.h"
-#include "Root.h"
-#include "Expression.h"
-#include "Operator.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class Log :
 	public SpecialCase
@@ -28,7 +16,6 @@ public:
 	Number* getExponent();
 	Number* getBase();
 	Number* getOperand();
-	vector<Number*> getComplex();
 	void setCoefficient(Number* co);
 	void setExponent(Number* ex);
 	void setBase(Number* ba);
@@ -43,3 +30,6 @@ private:
 	Number* operand;
 	const string typeName = "Log";
 };
+
+#endif
+

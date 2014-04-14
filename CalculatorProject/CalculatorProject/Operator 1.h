@@ -1,16 +1,6 @@
 #pragma once
 
-#include "Number.h"
-#include "Pi.h"
-#include "NatE.h"
-#include "Log.h"
-#include "Root.h"
-#include "Expression.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class Operator :
 	public Number
@@ -26,13 +16,10 @@ public:
 	void simplify();
 	~Operator();
 	string toString();
-	Number* getCoefficient();
-	Number* getExponent();
-	void setExponent(Number* exp);
-	void setCoefficient(Number coef);
-private:
 private:
 	string op;
 	const string typeName = "Operator";
 	bool operator==(Number* a);
 };
+
+#endif

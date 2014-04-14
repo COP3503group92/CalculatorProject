@@ -1,7 +1,18 @@
-#ifndef EXPRESSION_H_
-#define EXPRESSION_H_
+#pragma once
 
-#include "Includes.h"
+#include "SpecialCase.h"
+#include "Integer.h"
+#include "Rational.h"
+#include "Pi.h"
+#include "NatE.h"
+#include "Log.h"
+#include "Root.h"
+#include "Operator.h"
+#include "Add.h"
+#include "Subtract.h"
+#include "Multiply.h"
+#include "Divide.h"
+#include "Exponentiate.h"
 
 class Expression :
 	public SpecialCase
@@ -26,5 +37,3 @@ private:
 	vector<Number*> expr;
 	const string typeName = "Expression";
 };
-
-#endif

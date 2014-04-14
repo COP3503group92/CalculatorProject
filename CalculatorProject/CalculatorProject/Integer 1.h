@@ -1,11 +1,6 @@
 #pragma once
 
-#include "Number.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-#include "Divide.h"
-#include "Exponentiate.h"
+#include "Includes.h"
 
 class Integer :
 	public Number
@@ -24,11 +19,9 @@ public:
 	string getType();
 	string toString();
 	bool operator==(Number* a);
-	Number* getCoefficient();
-	Number* getExponent();
-	void setCoefficient(Number* coef);
-	void setExponent(Number* exp);
 private:
 	int value;
 	const string typeName = "Integer";
 };
+
+#endif
