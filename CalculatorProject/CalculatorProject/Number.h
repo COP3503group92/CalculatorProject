@@ -1,14 +1,30 @@
-/*
- * Number.h
- *
- *  Created on: Apr 5, 2014
- *      Author: mikeykem
- */
+#pragma once
 
-#ifndef NUMBER_H_
-#define NUMBER_H_
+// LIBRARY INCLUDES
+#include "LibraryIncludes.h"
 
-#include "Includes.h"
+// CONTROLLER
+#include "Controller.h"
+
+// OPERATIONS
+#include "Operations.h"
+#include "Add.h"
+#include "Subtract.h"
+#include "Multiply.h"
+#include "Divide.h"
+#include "Exponentiate.h"
+
+// NUMBER
+// #include "Number.h"
+#include "Integer.h"
+#include "Rational.h"
+#include "SpecialCase.h"
+#include "Pi.h"
+#include "NatE.h"
+#include "Log.h"
+#include "Root.h"
+#include "Expression.h"
+#include "Operator.h"
 
 class Number {
 public:
@@ -21,5 +37,3 @@ public:
 private:
 	string typeName;
 };
-
-#endif /* NUMBER_H_ */
