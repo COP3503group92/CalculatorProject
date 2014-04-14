@@ -54,35 +54,35 @@ Number* Multiply::evaluate(Number* a, Number* b)
         {
             Integer* r = dynamic_cast<Integer*>(a);
             NatE* e = dynamic_cast<NatE*>(b);
-            e->setCoefficient(evaluate(r, e->getCoefficient()))
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
             return e;
         }
         else if(b->getType()=="Pi")
         {
             Integer* r = dynamic_cast<Integer*>(a);
             Pi* e = dynamic_cast<Pi*>(b);
-            e->setCoefficient(evaluate(r, e->getCoefficient()))
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
             return e;
         }
         else if(b->getType()=="Log")
         {
             Integer* r = dynamic_cast<Integer*>(a);
             Log* e = dynamic_cast<Log*>(b);
-            e->setCoefficient(evaluate(r, e->getCoefficient()))
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
             return e;
         }
         else if(b->getType()=="Root")
         {
             Integer* r = dynamic_cast<Integer*>(a);
             Root* e = dynamic_cast<Root*>(b);
-            e->setCoefficient(evaluate(r, e->getCoefficient()))
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
             return e;
         }
         else if(b->getType()=="Expression")
         {
             Integer* r = dynamic_cast<Integer*>(a);
             Expression* e = dynamic_cast<Expression*>(b);
-            e->setCoefficient(evaluate(r, e->getCoefficient()))
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
             return e;
         }
       return 0;
@@ -111,15 +111,432 @@ Number* Multiply::evaluate(Number* a, Number* b)
             pro->simplify();
             return pro;
         }
-        //add the rest of the cases.............
+		//if both denominators are same "specialCase"
+		//-------------------------------------------
+		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
+		{
+
+			return pro;
+		}
+		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Pi")
+		{
+			return pro;
+		}
+		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
+		{
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Root")
+		{
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Expression"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Expression")
+		{
+			return pro;
+		}
+		//denominators have different specialCases...
+		//...........................................
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Pi")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			NatE* firD = dynamic_cast<NatE*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Pi* secD = dynamic_cast<Pi*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			NatE* firD = dynamic_cast<NatE*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Log* secD = dynamic_cast<Log*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Root")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			NatE* firD = dynamic_cast<NatE*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Root* secD = dynamic_cast<Root*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Expression")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			NatE* firD = dynamic_cast<NatE*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Expression* secD = dynamic_cast<Expression*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Pi* firD = dynamic_cast<Pi*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			NatE* secD = dynamic_cast<NatE*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Pi* firD = dynamic_cast<Pi*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Log* secD = dynamic_cast<Log*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Root")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Pi* firD = dynamic_cast<Pi*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Root* secD = dynamic_cast<Root*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Expression")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Pi* firD = dynamic_cast<Pi*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Expression* secD = dynamic_cast<Expression*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Log* firD = dynamic_cast<Log*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			NatE* secD = dynamic_cast<NatE*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Pi")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Log* firD = dynamic_cast<Log*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Pi* secD = dynamic_cast<Pi*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Root")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Log* firD = dynamic_cast<Log*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Root* secD = dynamic_cast<Root*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Expression")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Log* firD = dynamic_cast<Log*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Expression* secD = dynamic_cast<Expression*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			NatE* secD = dynamic_cast<NatE*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Pi")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Pi* secD = dynamic_cast<Pi*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Log* secD = dynamic_cast<Log*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Log* secD = dynamic_cast<Log*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Expression")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Expression* secD = dynamic_cast<Expression*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			NatE* secD = dynamic_cast<NatE*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Pi")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Pi* secD = dynamic_cast<Pi*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
+			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
+		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Log* secD = dynamic_cast<Log*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+			Multiply* mi = new Multiply();
+			Number* nu = mi->evaluate(firD, secD);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(nu);
+			pro->simplify();
+			return pro;
+		}
+		
+        
 
         return 0;
     }
+
+	//Rational times everything else
+	//-------------------------------
     else if(a->getType()=="Rational" && b->getType()=="")
     {
         return 0;
     }
 
+	//Special Case times SpecialCase (same kind of special)
+	else if (a->getType() == "NatE" && b->getType() == "NatE")
+	{
+		NatE* fir = dynamic_cast<NatE*>(a);
+		NatE* sec = dynamic_cast<NatE*>(b);
 
+		Multiply* mi = new Multiply();
+		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
+		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
+		NatE* e = new NatE(newCo, newEx);
+		return e;
+	}
+	else if (a->getType() == "Pi" && b->getType() == "Pi")
+	{
+	}
+	else if (a->getType() == "Log" && b->getType() == "Log")
+	{
+	}
+	else if (a->getType() == "Root" && b->getType() == "Root")
+	{
+	}
+	else if (a->getType() == "Expression" && b->getType() == "Expression")
+	{
+	}
 
 }
