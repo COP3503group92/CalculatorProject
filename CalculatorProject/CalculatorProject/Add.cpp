@@ -650,7 +650,7 @@ Number* Add::evaluate(Number* a, Number* b)
           if(first->getBase()==second->getBase() && first->getOperand()==second->getOperand())
           {
             Add* p = new Add();
-            Log* e = new Log(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+            Number* e = p->evaluate(first->getCoefficient(), second->getCoefficient());
             return e;
           }
           else
@@ -672,7 +672,7 @@ Number* Add::evaluate(Number* a, Number* b)
 		  if (first->getRoot() == second->getRoot() && first->getOperand() == second->getOperand())
 		  {
 			  Add* p = new Add();
-			  Root* e = new Root(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+			  Number* e = p->evaluate(first->getCoefficient(), second->getCoefficient());
 			  return e;
 		  }
 		  else

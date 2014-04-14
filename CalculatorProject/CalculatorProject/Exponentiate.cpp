@@ -221,5 +221,5 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		return aCast;
 
 	} // END NATE ^ RATIONAL
-
+	
 }
