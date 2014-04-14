@@ -57,6 +57,9 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		Number* denomenator = evaluate(denomenatorInput, b);
 
 		Number* result = new Rational(numerator, denomenator);
+		result->simplify();
+
+		return result;
 
 	} // END RATIONAL ^ INTEGER
 	else if (a->getType() == "Rational" && b->getType() == "Rational"){
@@ -68,6 +71,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		Number* denomenator = evaluate(aCast->getDenominator(), bCast->getDenominator());
 
 		Number* result = new Rational(numerator, denomenator);
+		result->simplify();
 
 		return result;
 
@@ -96,6 +100,9 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		}
 
 		Number* result = new NatE(coefficient, b);
+		result->simplify();
+
+		return result;
 
 	} // END NATE ^ INTEGER
 	else if (a->getType() == "Pi" && b->getType() == "Integer"){
@@ -121,6 +128,9 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		}
 
 		Number* result = new Pi(coefficient, b);
+		result->simplify();
+
+		return result;
 
 	} // END PI ^ INTEGER
 	else if (a->getType() == "Log" && b->getType() == "Integer"){
@@ -146,6 +156,9 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		}
 
 		Number* result = new Log(aCast->getBase(), aCast->getOperand(), coefficient, b);
+		result->simplify();
+
+		return result;
 
 	} // END LOG ^ INTEGER
 	else if (a->getType() == "Root" && b->getType() == "Integer"){
@@ -171,12 +184,16 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		}
 
 		Number* result = new Root(aCast->getOperand(), aCast->getRoot(), coefficient, b);
+		result->simplify();
+
+		return result;
 
 	} // END ROOT ^ INTEGER
 	else if (a->getType() == "NatE" && b->getType() == "Rational"){
 
 		NatE* aCast = dynamic_cast<NatE*>(a);
 		aCast->setExponent(b);
+		aCast->simplify();
 		return aCast;
 
 	} // END NATE ^ RATIONAL
@@ -184,6 +201,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 		Pi* aCast = dynamic_cast<Pi*>(a);
 		aCast->setExponent(b);
+		aCast->simplify();
 		return aCast;
 
 	} // END PI ^ RATIONAL
@@ -191,6 +209,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 		Log* aCast = dynamic_cast<Log*>(a);
 		aCast->setExponent(b);
+		aCast->simplify();
 		return aCast;
 
 	} // END LOG ^ RATIONAL
@@ -198,6 +217,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 		Root* aCast = dynamic_cast<Root*>(a);
 		aCast->setExponent(b);
+		aCast->simplify();
 		return aCast;
 
 	} // END NATE ^ RATIONAL
