@@ -113,34 +113,124 @@ Number* Multiply::evaluate(Number* a, Number* b)
         }
 		//if both denominators are same "specialCase"
 		//-------------------------------------------
-		/*
-		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
+		
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
 			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
 		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			NatE* firD = dynamic_cast<NatE*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			NatE* secD = dynamic_cast<NatE*>(second->getDenominator());
 
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+
+			Multiply* mi = new Multiply();
+			Number* newCo = mi->evaluate(firD->getCoefficient(), secD->getCoefficient());
+			Add* ad = new Add();
+			Number* newEx = ad->evaluate(firD->getExponent(), secD->getExponent());
+			NatE* e = new NatE(newCo, newEx);
+			
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(e);
+			pro->simplify();
 			return pro;
+			
 		}
-		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Pi"
 			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Pi")
 		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Pi* firD = dynamic_cast<Pi*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Pi* secD = dynamic_cast<Pi*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+
+			Multiply* mi = new Multiply();
+			Number* newCo = mi->evaluate(firD->getCoefficient(), secD->getCoefficient());
+			Add* ad = new Add();
+			Number* newEx = ad->evaluate(firD->getExponent(), secD->getExponent());
+			Pi* e = new Pi(newCo, newEx);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(e);
+			pro->simplify();
 			return pro;
 		}
-		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
+		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Log"
 			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Log")
 		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Log* firD = dynamic_cast<Log*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Log* secD = dynamic_cast<Log*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+
+			Multiply* mi = new Multiply();
+			Number* newCo = mi->evaluate(firD->getCoefficient(), secD->getCoefficient());
+			Add* ad = new Add();
+			Number* newEx = ad->evaluate(firD->getExponent(), secD->getExponent());
+			Log* e = new Log(newCo, newEx);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(e);
+			pro->simplify();
 			return pro;
 		}
 		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Root"
 			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Root")
 		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Root* firD = dynamic_cast<Root*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Root* secD = dynamic_cast<Root*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+
+			Multiply* mi = new Multiply();
+			Number* newCo = mi->evaluate(firD->getCoefficient(), secD->getCoefficient());
+			Add* ad = new Add();
+			Number* newEx = ad->evaluate(firD->getExponent(), secD->getExponent());
+			Root* e = new Root(newCo, newEx);
+
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(e);
+			pro->simplify();
 			return pro;
 		}
 		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "Expression"
 			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "Expression")
 		{
+			Integer* firN = dynamic_cast<Integer*>(first->getNumerator());
+			Expression* firD = dynamic_cast<Expression*>(first->getDenominator());
+			Integer* secN = dynamic_cast<Integer*>(second->getNumerator());
+			Expression* secD = dynamic_cast<Expression*>(second->getDenominator());
+
+			Integer* subNumer = new Integer(firN->getValue() * secN->getValue());
+
+			Multiply* mi = new Multiply();
+			Number* newCo = mi->evaluate(firD->getCoefficient(), secD->getCoefficient());
+			Number* newEx = mi->evaluate(firD->getExponent(), secD->getExponent());
+			Expression* e = new Expression();
+			e->add(firD, secD, new Operator(cl));
+			e->setCoefficient(newCo);
+			e->setExponent(newEx);
+			
+			Rational* pro = new Rational();
+			pro->setNumerator(subNumer);
+			pro->setDenominator(e);
+			pro->simplify();
 			return pro;
+
+			
+			
 		}
-		*/
+		
 		//denominators have different specialCases...
 		//...........................................
 		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
@@ -509,12 +599,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
         return 0;
     }
 
-	//Rational times everything else
-	//-------------------------------
-    else if(a->getType()=="Rational" && b->getType()=="")
-    {
-        return 0;
-    }
+	
 
 	//Special Case times SpecialCase (same kind of special)
 	else if (a->getType() == "NatE" && b->getType() == "NatE")
@@ -575,5 +660,19 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		e->setExponent(newEx);
 		return e;
 	}
+//Rational times everything else
+	//-------------------------------
+    else 
+    {
+		Number* mo = new Number();
+		mo = evaluate(a, b->getCoefficient());
+		mo->simplify();
+		b->setCoefficient(mo);
+        return b;
+    }
+
+
+
+
 
 }
