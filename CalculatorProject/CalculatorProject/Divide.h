@@ -1,21 +1,6 @@
 #pragma once
 
-// LIBRARY INCLUDES
-#include "LibraryIncludes.h"
-
-// CONTROLLER
-#include "Controller.h"
-
-// OPERATIONS
 #include "Operations.h"
-#include "Add.h"
-#include "Subtract.h"
-#include "Multiply.h"
-// #include "Divide.h"
-#include "Exponentiate.h"
-
-// NUMBER
-#include "Number.h"
 #include "Integer.h"
 #include "Rational.h"
 #include "SpecialCase.h"
