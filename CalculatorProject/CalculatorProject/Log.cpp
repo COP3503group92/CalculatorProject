@@ -232,7 +232,7 @@ bool Log::operator==(Number*a){
 	if (a->getType() == "Log"){
 		Log* b = dynamic_cast<Log*>(a);
 		if (b->getBase() == this->base&&b->getCoefficient == this->coefficient&& this->exponent == b->getExponent() 
-			&& b->getOperand == this->operand){
+			&& b->getOperand() == this->operand){
 			vector<Number*> otherComp = b->getComplex();
 			if (this->complex.size() == otherComp.size()){
 				for (int i = 0; i < complex.size(); i++){
@@ -258,8 +258,8 @@ string Log::toString(){
 		str += "log_";
 		str += this->base->toString();
 		str += ":";
-		str += this->operand->toString;
-		for (int i = 0; i < this->complex.size; i++){
+		str += this->operand->toString();
+		for (int i = 0; i < this->complex.size()-1; i++){
 			str += complex[i]->toString();
 		}
 		str += ")^";
@@ -274,8 +274,8 @@ string Log::toString(){
 			str += "log_";
 			str += this->base->toString();
 			str += ":";
-			str += this->operand->toString;
-			for (int i = 0; i < this->complex.size; i++){
+			str += this->operand->toString();
+			for (int i = 0; i < this->complex.size(); i++){
 				str += complex[i]->toString();
 			}
 			str += ")^";
@@ -287,8 +287,8 @@ string Log::toString(){
 			str += "log_";
 			str += this->base->toString();
 			str += ":";
-			str += this->operand->toString;
-			for (int i = 0; i < this->complex.size; i++){
+			str += this->operand->toString();
+			for (int i = 0; i < this->complex.size(); i++){
 				str += complex[i]->toString();
 			}
 		}

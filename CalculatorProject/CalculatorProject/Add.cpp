@@ -629,7 +629,7 @@ Number* Add::evaluate(Number* a, Number* b)
         NatE* first = dynamic_cast<NatE*>(a);
         NatE* second = dynamic_cast<NatE*>(b);
         Add* p = new Add();
-        NatE* e = new NatE(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+        Number* e = p->evaluate(first->getCoefficient(), second->getCoefficient());
         return e;
       }
       //ie: pi + pi
@@ -638,7 +638,7 @@ Number* Add::evaluate(Number* a, Number* b)
         Pi* first = dynamic_cast<Pi*>(a);
         Pi* second = dynamic_cast<Pi*>(b);
         Add* p = new Add();
-        Pi* e = new Pi(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+        Number* e =p->evaluate(first->getCoefficient(), second->getCoefficient());
         return e;
       }
       //ie: log + log

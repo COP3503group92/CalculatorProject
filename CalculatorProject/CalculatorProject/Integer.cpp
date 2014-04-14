@@ -52,9 +52,9 @@ Number* Integer::getExponent(){
 	return new Integer(1);
 }
 
-void Integer::setExponent(exp){
+void Integer::setExponent(Number* exp){
 
 }
-void Integer::setCoefficient(coef){
+void Integer::setCoefficient(Number* coef){
 
 }
