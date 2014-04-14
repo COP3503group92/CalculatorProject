@@ -55,35 +55,35 @@ Number* Add::evaluate(Number* a, Number* b)
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression->add(a, b, op);
+            ee->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Pi")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression->add(a, b, op);
+            ee->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Log")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression->add(a, b, op);
+            ee->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Root")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression->add(a, b, op);
+            ee->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Expression")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression->add(a, b, op);
+            ee->add(a, b, op);
             return ee;
         }
      return 0;

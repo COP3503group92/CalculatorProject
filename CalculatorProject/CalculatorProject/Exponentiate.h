@@ -1,10 +1,7 @@
 #ifndef EXPONENTIATE_H
 #define EXPONENTIATE_H
 
-#include <iostream>
-using namespace std;
-#include "Operations.h"
-
+#include "Includes.h"
 
 class Exponentiate : public Operations
 {
@@ -12,7 +9,6 @@ class Exponentiate : public Operations
         Exponentiate();
         virtual ~Exponentiate();
         Number* evaluate(Number* a, Number* b);
-    protected:
     private:
         string cl = "^";
 };

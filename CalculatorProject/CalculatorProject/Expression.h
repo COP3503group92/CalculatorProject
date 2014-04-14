@@ -3,7 +3,6 @@
 
 #include "Includes.h"
 
-
 class Expression :
 	public SpecialCase
 {
@@ -19,4 +18,5 @@ private:
 	vector<Number*> expr;
 	const string typeName = "Expression";
 };
+
 #endif

@@ -24,4 +24,5 @@ private:
 	int value;
 	const string typeName = "Integer";
 };
+
 #endif
