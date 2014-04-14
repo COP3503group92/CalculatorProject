@@ -63,17 +63,17 @@ void Expression::simplify(){
 	Number* common = this->expr[0]->getCoefficient();
 	int count;
 	int opCount;
-	for (int j=0; j < this->expr.size()-1; j++){
+	for (int j = 0; j < this->expr.size() - 1; j++){
 		count = 0;
 		opCount = 0;
 		Rational* rat = new Rational(common, expr[j]->getCoefficient());
 		rat->simplify();
-		if (rat->getDenominator()->getType == "Integer"){
+		if (rat->getDenominator()->getType() == "Integer"){
 			Integer* den = dynamic_cast<Integer*>(rat->getDenominator());
 			if (den->getValue() != 1){
 				break;
 			}
-			
+
 		}
 		else if (rat->getDenominator()->getType() == "Operator"){
 			opCount++;
@@ -82,10 +82,17 @@ void Expression::simplify(){
 			count++;
 		}
 		if (opCount + count == this->expr.size()){
-			this->coefficent == common;
+			this->coefficent = common;
 			for (int j = 0; j < this->expr.size() - 1; j++){
-				this-
+				Rational* rat = new Rational(this->expr[j]->getCoefficient(), common);
+				rat->simplify();
+				this->expr[j]->setCoefficient(rat);
+
+			}
 		}
+	}
+	for (int i = 0; i < this->expr.size() - 1; i++){
+		this->expr[i]->simplify();
 	}
 }
 				

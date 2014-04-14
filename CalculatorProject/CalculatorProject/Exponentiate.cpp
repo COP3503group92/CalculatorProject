@@ -24,7 +24,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		return result;
 
 	} // END INTEGER ^ INTEGER
-	else if (a->getType == "Integer" && b->getType() == "Rational"){
+	else if (a->getType() == "Integer" && b->getType() == "Rational"){
 
 		Integer* aCast = dynamic_cast<Integer*>(a);
 		Rational* bCast = dynamic_cast<Rational*>(b);
@@ -45,7 +45,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		return result;
 
 	} // END INTEGER ^ RATIONAL
-	else if (a->getType == "Rational" && b->getType == "Integer"){
+	else if (a->getType() == "Rational" && b->getType() == "Integer"){
 
 		Rational* aCast = dynamic_cast<Rational*>(a);
 		Integer* bCast = dynamic_cast<Integer*>(b);
