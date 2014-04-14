@@ -1,7 +1,10 @@
 #ifndef DIVIDE_H
 #define DIVIDE_H
 
-#include "Includes.h"
+#include <iostream>
+using namespace std;
+#include "Operations.h"
+
 
 class Divide : public Operations
 {

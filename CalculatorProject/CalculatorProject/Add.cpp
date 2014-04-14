@@ -1,4 +1,6 @@
 #include "Add.h"
+#include "Includes.h"
+
 
 Add::Add()
 {
@@ -53,35 +55,35 @@ Number* Add::evaluate(Number* a, Number* b)
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression.add(a, b, op);
+            Expression->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Pi")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression.add(a, b, op);
+            Expression->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Log")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression.add(a, b, op);
+            Expression->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Root")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression.add(a, b, op);
+            Expression->add(a, b, op);
             return ee;
         }
         else if(b->getType()=="Expression")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
-            Expression.add(a, b, op);
+            Expression->add(a, b, op);
             return ee;
         }
      return 0;
@@ -108,8 +110,8 @@ Number* Add::evaluate(Number* a, Number* b)
             Integer* subDenomA = new Integer(firD->getValue() * secD->getValue());
             Integer* subNumerB = new Integer(firD->getValue() * secN->getValue());
 
-            Add* p = new Add(subNumerA, subNumerB);
-            Integer* newNumer = new Integer(p->evaluate());
+            Add* p = new Add();
+            Integer* newNumer = new Integer(p->evaluate(subNumerA, subNumerB));
 
             Rational* sum = new Rational(newNumer, subDenomA);
             sum->setNumerator(newNumer);
@@ -522,7 +524,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Rational" && b->getType()=="Pi")
@@ -531,7 +533,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Rational" && b->getType()=="Log")
@@ -540,7 +542,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Rational" && b->getType()=="Root")
@@ -549,7 +551,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Rational" && b->getType()=="Expression")
@@ -558,7 +560,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
 
@@ -571,7 +573,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Pi" && b->getType()=="Rational")
@@ -580,7 +582,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Log" && b->getType()=="Rational")
@@ -589,7 +591,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Root" && b->getType()=="Rational")
@@ -598,7 +600,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
       else if(a->getType()=="Expression" && b->getType()=="Rational")
@@ -607,7 +609,7 @@ Number* Add::evaluate(Number* a, Number* b)
         a->simplify();
         b->simplify();
         Expression* ee = new Expression();
-        ee->add(first, second, op);
+        ee->add(a, b, op);
         return ee;
       }
 
@@ -622,8 +624,8 @@ Number* Add::evaluate(Number* a, Number* b)
       {
         NatE* first = dynamic_cast<NatE*>(a);
         NatE* second = dynamic_cast<NatE*>(b);
-        Add* p = new Add(first->getCoefficient(), second->getCoefficient());
-        NatE* e = new NatE(p->evaluate());
+        Add* p = new Add();
+        NatE* e = new NatE(p->evaluate(first->getCoefficient(), second->getCoefficient()));
         return e;
       }
       //ie: pi + pi
@@ -631,8 +633,8 @@ Number* Add::evaluate(Number* a, Number* b)
       {
         Pi* first = dynamic_cast<Pi*>(a);
         Pi* second = dynamic_cast<Pi*>(b);
-        Add* p = new Add(first->getCoefficient(), second->getCoefficient());
-        Pi* e = new Pi(p->evaluate());
+        Add* p = new Add();
+        Pi* e = new Pi(p->evaluate(first->getCoefficient(), second->getCoefficient()));
         return e;
       }
       //ie: log + log
@@ -643,9 +645,9 @@ Number* Add::evaluate(Number* a, Number* b)
         Log* second = dynamic_cast<Log*>(b);
           if(first->getBase()==second->getBase() && first->getOperand()==second->getOperand())
           {
-            Add* p = new Add(first->getCoefficient(), second->getCoefficient());
-            Log* e = new Log(p->evaluate());
-			return e;
+            Add* p = new Add();
+            Log* e = new Log(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+            return e;
           }
           else
             {
@@ -654,9 +656,9 @@ Number* Add::evaluate(Number* a, Number* b)
                 second->simplify();
                 Expression* e = new Expression();
                 e->add(first, second, op);
-				return e;
+                return e;
             }
-       
+
       }
       //ie: root + root
       else if(a->getType()=="Root" && b->getType()=="Root")
@@ -665,8 +667,9 @@ Number* Add::evaluate(Number* a, Number* b)
         Root* second = dynamic_cast<Root*>(b);
           if(first->getRoot()==second->getRoot() && first->getOperand()==second->getOperand())
           {
-            Add* p = new Add(first->getCoefficient(), second->getCoefficient());
-            Root* e = new Root(p->evaluate());
+            Add* p = new Add();
+            Root* e = new Root(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+            return e;
           }
           else
           {
@@ -675,13 +678,13 @@ Number* Add::evaluate(Number* a, Number* b)
             second->simplify();
             Expression* e = new Expression();
             e->add(first, second, op);
+            return e;
           }
-        return e;
       }
       //ie: expression + expression
       else if(a->getType()=="Expression" && b->getType()=="Expression")
       {
-
+        return 0;
       }
 
 
@@ -694,6 +697,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: e + log
       else if(a->getType()=="NatE" && b->getType()=="Log")
@@ -703,6 +707,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: e + Root
       else if(a->getType()=="NatE" && b->getType()=="Root")
@@ -712,6 +717,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: e + Expression
       else if(a->getType()=="NatE" && b->getType()=="Expression")
@@ -721,6 +727,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: pi + e
       else if(a->getType()=="Pi" && b->getType()=="NatE")
@@ -730,6 +737,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: pi + log
       else if(a->getType()=="Pi" && b->getType()=="Log")
@@ -739,6 +747,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: pi + root
       else if(a->getType()=="Pi" && b->getType()=="Root")
@@ -748,6 +757,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: pi + expression
       else if(a->getType()=="Pi" && b->getType()=="Expression")
@@ -757,6 +767,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: log + e
       else if(a->getType()=="Log" && b->getType()=="NatE")
@@ -766,6 +777,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: log + pi
       else if(a->getType()=="Log" && b->getType()=="Pi")
@@ -775,6 +787,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: log + root
       else if(a->getType()=="Log" && b->getType()=="Root")
@@ -784,6 +797,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: log + express
       else if(a->getType()=="Log" && b->getType()=="Expression")
@@ -793,6 +807,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: root + e
       else if(a->getType()=="Root" && b->getType()=="NatE")
@@ -802,6 +817,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: root + pi
       else if(a->getType()=="Root" && b->getType()=="Pi")
@@ -811,6 +827,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: root + log
       else if(a->getType()=="Root" && b->getType()=="Log")
@@ -820,6 +837,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
       //ie: root + expression
       else if(a->getType()=="Root" && b->getType()=="Expression")
@@ -829,6 +847,7 @@ Number* Add::evaluate(Number* a, Number* b)
         second->simplify();
         Expression* e = new Expression();
         e->add(first, second, op);
+        return e;
       }
 
  return 0;
