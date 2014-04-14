@@ -23,6 +23,13 @@ bool Number::operator==(Number* a){
 Number* Number::getCoefficient(){
 	return new Integer();
 }
-virtual Number* getExponent();
-virtual void setExponent(Number* exp);
-virtual void setCoefficient(Number* coef);
+
+Number* Number::getExponent(){
+	return new Integer();
+}
+void Number::setExponent(Number* exp){
+
+}
+void setCoefficient(Number* coef){
+
+}

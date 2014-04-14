@@ -194,8 +194,7 @@ bool ComputeNewOperation() {
 // return:		none
 void historyMenu() {
 	char floating;
-	int in;
-	int hist;
+
 		cout << "-----------------------------------------------------------" << endl;
 		cout << "                    <<   History!   >>                     " << endl << endl;
 		cout << "Display floating value (Y or N): ";
