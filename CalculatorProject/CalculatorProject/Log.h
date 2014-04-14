@@ -21,7 +21,10 @@ public:
 	void setExponent(Number* ex);
 	void setBase(Number* ba);
 	void setOperand(Number* oper);
+	string toString();
+	bool operator==(Number* a);
 private:
+	vector<Number*> complex;
 	Number* coefficient;
 	Number* exponent;
 	Number* base;

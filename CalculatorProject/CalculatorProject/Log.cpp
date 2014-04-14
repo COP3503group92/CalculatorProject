@@ -61,3 +61,36 @@ void Log::setBase(Number* ba){
 void Log::setOperand(Number* oper){
 	this->operand = oper;
 }
+void Log::simplify(){
+	if (this->operand->getType() == "Rational"){
+		Rational* op = dynamic_cast<Rational*>(operand);
+		complex.push_back(new Operator("-"));
+		complex.push_back(new Log(this->base, op->getDenominator(), this->coefficient, this->exponent));
+		this->operand = op->getNumerator();
+		simplify();
+	}
+	if (this->operand->getType() == "Integer"&&this->base->getType() == "Integer"){
+		Integer* op = dynamic_cast<Integer*>(this->operand);
+		Integer* ba = dynamic_cast<Integer*>(this->base);
+		if (op->getValue() % ba->getValue()== 0){
+			int bas = ba->getValue();
+			int oper = op->getValue();
+			int result = 0;
+			while (oper%bas == 0){
+				oper = oper / bas;
+				result++;
+			}
+			op->setValue(oper);
+			complex.push_back(new Operator("+"));
+			complex.push_back(new Integer(result));
+			this->operand = op;
+			simplify();
+
+		}
+	}
+	if (this->operand->getType() == "NatE"&& this->base->getType() == "NatE"){
+		NatE* op = dynamic_cast<NatE*>(this->operand);
+		NatE* ba = dynamic_cast<NatE*>(this->base);
+		
+	}
+}

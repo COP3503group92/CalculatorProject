@@ -122,8 +122,13 @@ void Rational::simplify(){
 			newCo->simplify();
 			newNum->setCoefficient(newCo->getNumerator());
 			newDenom->setCoefficient(newCo->getDenominator());
-			this->numerator = newNum;
-			this->denominator = newDenom;
+			Multiply* mult = new Multiply();
+			Number* newerNum = mult->evaluate(newNum, newDenom);
+			Number* newerDenom = mult->evaluate(newDenom, newDenom);
+			newerNum->simplify();
+			newerDenom->simplify();
+			this->numerator = newerNum;
+			this->denominator = newerDenom;
 		}
 		else if (this->numerator->getType() == "Expression"){
 
@@ -168,13 +173,14 @@ void Rational::simplify(){
 	else if (this->numerator->getType() == "Integer"&&this->denominator->getType() == "Root"){
 		Integer* newNum = dynamic_cast<Integer*>(this->numerator);
 		Root* newDenom = dynamic_cast<Root*>(this->denominator);
-		Multiply* mult = new Multiply();
+		Multiply* mult = new Multiply();		
 		Exponentiate* exp = new Exponentiate();
-		Rational* toSimp = new Rational(newNum, newDenom->getCoefficient());
-		toSimp->simplify();
-		newDenom->setCoefficient(toSimp->getDenominator());
-		this->numerator = mult->evaluate(toSimp->getNumerator(), newDenom);
-		this->denominator = exp->evaluate(newDenom, new Integer(2));
+		Subtract* sub = new Subtract();
+		Number* newerNum = mult->evaluate(newNum, exp->evaluate(newDenom, sub->evaluate(newDenom->getRoot(), new Integer())));
+		Number* newerDenom = exp->evaluate(newDenom, newDenom->getRoot);
+		newerNum->simplify();
+		newerDenom->simplify();
+		simplify();
 	}
 	else if (this->numerator->getType() == "Integer"&&this->denominator->getType() == "Expression"){
 
@@ -259,12 +265,14 @@ void Rational::simplify(){
 	else if (this->numerator->getType() == "Pi"&&this->denominator->getType() == "Root"){
 		Pi* newNum = dynamic_cast<Pi*>(this->numerator);
 		Root* newDenom = dynamic_cast<Root*>(this->denominator);
-		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
-		newCo->simplify();
-		newNum->setCoefficient(newCo->getNumerator());
-		newDenom->setCoefficient(newCo->getDenominator());
-		this->numerator = newNum;
-		this->denominator = newDenom;
+		Multiply* mult = new Multiply();
+		Number* newerNum = mult->evaluate(newNum, newDenom);
+		Number* newerDenom = mult->evaluate(newDenom, newDenom);
+		newerNum->simplify();
+		newerDenom->simplify();
+		this->numerator = newerNum;
+		this->denominator = newerDenom;
+		simplify();
 	}
 	else if (this->numerator->getType() == "Pi"&&this->denominator->getType() == "Expression"){
 
@@ -310,12 +318,14 @@ void Rational::simplify(){
 	else if (this->numerator->getType() == "NatE"&& this->denominator->getType() == "Root"){
 		NatE* newNum = dynamic_cast<NatE*>(this->numerator);
 		Root* newDenom = dynamic_cast<Root*>(this->denominator);
-		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
-		newCo->simplify();
-		newNum->setCoefficient(newCo->getNumerator());
-		newDenom->setCoefficient(newCo->getDenominator());
-		this->numerator = newNum;
-		this->denominator = newDenom;
+		Multiply* mult = new Multiply();
+		Number* newerNum = mult->evaluate(newNum, newDenom);
+		Number* newerDenom = mult->evaluate(newDenom, newDenom);
+		newerNum->simplify();
+		newerDenom->simplify();
+		this->numerator = newerNum;
+		this->denominator = newerDenom;
+		simplify();
 	}
 	else if (this->numerator->getType() == "NatE"&& this->denominator->getType() == "Expression"){
 
@@ -361,12 +371,14 @@ void Rational::simplify(){
 	else if (this->numerator->getType() == "Log"&&this->denominator->getType() == "Root"){
 		Log* newNum = dynamic_cast<Log*>(this->numerator);
 		Root* newDenom = dynamic_cast<Root*>(this->denominator);
-		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
-		newCo->simplify();
-		newNum->setCoefficient(newCo->getNumerator());
-		newDenom->setCoefficient(newCo->getDenominator());
-		this->numerator = newNum;
-		this->denominator = newDenom;
+		Multiply* mult = new Multiply();
+		Number* newerNum = mult->evaluate(newNum, newDenom);
+		Number* newerDenom = mult->evaluate(newDenom, newDenom);
+		newerNum->simplify();
+		newerDenom->simplify();
+		this->numerator = newerNum;
+		this->denominator = newerDenom;
+		simplify();
 	}
 	else if (this->numerator->getType() == "Log"&& this->denominator->getType() == "Expression"){
 
@@ -482,4 +494,15 @@ bool Rational::operator==(Number* a){
 			}
 		}
 		return false;
+}
+
+string Rational::toString(){
+	string str;
+	simplify();
+	str += "(";
+	str += this->numerator->toString();
+	str += "/";
+	str += this->denominator->toString();
+	str += ")";
+	return str;
 }

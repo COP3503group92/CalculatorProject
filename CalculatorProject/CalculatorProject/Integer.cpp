@@ -40,3 +40,7 @@ bool Integer::operator==(Number* a){
 	}
 	return false;
 }
+string Integer::toString(){
+	string str = to_string(this->value);
+	return str;
+}

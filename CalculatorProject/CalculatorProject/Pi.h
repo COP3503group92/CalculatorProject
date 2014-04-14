@@ -18,6 +18,7 @@ public:
 	Number* getExponent();
 	void setExponent(Number* exponent);
 	string toString();
+	bool operator==(Number* a);
 
 	
 private:

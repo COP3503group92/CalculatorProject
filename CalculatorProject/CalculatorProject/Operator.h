@@ -20,6 +20,7 @@ public:
 private:
 	string op;
 	const string typeName = "Operator";
+	bool operator==(Number* a);
 };
 
 #endif

@@ -72,3 +72,35 @@ void NatE::simplify(){
 
 	}
 }
+
+bool NatE::operator==(Number* a){
+	if (a->getType() == "NatE"){
+		NatE* check = dynamic_cast<NatE*>(a);
+		if (check->getCoefficient() == this->coefficient&& check->getExponent == this->exponent){
+			return true;
+		}
+	}
+	return false;
+	//Time permitting, check a for a coefficient of type NatE.
+}
+string NatE::toString(){
+	string str;
+	str += this->coefficient->toString();
+	if (this->exponent->getType() == "Integer"){
+		Integer* exp = dynamic_cast<Integer*>(this->exponent);
+		if (exp->getValue() == 0){
+			return str;
+		}
+		else if (exp->getValue() == 1){
+			str += "e";
+			return str;
+		}
+
+	}
+	else{
+		str += "(e^";
+		str += this->exponent->toString();
+		str += ")";
+		return str;
+	}
+}

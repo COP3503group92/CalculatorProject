@@ -17,6 +17,8 @@ public:
 	void setExponent(Number* ex);
 	void setCoefficient(Number* co);
 	void simplify();
+	bool operator==(Number* a);
+	string toString();
 private:
 	bool negative;
 	Number* coefficient;
