@@ -528,15 +528,47 @@ Number* Multiply::evaluate(Number* a, Number* b)
 	}
 	else if (a->getType() == "Pi" && b->getType() == "Pi")
 	{
+		Pi* fir = dynamic_cast<Pi*>(a);
+		Pi* sec = dynamic_cast<Pi*>(b);
+
+		Multiply* mi = new Multiply();
+		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
+		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
+		Pi* e = new Pi(newCo, newEx);
+		return e;
 	}
 	else if (a->getType() == "Log" && b->getType() == "Log")
 	{
+		Log* fir = dynamic_cast<Log*>(a);
+		Log* sec = dynamic_cast<Log*>(b);
+
+		Multiply* mi = new Multiply();
+		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
+		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
+		Log* e = new Log(newCo, newEx);
+		return e;
 	}
 	else if (a->getType() == "Root" && b->getType() == "Root")
 	{
+		Root* fir = dynamic_cast<Root*>(a);
+		Root* sec = dynamic_cast<Root*>(b);
+
+		Multiply* mi = new Multiply();
+		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
+		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
+		Root* e = new Root(newCo, newEx);
+		return e;
 	}
 	else if (a->getType() == "Expression" && b->getType() == "Expression")
 	{
+		Expression* fir = dynamic_cast<Expression*>(a);
+		Expression* sec = dynamic_cast<Expression*>(b);
+
+		Multiply* mi = new Multiply();
+		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
+		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
+		Expression* e = new Expression(newCo, newEx);
+		return e;
 	}
 
 }

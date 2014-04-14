@@ -111,7 +111,9 @@ Number* Add::evaluate(Number* a, Number* b)
             Integer* subNumerB = new Integer(firD->getValue() * secN->getValue());
 
             Add* p = new Add();
-            Integer* newNumer = new Integer(p->evaluate(subNumerA, subNumerB));
+			Integer* newNumer = new Integer();
+			Integer* as = dynamic_cast<Integer*>(p->evaluate(subNumerA, subNumerB));
+			newNumer = as;
 
             Rational* sum = new Rational(newNumer, subDenomA);
             sum->setNumerator(newNumer);

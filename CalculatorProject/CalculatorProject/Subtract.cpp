@@ -111,7 +111,9 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Integer* subNumerB = new Integer(firD->getValue() * secN->getValue());
 
             Subtract* p = new Subtract();
-            Integer* newNumer = new Integer(p->evaluate(subNumerA, subNumerB));
+            Integer* newNumer = new Integer();
+			Integer* se = dynamic_cast<Integer*>(p->evaluate(subNumerA, subNumerB));
+			newNumer = se;
 
             Rational* diff = new Rational(newNumer, subDenomA);
             diff->setNumerator(newNumer);
@@ -668,7 +670,7 @@ Number* Subtract::evaluate(Number* a, Number* b)
           if(first->getRoot()==second->getRoot() && first->getOperand()==second->getOperand())
           {
             Subtract* p = new Subtract();
-            first->getCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+            first->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
 			return first;
           }
           else
