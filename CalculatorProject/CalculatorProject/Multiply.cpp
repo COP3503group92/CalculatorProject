@@ -664,8 +664,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
 	//-------------------------------
     else 
     {
-		Number* mo = new Number();
-		mo = evaluate(a, b->getCoefficient());
+		Number* mo = evaluate(a, b->getCoefficient());
 		mo->simplify();
 		b->setCoefficient(mo);
         return b;
