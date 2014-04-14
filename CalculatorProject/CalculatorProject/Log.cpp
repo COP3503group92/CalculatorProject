@@ -231,7 +231,7 @@ bool Log::operator==(Number*a){
 	simplify();
 	if (a->getType() == "Log"){
 		Log* b = dynamic_cast<Log*>(a);
-		if (b->getBase() == this->base&&b->getCoefficient == this->coefficient&& this->exponent == b->getExponent() 
+		if (b->getBase() == this->base&&b->getCoefficient() == this->coefficient&& this->exponent == b->getExponent() 
 			&& b->getOperand() == this->operand){
 			vector<Number*> otherComp = b->getComplex();
 			if (this->complex.size() == otherComp.size()){

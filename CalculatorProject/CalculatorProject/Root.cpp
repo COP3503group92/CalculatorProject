@@ -1,5 +1,6 @@
 #include "Root.h"
 
+
 Root::Root()
 {
 	this->coefficient = new Integer();
@@ -64,7 +65,7 @@ void Root::simplify(){
 				}
 			}
 		}
-		if (op->getExponent->getType() == "Integer"&&this->root->getType()=="Integer"){
+		if (op->getExponent->getType() == "Integer"&& this->root->getType() == "Integer"){
 			Integer* exp = dynamic_cast<Integer*>(op->getExponent());
 			Integer* rt = dynamic_cast<Integer*>(this->root);
 			if (exp->getValue() % rt->getValue()==0){
@@ -94,7 +95,7 @@ void Root::simplify(){
 				}
 			}
 		}
-		if (op->getExponent->getType() == "Integer"&&this->root->getType() == "Integer"){
+		if (op->getExponent->getType() == "Integer"&& this->root->getType()== "Integer"){
 			Integer* exp = dynamic_cast<Integer*>(op->getExponent());
 			Integer* rt = dynamic_cast<Integer*>(this->root);
 			if (exp->getValue() % rt->getValue() == 0){
@@ -124,7 +125,7 @@ void Root::simplify(){
 				}
 			}
 		}
-		if (op->getExponent->getType() == "Integer"&&this->root->getType() == "Integer"){
+		if (op->getExponent->getType() == "Integer"&& this->root->getType() == "Integer"){
 			Integer* exp = dynamic_cast<Integer*>(op->getExponent());
 			Integer* rt = dynamic_cast<Integer*>(this->root);
 			if (exp->getValue() % rt->getValue() == 0){
@@ -176,7 +177,7 @@ string Root::toString(){
 		str += this->coefficient->toString();
 		str += this->root->toString();
 		str += "rt:";
-		str += this->operand->toString;
+		str += this->operand->toString();
 		str += ")^";
 		str += this->exponent->toString();
 		str += ")";
@@ -197,7 +198,7 @@ string Root::toString(){
 			str += this->coefficient->toString();
 			str += this->root->toString();
 			str += "rt:";
-			str += this->operand->toString;
+			str += this->operand->toString();
 		}
 		else{
 			str = "1";

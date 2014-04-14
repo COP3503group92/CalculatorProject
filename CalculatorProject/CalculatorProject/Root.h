@@ -13,6 +13,7 @@
 #include "Multiply.h"
 #include "Divide.h"
 #include "Exponentiate.h"
+#include "Number.h"
 
 class Root :
 	public SpecialCase

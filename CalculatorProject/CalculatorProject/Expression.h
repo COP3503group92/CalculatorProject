@@ -27,7 +27,7 @@ public:
 	Number* getCoefficient();
 	void setCoefficient(Number* coef);
 	Number* getExponent();
-	void setExponent(Number*);
+	void setExponent(Number* exp);
 	string toString();
 	bool operator==(Number* a);
 	void simplify();

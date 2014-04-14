@@ -31,6 +31,12 @@ Number* Expression::getCoefficient(){
 void Expression::setCoefficient(Number* coef){
 	this->coefficent = coef;
 }
+Number* Expression::getExponent(){
+	return this->exponent;
+}
+void Expression::setExponent(Number* exp){
+	this->exponent = exp;
+}
 string Expression::toString(){
 	string str = "";
 	str += this->coefficent->toString();

@@ -23,7 +23,7 @@ Rational::~Rational() {
 void Rational::simplify(){
 	if (this->denominator->getType() == "Integer"){
 		Integer* denom = dynamic_cast<Integer*>(this->denominator);
-		if (denom->getValue == 1){
+		if (denom->getValue() == 1){
 			return;
 		}
 	}
@@ -104,7 +104,7 @@ void Rational::simplify(){
 			if (newNum->getRoot() == newDenom->getRoot()){
 				Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
 				newCo->simplify();
-				Rational* newOp = new Rational(newNum->getOperand, newDenom->getOperand);
+				Rational* newOp = new Rational(newNum->getOperand(), newDenom->getOperand());
 				newOp->simplify();
 				newNum->setCoefficient(newCo);
 				newNum->setOperand(newOp);
@@ -170,7 +170,7 @@ void Rational::simplify(){
 		Exponentiate* exp = new Exponentiate();
 		Subtract* sub = new Subtract();
 		Number* newerNum = mult->evaluate(newNum, exp->evaluate(newDenom, sub->evaluate(newDenom->getRoot(), new Integer())));
-		Number* newerDenom = exp->evaluate(newDenom, newDenom->getRoot);
+		Number* newerDenom = exp->evaluate(newDenom, newDenom->getRoot());
 		newerNum->simplify();
 		newerDenom->simplify();
 		simplify();
@@ -230,7 +230,7 @@ void Rational::simplify(){
 		Rational* newDenom = dynamic_cast<Rational*>(this->denominator);
 		Rational* newerDenom = new Rational(newDenom->getDenominator(), newDenom->getNumerator());
 		Multiply* mult = new Multiply();
-		newNum->setCoefficient(mult->evaluate(newerDenom->getNumerator, newNum->getCoefficient()));
+		newNum->setCoefficient(mult->evaluate(newerDenom->getNumerator(), newNum->getCoefficient()));
 		this->numerator = newNum;
 		this->denominator = newerDenom->getDenominator();
 	}
@@ -401,7 +401,7 @@ void Rational::simplify(){
 		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
 		newCo->simplify();
 		newNum->setCoefficient(newCo->getNumerator());
-		newDenom->setCoefficient(newCo->getDenominator);
+		newDenom->setCoefficient(newCo->getDenominator());
 		this->numerator = newNum;
 		this->denominator = newDenom;
 	}
@@ -411,7 +411,7 @@ void Rational::simplify(){
 		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
 		newCo->simplify();
 		newNum->setCoefficient(newCo->getNumerator());
-		newDenom->setCoefficient(newCo->getDenominator);
+		newDenom->setCoefficient(newCo->getDenominator());
 		this->numerator = newNum;
 		this->denominator = newDenom;
 	}
@@ -421,28 +421,28 @@ void Rational::simplify(){
 		Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
 		newCo->simplify();
 		newNum->setCoefficient(newCo->getNumerator());
-		newDenom->setCoefficient(newCo->getDenominator);
+		newDenom->setCoefficient(newCo->getDenominator());
 		this->numerator = newNum;
 		this->denominator = newDenom;
 	}
 	else if (this->numerator->getType() == "Root"&&this->denominator->getType() == "Expression"){
 	}
-	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Integer"){
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType() == "Integer"){
 		//Distributes integer through expression; for loop should cover it.
 	}
-	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Rational"){
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType() == "Rational"){
 		//distributes denominator by multiplication, does another Rational with the denominator on the bottom
 	}
-	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Pi"){
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType() == "Pi"){
 		//i don't even knowwwww
 	}
-	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "NatE"){
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType() == "NatE"){
 		//ewwwwwwww
 	}
-	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Log"){
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType() == "Log"){
 		//Why do I hate myself?
 	}
-	else if (this->numerator->getType() == "Expression"&&this->denominator->getType == "Root"){
+	else if (this->numerator->getType() == "Expression"&&this->denominator->getType() == "Root"){
 		// *vomits*
 	}
 	

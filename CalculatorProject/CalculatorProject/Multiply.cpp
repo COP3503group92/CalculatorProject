@@ -113,6 +113,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
         }
 		//if both denominators are same "specialCase"
 		//-------------------------------------------
+		/*
 		if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
 			&& second->getNumerator()->getType() == "Integer" && second->getDenominator()->getType() == "NatE")
 		{
@@ -139,6 +140,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		{
 			return pro;
 		}
+		*/
 		//denominators have different specialCases...
 		//...........................................
 		else if (first->getNumerator()->getType() == "Integer" && first->getDenominator()->getType() == "NatE"
@@ -567,7 +569,10 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		Multiply* mi = new Multiply();
 		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
 		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
-		Expression* e = new Expression(newCo, newEx);
+		Expression* e = new Expression();
+		e->add(fir, sec, new Operator(cl));
+		e->setCoefficient(newCo);
+		e->setExponent(newEx);
 		return e;
 	}
 

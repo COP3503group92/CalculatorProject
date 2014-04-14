@@ -76,7 +76,7 @@ void NatE::simplify(){
 bool NatE::operator==(Number* a){
 	if (a->getType() == "NatE"){
 		NatE* check = dynamic_cast<NatE*>(a);
-		if (check->getCoefficient() == this->coefficient&& check->getExponent == this->exponent){
+		if (check->getCoefficient() == this->coefficient&& check->getExponent() == this->exponent){
 			return true;
 		}
 	}

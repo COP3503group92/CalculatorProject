@@ -93,7 +93,7 @@ string Pi::toString(){
 bool Pi::operator==(Number* a){
 	if (a->getType() == "Pi"){
 		Pi* check = dynamic_cast<Pi*>(a);
-		if (check->getCoefficient() == this->coefficient&& check->getExponent == this->exponent){
+		if (check->getCoefficient() == this->coefficient&& check->getExponent() == this->exponent){
 			return true;
 		}
 	}
