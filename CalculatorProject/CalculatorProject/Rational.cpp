@@ -492,10 +492,39 @@ bool Rational::operator==(Number* a){
 string Rational::toString(){
 	string str;
 	simplify();
-	str += "(";
-	str += this->numerator->toString();
-	str += "/";
-	str += this->denominator->toString();
-	str += ")";
-	return str;
+	if (this->denominator->getType() == "Integer"){
+		Integer* denom = dynamic_cast<Integer*>(this->denominator);
+		if (denom->getValue() == 1){
+			str += this->numerator->toString();
+			return str;
+		}
+	}
+	else{
+		str += "(";
+		str += this->numerator->toString();
+
+		str += "/";
+		str += this->denominator->toString();
+		str += ")";
+		return str;
+	}
+}
+
+
+Number* Rational::getCoefficient(){
+	return this;
+}
+Number* Rational::getExponent(){
+	return new Integer();
+}
+void Rational::setCoefficient(Number* coef){
+	this->numerator = coef;
+	this->denominator = new Integer();
+	simplify();
+}
+void Rational::setExponent(Number*exp){
+	Exponentiate* expon = new Exponentiate();
+	this->numerator = expon->evaluate(this->numerator, exp);
+	this->denominator = expon->evaluate(this->denominator, exp);
+	simplify();
 }
