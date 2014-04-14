@@ -645,6 +645,7 @@ Number* Add::evaluate(Number* a, Number* b)
           {
             Add* p = new Add(first->getCoefficient(), second->getCoefficient());
             Log* e = new Log(p->evaluate());
+			return e;
           }
           else
             {
@@ -653,8 +654,9 @@ Number* Add::evaluate(Number* a, Number* b)
                 second->simplify();
                 Expression* e = new Expression();
                 e->add(first, second, op);
+				return e;
             }
-        return e;
+       
       }
       //ie: root + root
       else if(a->getType()=="Root" && b->getType()=="Root")

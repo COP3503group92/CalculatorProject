@@ -20,10 +20,10 @@ public:
 	string getType();
 	Number* getNumerator();
 	Number* getDenominator();
-	void setNumerator(Number*);
-	void setDenominator(Number*);
+	void setNumerator(Number* numer);
+	void setDenominator(Number* denom);
 	string toString();
-	
+	bool operator==(Number* a);
 private:
 	Number* numerator;
 	Number* denominator;

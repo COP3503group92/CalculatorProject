@@ -17,6 +17,7 @@ public:
 	virtual void simplify(); 
 	virtual string getType();
 	virtual string toString();
+	virtual bool operator==(Number* a);
 private:
 	string typeName;
 };

@@ -19,6 +19,7 @@ public:
 	void simplify();
 	string getType();
 	string toString();
+	bool operator==(Number* a);
 private:
 	int value;
 	const string typeName = "Integer";

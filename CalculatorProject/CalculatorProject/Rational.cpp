@@ -88,7 +88,7 @@ void Rational::simplify(){
 		else if (this->numerator->getType() == "Log"){
 			Log* numLog = dynamic_cast<Log*>(this->numerator);
 			Log* denomLog = dynamic_cast<Log*>(this->denominator);
-			if (*(numLog->getBase()) == *(denomLog->getBase())){
+			if (numLog->getBase() == denomLog->getBase()){
 				Rational* newCo = new Rational(numLog->getCoefficient(), denomLog->getCoefficient());
 				newCo->simplify();
 				numLog->setCoefficient(newCo);
@@ -108,7 +108,7 @@ void Rational::simplify(){
 			Root* newDenom = dynamic_cast<Root*>(this->denominator);
 			newNum->simplify();
 			newDenom->simplify();
-			if (*(newNum->getRoot()) == *(newDenom->getRoot())){
+			if (newNum->getRoot() == newDenom->getRoot()){
 				Rational* newCo = new Rational(newNum->getCoefficient(), newDenom->getCoefficient());
 				newCo->simplify();
 				Rational* newOp = new Rational(newNum->getOperand, newDenom->getOperand);
@@ -452,4 +452,34 @@ void Rational::leastCommonDenom(int& n, int& d){
 			leastCommonDenom(n, d);
 		}
 	}
+}
+
+Number* Rational::getNumerator(){
+	return this->numerator;
+}
+
+Number* Rational::getDenominator(){
+	return this->denominator
+		;
+}
+
+void Rational::setNumerator(Number* numer){
+	this->numerator = numer;
+}
+
+void Rational::setDenominator(Number* denom){
+	this->denominator = denom;
+}
+
+bool Rational::operator==(Number* a){
+		if (a->getType() == "Rational"){
+			Rational* in = dynamic_cast<Rational*>(a);
+			if (in->getNumerator() == this->numerator){
+				if (in->getDenominator() == this->denominator){
+					return true;
+				}
+				
+			}
+		}
+		return false;
 }
