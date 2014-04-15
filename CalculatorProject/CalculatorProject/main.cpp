@@ -167,7 +167,13 @@ bool ComputeNewOperation() {
 			op->reversePolish();
 			op->printInfo();
 				
-			op->parseQueue();
+			vector<Number*> result = op->parseQueue(op->getQueue());
+
+			for (int i = 0; i < result.size(); i++){
+
+				cout << "Result [" << i << "] = " << result[i]->toString() << endl;
+
+			}
 
 			expressionResult.push_back("hah");
 			expressionResult.push_back("lmao");
