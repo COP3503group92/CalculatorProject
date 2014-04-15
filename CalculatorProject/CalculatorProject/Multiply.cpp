@@ -660,6 +660,52 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		e->setExponent(newEx);
 		return e;
 	}
+	
+		
+		else if (b->getType() == "Rational")
+		{
+			Rational* i = dynamic_cast<Rational*>(a);
+			i->simplify();
+			evaluate(i, b);
+			return 0;
+		}
+		//3*e
+		else if (a->getType() == "NatE" && b->getType()=="Integer")
+		{
+			Integer* r = dynamic_cast<Integer*>(b);
+			NatE* e = dynamic_cast<NatE*>(a);
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
+			return e;
+		}
+		else if (a->getType() == "Pi" && b->getType()=="Integer")
+		{
+			Integer* r = dynamic_cast<Integer*>(b);
+			Pi* e = dynamic_cast<Pi*>(a);
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
+			return e;
+		}
+		else if (a->getType() == "Log" && b->getType()=="Integer")
+		{
+			Integer* r = dynamic_cast<Integer*>(b);
+			Log* e = dynamic_cast<Log*>(a);
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
+			return e;
+		}
+		else if (a->getType() == "Root" && b->getType()=="Integer")
+		{
+			Integer* r = dynamic_cast<Integer*>(b);
+			Root* e = dynamic_cast<Root*>(a);
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
+			return e;
+		}
+		else if (a->getType() == "Expression" && b->getType()=="Integer")
+		{
+			Integer* r = dynamic_cast<Integer*>(b);
+			Expression* e = dynamic_cast<Expression*>(a);
+			e->setCoefficient(evaluate(r, e->getCoefficient()));
+			return e;
+		}
+		
 //Rational times everything else
 	//-------------------------------
     else 
