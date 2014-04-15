@@ -71,7 +71,18 @@ void Pi::setExponent(Number* exponent){
 
 string Pi::toString(){
 	string str;
-	str += this->coefficient->toString();
+	if (this->coefficient->getType() != "Integer"){
+		str += this->coefficient->toString();
+	}
+	else{
+		Integer* co = dynamic_cast<Integer*>(this->coefficient);
+		if (co->getValue() != 1){
+			str += this->coefficient->toString();
+		}
+		else{
+
+		}
+	}
 	if (this->exponent->getType() == "Integer"){
 		Integer* exp = dynamic_cast<Integer*>(this->exponent);
 		if (exp->getValue() == 0){
