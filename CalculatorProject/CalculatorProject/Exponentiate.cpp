@@ -34,15 +34,37 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 		Integer* exponentCast = dynamic_cast<Integer*>(numberExponent);
 
-		int base = aCast->getValue();
-		int exponent = exponentCast->getValue();
+		if (exponentCast->getValue() < 0){
 
-		Number* root = new Integer((int)pow(base, exponent));
+			Number* oneNumerator = new Integer(1);
+			Rational* newA = new Rational(oneNumerator, a);
 
-		Number* result = new Root(nNumber, root);
-		result->simplify();
+			int base = aCast->getValue();
+			int exponent = exponentCast->getValue();
 
-		return result;
+			Number* root = new Integer((int)pow(base, exponent));
+
+			Number* rootResult = new Root(nNumber, root);
+			rootResult->simplify();
+
+			newA->setDenominator(rootResult);
+
+			return newA;
+
+		}
+		else {
+
+			int base = aCast->getValue();
+			int exponent = exponentCast->getValue();
+
+			Number* root = new Integer((int)pow(base, exponent));
+
+			Number* result = new Root(nNumber, root);
+			result->simplify();
+
+			return result;
+
+		}
 
 	} // END INTEGER ^ RATIONAL
 	else if (a->getType() == "Rational" && b->getType() == "Integer"){
