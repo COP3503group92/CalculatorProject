@@ -668,7 +668,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
 			Rational* i = dynamic_cast<Rational*>(a);
 			i->setNumerator(evaluate(i->getNumerator(), b));
 			i->simplify();
-			return 0;
+			return i;
 		}
 		//3*e
 		else if (a->getType() == "NatE" && b->getType()=="Integer")
