@@ -240,5 +240,12 @@ void Root::setExponent(Number* exp){
 }
 
 bool Root::operator==(Number* a){
-	return true;
+	if (a->getType() == this->typeName){
+		Root* other = dynamic_cast<Root*>(a);
+		if (other->getCoefficient()==this->coefficient&&other->getExponent()==this->exponent&& 
+			other->getOperand() == this->operand&&other->getRoot() == this->root){
+			return true;
+		}
+	}
+	return false;
 }
