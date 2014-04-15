@@ -107,10 +107,23 @@ string NatE::toString(){
 		}
 		else{
 			str += this->coefficient->toString();
-			str += "e^(";
-			str += this->exponent->toString();
-			str += ")";
-			return str;
+			if (this->exponent->getType() == "Integer"){
+				Integer* exp = dynamic_cast<Integer*>(this->exponent);
+				if (exp->getValue() == 0){
+					return str;
+				}
+				else if (exp->getValue() == 1){
+					str += "e";
+					return str;
+				}
+
+			}
+			else{
+				str += "e^(";
+				str += this->exponent->toString();
+				str += ")";
+				return str;
+			}
 		}
 	}
 	else{
