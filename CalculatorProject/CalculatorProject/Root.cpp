@@ -171,12 +171,13 @@ string Root::getType(){
 string Root::toString(){
 	simplify();
 	string str;
+	char rootsym = 251;
 	if (this->exponent->getType() != "Integer"){
 		str += "((";
 		str += this->coefficient->toString();
 		str += "(";
 		str += this->root->toString();
-		str += "rt:";
+		str += rootsym;
 		str += this->operand->toString();
 		str += ")^";
 		str += this->exponent->toString();
@@ -188,7 +189,7 @@ string Root::toString(){
 			str += "((";
 			str += this->coefficient->toString();
 			str += this->root->toString();
-			str += "rt:";
+			str += rootsym;
 			str += this->operand->toString();
 			str += ")^";
 			str += this->exponent->toString();
@@ -198,7 +199,7 @@ string Root::toString(){
 			str += this->coefficient->toString();
 			str += "(";
 			str += this->root->toString();
-			str += "rt:";
+			str += rootsym;
 			str += this->operand->toString();
 			str += ")";
 		}
