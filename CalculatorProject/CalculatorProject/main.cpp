@@ -167,11 +167,11 @@ bool ComputeNewOperation() {
 			op->reversePolish();
 			op->printInfo();
 				
-			vector<Number*> result = op->parseQueue(op->getQueue());
+			vector<Number*> resultVector = op->parseQueue(op->getQueue());
 
 			for (int i = 0; i < result.size(); i++){
 
-				cout << "Result [" << i << "] = " << result[i]->toString() << endl;
+				cout << "Result [" << i << "] = " << resultVector[i]->toString() << endl;
 
 			}
 
