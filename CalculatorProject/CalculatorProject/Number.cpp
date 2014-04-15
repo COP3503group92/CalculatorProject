@@ -30,6 +30,6 @@ Number* Number::getExponent(){
 void Number::setExponent(Number* exp){
 
 }
-void setCoefficient(Number* coef){
+void Number::setCoefficient(Number* coef){
 
 }

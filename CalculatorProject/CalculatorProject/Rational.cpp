@@ -27,11 +27,11 @@ void Rational::simplify(){
 			return;
 		}
 		else {
-			try{
+			/*try{
 				if (denom->getValue() == 0){
 					throw invalid_argument("Can't divide by 0!");
 				}
-			}
+			}*/
 		}
 		if (this->numerator->getType() == this->denominator->getType()){
 			if (this->numerator->getType() == "Integer"){
@@ -532,4 +532,7 @@ void Rational::leastCommonDenom(int& n, int& d){
 			leastCommonDenom(n, d);
 		}
 	}
+}
+string Rational::getType(){
+	return this->typeName;
 }

@@ -238,3 +238,7 @@ void Root::setCoefficient(Number* coef){
 void Root::setExponent(Number* exp){
 	this->exponent = exp;
 }
+
+bool Root::operator==(Number* a){
+	return true;
+}

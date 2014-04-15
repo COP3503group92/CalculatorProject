@@ -67,11 +67,11 @@ void Log::simplify(){
 	this->base->simplify();
 	if (this->base->getType() == "Integer"){
 		Integer* ba = dynamic_cast<Integer*>(this->base);
-		try{
+		/*try{
 			if (ba->getValue() == 0){
 				throw invalid_argument("No 0 bases in logarithms!");
 			}
-		}
+		}*/
 	}
 	if (this->operand->getType() == "Rational"){
 		Rational* op = dynamic_cast<Rational*>(operand);
