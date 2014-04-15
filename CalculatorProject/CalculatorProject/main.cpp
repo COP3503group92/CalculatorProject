@@ -167,6 +167,7 @@ bool ComputeNewOperation() {
 			op->reversePolish();
 			op->printInfo();
 				
+			op->parseQueue();
 
 			expressionResult.push_back("hah");
 			expressionResult.push_back("lmao");
