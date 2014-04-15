@@ -161,6 +161,34 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 			} // END ^ OPERATOR ===============================================================================
 
 		} // END OPERATOR CHECK SECTION =======================================================================
+
+		else if (input[i]->getType() == "Log"){
+
+			input[i]->simplify();
+			Number* result = input[i];
+
+			input.erase(input.begin() + i - 1);
+			input.erase(input.begin() + i - 1);
+
+			input[i - 2] = result;
+
+			i = 0;
+
+		}
+		else if (input[i]->getType() == "Root"){
+
+			input[i]->simplify();
+			Number* result = input[i];
+
+			input.erase(input.begin() + i - 1);
+			input.erase(input.begin() + i - 1);
+
+			input[i - 2] = result;
+
+			i = 0;
+
+		}
+
 	}
 
 	return input;
