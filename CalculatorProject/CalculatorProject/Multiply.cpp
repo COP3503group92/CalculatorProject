@@ -44,10 +44,11 @@ Number* Multiply::evaluate(Number* a, Number* b)
         }
         else if(b->getType()=="Rational")
         {
-            Rational* i = dynamic_cast<Rational*>(a);
-            i->simplify();
-            evaluate(i, b);
-            return 0;
+            Rational* i = dynamic_cast<Rational*>(b);
+			i->setNumerator(evaluate(a, i->getNumerator()));
+			i->simplify();
+			return i;
+            
         }
         //3*e
         else if(b->getType()=="NatE")
@@ -662,11 +663,11 @@ Number* Multiply::evaluate(Number* a, Number* b)
 	}
 	
 		
-		else if (b->getType() == "Rational")
+		else if (a->getType()=="Rational"&&b->getType() == "Integer")
 		{
 			Rational* i = dynamic_cast<Rational*>(a);
+			i->setNumerator(evaluate(i->getNumerator(), b));
 			i->simplify();
-			evaluate(i, b);
 			return 0;
 		}
 		//3*e
@@ -708,6 +709,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		
 //Rational times everything else
 	//-------------------------------
+		/*
     else 
     {
 		Number* mo = evaluate(a, b->getCoefficient());
@@ -715,7 +717,7 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		b->setCoefficient(mo);
         return b;
     }
-
+		*/
 
 
 

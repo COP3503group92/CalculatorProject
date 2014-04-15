@@ -55,7 +55,7 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 
 			numberVector.push_back(rtObject);
 
-		} else if(queue[i][0] == '+' || queue[i][0] == '-' || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
+		} else if(queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
 
 			Number* opObject = new Operator(queue[i]);
 			

@@ -13,6 +13,8 @@ void Expression::add(Number* first, Number* second, Number* op){
 	this->expr.push_back(first);
 	this->expr.push_back(op);
 	this->expr.push_back(second);
+	this->coefficent = new Integer();
+	this->exponent = new Integer();
 }
 string Expression::getType(){
 	return this->typeName;
@@ -39,12 +41,49 @@ void Expression::setExponent(Number* exp){
 }
 string Expression::toString(){
 	string str = "";
-	str += this->coefficent->toString();
-	str += "(";
-	for (int i = 0; i < expr.size(); i++){
-		str += expr[i]->toString();
+	if (this->coefficent->getType() == "Integer"){
+		Integer* co = dynamic_cast<Integer*>(this->coefficent);
+		if (co->getValue() != 1){
+			str += this->coefficent->toString();
+			str += "(";
+			for (int i = 0; i < expr.size(); i++){
+				str += expr[i]->toString();
+			}
+			
+		}
+		else {
+			str += "(";
+			for (int i = 0; i < expr.size(); i++){
+				str += expr[i]->toString();
+			}
+			
+		}
 	}
-	str += this->exponent->toString();
+	else{
+		str += this->coefficent->toString();
+		str += "(";
+		for (int i = 0; i < expr.size(); i++){
+			str += expr[i]->toString();
+		}
+	}
+
+	if (this->exponent->getType() == "Integer"){
+		Integer* ex = dynamic_cast<Integer*>(this->exponent);
+		if (ex->getValue() != 1){
+			str += ")";
+			str += "^";
+			str += this->exponent->toString();
+		}
+		else{
+			str += ")";
+		}
+	}
+	else{
+		str += ")";
+		str += "^";
+		str += this->exponent->toString();
+
+	}
 	return str;
 }
 bool Expression::operator==(Number* a){
