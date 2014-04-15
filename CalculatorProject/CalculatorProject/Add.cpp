@@ -673,18 +673,43 @@ Number* Add::evaluate(Number* a, Number* b)
       {
         NatE* first = dynamic_cast<NatE*>(a);
         NatE* second = dynamic_cast<NatE*>(b);
-        Add* p = new Add();
-        Number* e = p->evaluate(first->getCoefficient(), second->getCoefficient());
-        return e;
+		if (1 == 1)
+		{
+			
+			Add* p = new Add();
+			NatE* e = new NatE();
+			e->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+			return e;
+		}
+		else
+		{
+			Operator* op = new Operator(cl);
+			Expression* ee = new Expression();
+			ee->add(a, b, op);
+			return ee;
+		}
+        
       }
       //ie: pi + pi
       else if(a->getType()=="Pi" && b->getType()=="Pi")
       {
-        Pi* first = dynamic_cast<Pi*>(a);
-        Pi* second = dynamic_cast<Pi*>(b);
-        Add* p = new Add();
-        Number* e =p->evaluate(first->getCoefficient(), second->getCoefficient());
-        return e;
+		  Pi* first = dynamic_cast<Pi*>(a);
+		  Pi* second = dynamic_cast<Pi*>(b);
+		  if (1 == 1)
+		  {
+			  
+			  Add* p = new Add();
+			  Pi* e = new Pi();
+			  e->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+			  return e;
+		  }
+		  else
+		  {
+			  Operator* op = new Operator(cl);
+			  Expression* ee = new Expression();
+			  ee->add(a, b, op);
+			  return ee;
+		  }
       }
       //ie: log + log
 

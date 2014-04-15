@@ -668,20 +668,45 @@ Number* Subtract::evaluate(Number* a, Number* b)
       //ie: e + e
       else if(a->getType()=="NatE" && b->getType()=="NatE")
       {
-        NatE* first = dynamic_cast<NatE*>(a);
-        NatE* second = dynamic_cast<NatE*>(b);
-        Subtract* p = new Subtract();
-        NatE* e = new NatE(p->evaluate(first->getCoefficient(), second->getCoefficient()));
-        return e;
+		  NatE* first = dynamic_cast<NatE*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+		  if (1 == 1)
+		  {
+
+			  Subtract* p = new Subtract();
+			  NatE* e = new NatE();
+			  e->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+			  return e;
+		  }
+		  else
+		  {
+			  Operator* op = new Operator(cl);
+			  Expression* ee = new Expression();
+			  ee->add(a, b, op);
+			  return ee;
+		  }
+        
       }
       //ie: pi + pi
       else if(a->getType()=="Pi" && b->getType()=="Pi")
       {
-        Pi* first = dynamic_cast<Pi*>(a);
-        Pi* second = dynamic_cast<Pi*>(b);
-        Subtract* p = new Subtract();
-        Pi* e = new Pi(p->evaluate(first->getCoefficient(), second->getCoefficient()));
-        return e;
+		  NatE* first = dynamic_cast<NatE*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+		  if (1 == 1)
+		  {
+
+			  Subtract* p = new Subtract();
+			  NatE* e = new NatE();
+			  e->setCoefficient(p->evaluate(first->getCoefficient(), second->getCoefficient()));
+			  return e;
+		  }
+		  else
+		  {
+			  Operator* op = new Operator(cl);
+			  Expression* ee = new Expression();
+			  ee->add(a, b, op);
+			  return ee;
+		  }
       }
       //ie: log + log
 
