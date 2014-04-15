@@ -670,7 +670,8 @@ Number* Subtract::evaluate(Number* a, Number* b)
       {
 		  NatE* first = dynamic_cast<NatE*>(a);
 		  NatE* second = dynamic_cast<NatE*>(b);
-		  if (1 == 1)
+		  
+		  if (1==1)
 		  {
 
 			  Subtract* p = new Subtract();
