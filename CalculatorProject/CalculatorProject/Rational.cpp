@@ -486,8 +486,8 @@ bool Rational::operator==(Number* a){
 }
 
 string Rational::toString(){
-	string str;
-	simplify();
+	string str="";
+	this->simplify();
 	if (this->denominator->getType() == "Integer"){
 		Integer* denom = dynamic_cast<Integer*>(this->denominator);
 		if (denom->getValue() == 1){
@@ -495,7 +495,6 @@ string Rational::toString(){
 			return str;
 		}
 	}
-	else{
 		str += "(";
 		str += this->numerator->toString();
 
@@ -503,7 +502,6 @@ string Rational::toString(){
 		str += this->denominator->toString();
 		str += ")";
 		return str;
-	}
 }
 
 
@@ -525,7 +523,7 @@ void Rational::setExponent(Number*exp){
 	simplify();
 }
 void Rational::leastCommonDenom(int& n, int& d){
-	for (int i = 0; i < d; i++){
+	for (int i = 2; i < d; i++){
 		if (n%i == 0 && d%i == 0){
 			n = n / i;
 			d = d / i;

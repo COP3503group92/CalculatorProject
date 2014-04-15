@@ -25,7 +25,7 @@ void Root::simplify(){
 	if (this->operand->getType() == "Integer"&&this->root->getType()=="Integer"){
 		Integer*op = dynamic_cast<Integer*>(this->operand);
 		Exponentiate* ex = new Exponentiate();
-		for (int i = 0;; i++){
+		for (int i = 1;; i++){
 			Integer* sampInt = dynamic_cast<Integer*>(ex->evaluate(new Integer(i), this->root));
 			if (op->getValue() < sampInt->getValue()){
 				break;
