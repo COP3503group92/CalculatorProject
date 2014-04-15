@@ -103,12 +103,14 @@ string NatE::toString(){
 				}
 
 			}
-			else{
-				str += "e^(";
-				str += this->exponent->toString();
-				str += ")";
-				return str;
-			}
+
+		}
+		else{
+			str += this->coefficient->toString();
+			str += "e^(";
+			str += this->exponent->toString();
+			str += ")";
+			return str;
 		}
 	}
 	else{
