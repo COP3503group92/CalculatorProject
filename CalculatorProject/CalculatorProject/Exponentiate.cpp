@@ -44,7 +44,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 			Number* root = new Integer((int)pow(base, exponent));
 
-			Number* rootResult = new Root(nNumber, root);
+			Number* rootResult = new Root(root, nNumber);
 			rootResult->simplify();
 
 			newA->setDenominator(rootResult);
@@ -59,7 +59,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 			Number* root = new Integer((int)pow(base, exponent));
 
-			Number* result = new Root(nNumber, root);
+			Number* result = new Root(root, nNumber);
 			result->simplify();
 
 			return result;
