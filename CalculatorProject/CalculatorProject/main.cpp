@@ -28,6 +28,7 @@
 vector <string> inputExpression;	// To Store the input that user entered at first
 vector <string> expressionResult;	// To store an expression result
 vector <double> result;				// To store floating point value of user's answer
+int ans;
 
 // Prototypes
 int menu();
@@ -114,9 +115,8 @@ bool ComputeNewOperation() {
 	bool quit = false;
 	bool exitCompute = false;
 	bool ans = false;
+	bool bad_input = false;
 	
-	cout << "-----------------------------------------------------------" << endl;
-	cout << "                   <<   Calculate   >>                     " << endl << endl;
 
 	// To clean any last bad (\n) character in the cin
 	cin.ignore();
@@ -125,6 +125,9 @@ bool ComputeNewOperation() {
 		// Create an object of the class Shunting yard
 		Controller* op = new Controller();
 
+		cout << "-----------------------------------------------------------" << endl;
+		cout << "                   <<   Calculate   >>                     " << endl << endl;
+		cout << "- Type an expression to calculate: " << endl;
 		cout << "- Type \"back\" to go back to Main Menu: " << endl;
 		cout << "- Type \"quit\" to exit Calculator 2.0!: " << endl << endl;
 
@@ -133,6 +136,7 @@ bool ComputeNewOperation() {
 
 		if (input == "ans") {
 			if( !result.empty() ) {
+				ans = result.back();
 				cout << "Enter an expression: ans ";
 				getline(cin, input);
 			}
@@ -156,7 +160,7 @@ bool ComputeNewOperation() {
 			catch( exception &e ) {
 				cout << e.what() << endl;
 			}
-				
+			if(!bad_input) {	
 			// Call to the correponding operations goes inside
 			// this block
 			op->removeSpaces();
@@ -189,6 +193,7 @@ bool ComputeNewOperation() {
 			cout << endl;
 			// Delete the ShuntingYard object using the destructor
 			op->~Controller();
+			}
 			cout << endl;
 		}
 
@@ -197,6 +202,7 @@ bool ComputeNewOperation() {
 	return quit;
 }
 
+
 // Function:	historyMenu()
 // Parameter:	None
 // Description:	This method works perfectly so far except it is missing the option 
@@ -204,45 +210,88 @@ bool ComputeNewOperation() {
 // return:		none
 void historyMenu() {
 	char floating;
-
+	int in;
+	int selection;
+	int hist;
+	
+	do {
 		cout << "-----------------------------------------------------------" << endl;
 		cout << "                    <<   History!   >>                     " << endl << endl;
-		cout << "Display floating value (Y or N): ";
-		cin >> floating;
-	
-		while( cin.fail() || (floating != 'y') && (floating != 'n') && (floating != 'Y') && (floating != 'N') ) {
+		cout << "1. Display floating value" << endl;
+		cout << "2. Set ans " <<endl;
+		cout << "3. Back" <<endl << endl;
+
+		cout << "Enter a selection: ";
+		cin >> selection;
+
+		if(cin.fail()) {
 			cin.clear();
 			cin.ignore(INT_MAX, '\n');
-			cout << "Wrong Input!\n"<< endl;
-			cout << "Enter Y for yes and N for No: ";
-			cin >> floating;
+			
+			cout << "Invalid input!!" <<endl;
+			cout << "Enter and integer\n" <<endl;
 		}
+		else if ((selection < 1) || (selection > 3)) {
+			cout << "Invalid Input!"<<endl;
+			cout << "Enter a choice (1-3)\n" <<endl;
+		}
+		else if (selection == 1) {
+			cout << "Display floating value (Y or N): ";
+			cin >> floating;
+	
+			while( cin.fail() || (floating != 'y') && (floating != 'n') && (floating != 'Y') && (floating != 'N') ) {
+				cin.clear();
+				cin.ignore(INT_MAX, '\n');
+				cout << "Wrong Input!\n"<< endl;
+				cout << "Enter Y for yes and N for No: ";
+				cin >> floating;
+			}
 		
 
-		if( !inputExpression.empty() && (floating == 'y' || floating == 'Y') ) {
-			int print = 1;
-			int counter = inputExpression.size() - 1;
-			while( counter >= 0 ) {
-				cout << print << "\t" << inputExpression.at(counter) 
-					<<"\t\t"  << result.at(counter)<< endl;
-				counter--;
-				print++;
+			if( !inputExpression.empty() && (floating == 'y' || floating == 'Y') ) {
+				int print = 1;
+				int counter = inputExpression.size() - 1;
+				while( counter >= 0 ) {
+					cout << print << "\t" << inputExpression.at(counter) 
+						<<"\t\t"  << expressionResult.at(counter) <<"\t\t"  << result.at(counter) << endl;
+					counter--;
+					print++;
+				}
 			}
+			else if( !inputExpression.empty() && (floating == 'n' || floating == 'N') ) {
+				int print = 1;
+				int counter = inputExpression.size() - 1;
+				while( counter >= 0 ) {
+					cout << print << "\t" << inputExpression.at(counter) 
+						<<"\t\t"  << expressionResult.at(counter)<< endl;
+					counter--;
+					print++;
+				}
+			}
+			else {
+				cout << "No operations has been performed yet" << endl;
+				cout << "No history available yet" << endl << endl;
+			}
+
 		}
-		else if( !inputExpression.empty() && (floating == 'n' || floating == 'N') ) {
-			int print = 1;
-			int counter = inputExpression.size() - 1;
-			while( counter >= 0 ) {
-				cout << print << "\t" << inputExpression.at(counter) 
-					<<"\t\t"  << expressionResult.at(counter)<< endl;
-				counter--;
-				print++;
+		else if(selection == 2) {
+			int sel;
+			cout << "Enter the history to set to \"ans\": ";
+			cin >> sel;
+
+			if(!result.empty()) {
+				ans = result.at((result.size() - sel));
 			}
+			else {
+				cout << "No operations have been performed yet"<< endl;
+			}
+
 		}
 		else {
-			cout << "No operations has been performed yet" << endl;
-			cout << "No history available yet" << endl << endl;
+			// User must have selected 0
+			// Do nothing. Just got back to main menu
 		}
+	}while(selection != 3);
 }
 
 // Function:	void help()
@@ -254,8 +303,60 @@ void historyMenu() {
 void help() {
 	int in = 0;
 	cout << "-----------------------------------------------------------" << endl;
-	cout << "                    << Instructions >>                     " << endl << endl;
-	cout << "This page is under construction" << endl << endl;
+	cout << "                    << User Manual >>                      " << endl << endl;
+	cout << "Contents" << endl;
+	cout << "Calculator 2.0 has the following menu" << endl;
+	cout << "- Main Menu" << endl;
+	cout << "- Calculate Menu" << endl;
+	cout << "- History Menu" << endl;
+	cout << "- Help Menu" << endl << endl;
+
+	cout << "Navigating through Calculator 2.0\n";
+	cout << "- Calculate, History, and the Help Menu can only be\n";
+	cout << "access at the Main Menu by entering the number associated with\n";
+	cout << "that menu.\n" << endl;
+
+	cout << "Calculate Menu allows the user to enter an expression to solve.\n";
+	cout << "When inside the Calculate Meny, users are allowed to enter\n";
+	cout << "the keyword \"back\" to go back to the Main Menu, or the keyword \"quit\"\n";
+	cout << "to exit Calculator 2.0\n" << endl;
+
+	cout << "History Menu allows the user to see previous calculations computed.\n";
+	cout << "It also allows the user to see floating values of past result\n";
+	cout << "as well as selecting an answer to be used in another operations\n"<< endl;
+
+	cout << "Syntax\n";
+	cout << "Always use lowercase letters.\n"; 
+	cout << "Use parentheses as needed\n\n";
+
+	cout << "Basic Operations:\n";
+	cout << "Addition	: number 1 + number 2\n";
+	cout << "Substraction	: number 1 - number 2\n";
+	cout << "Multiplication	: number 1 * number 2\n";
+	cout << "Division	: number 1 / number 3\n";
+	cout << "Exponent	: base ^ exponent\n\n";
+
+	cout << "Logarithm syntax:\n";
+	cout << "log base	: log_(base):(operand)\n";
+	cout << "log base 10	: log_10: or log:\n";
+	cout << "natural log	: log_e:  or ln:\n\n";
+
+	cout << "Root Syntax	:\n";
+	cout << "Any root	: nth rt:(operand)\n";
+	cout << "Square root	: 2rt:(operand) or sqrt:(operand)\n\n";
+
+	cout << "Other Syntax	:\n";
+	cout << "Euler's Number	: \"e\"\n";
+	cout << "Pi		: \"pi\"\n"<< endl;
+
+	cout << "Restrictions\n";
+	cout << "Calculator 2.0 is case sensitive. To prevent error messages,\n"; 
+	cout << "always follow the accepted input format and avoid using any\n";
+	cout << "uppercase letters.\n";
+	cout << "Example; \"pi\" and \"Pi\" are not the same inputs\n";
+	cout << "------------------------------------------------------------------------\n" << endl;
+
+
 	cout << "Enter \"9\" to go back to the main menu:";
 	cin >> in;
 	while( cin.fail() || (in != 9) ) {
@@ -267,3 +368,4 @@ void help() {
 	}
 	cout << endl;
 }
+
