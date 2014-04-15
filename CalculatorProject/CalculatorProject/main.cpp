@@ -166,12 +166,14 @@ bool ComputeNewOperation() {
 			op->toVector();
 			op->reversePolish();
 			op->printInfo();
-				
-			vector<Number*> resultVector = op->parseQueue(op->getQueue());
 
-			for (int i = 0; i < result.size(); i++){
+			vector<Number*> queue = op->parseQueue(op->getQueue());
 
-				cout << "Result [" << i << "] = " << resultVector[i]->toString() << endl;
+			cout << endl << endl;
+
+			for (int sizeCount = 0; sizeCount < queue.size(); sizeCount++){
+
+				cout << "Result [" << sizeCount << "] = " << queue[sizeCount]->toString() << endl;
 
 			}
 
@@ -189,6 +191,7 @@ bool ComputeNewOperation() {
 			op->~Controller();
 			cout << endl;
 		}
+
 	} while( !exitCompute );
 
 	return quit;
