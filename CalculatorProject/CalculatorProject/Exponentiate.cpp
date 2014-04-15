@@ -40,7 +40,7 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 			Rational* newA = new Rational(oneNumerator, a);
 
 			int base = aCast->getValue();
-			int exponent = exponentCast->getValue();
+			int exponent = (-1)*exponentCast->getValue();
 
 			Number* root = new Integer((int)pow(base, exponent));
 
