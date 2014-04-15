@@ -49,6 +49,8 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 			newA->setDenominator(rootResult);
 
+			newA->simplify();
+
 			return newA;
 
 		}
