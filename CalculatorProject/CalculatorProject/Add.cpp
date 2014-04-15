@@ -571,7 +571,43 @@ Number* Add::evaluate(Number* a, Number* b)
 
   //Case #2
   //(SpecialCase) + 2
+	  else if (a->getType() == "NatE" && b->getType() == "Integer")
+	  {
+		  Operator* op = new Operator(cl);
+		  a->simplify();
+		  b->simplify();
+		  Expression* ee = new Expression();
+		  ee->add(a, b, op);
+		  return ee;
+	  }
 	  else if (a->getType() == "Pi" && b->getType() == "Integer")
+	  {
+		  Operator* op = new Operator(cl);
+		  a->simplify();
+		  b->simplify();
+		  Expression* ee = new Expression();
+		  ee->add(a, b, op);
+		  return ee;
+	  }
+	  else if (a->getType() == "Log" && b->getType() == "Integer")
+	  {
+		  Operator* op = new Operator(cl);
+		  a->simplify();
+		  b->simplify();
+		  Expression* ee = new Expression();
+		  ee->add(a, b, op);
+		  return ee;
+	  }
+	  else if (a->getType() == "Root" && b->getType() == "Integer")
+	  {
+		  Operator* op = new Operator(cl);
+		  a->simplify();
+		  b->simplify();
+		  Expression* ee = new Expression();
+		  ee->add(a, b, op);
+		  return ee;
+	  }
+	  else if (a->getType() == "Expression" && b->getType() == "Integer")
 	  {
 		  Operator* op = new Operator(cl);
 		  a->simplify();
