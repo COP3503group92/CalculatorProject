@@ -35,7 +35,6 @@ void Root::simplify(){
 				Multiply* mult = new Multiply();
 				this->operand = op;
 				this->coefficient = mult->evaluate(new Integer(i), this->coefficient);
-				simplify();
 			}
 		}
 	}
@@ -175,6 +174,7 @@ string Root::toString(){
 	if (this->exponent->getType() != "Integer"){
 		str += "((";
 		str += this->coefficient->toString();
+		str += "(";
 		str += this->root->toString();
 		str += "rt:";
 		str += this->operand->toString();
@@ -196,9 +196,11 @@ string Root::toString(){
 		}
 		else if (a->getValue() == 1){
 			str += this->coefficient->toString();
+			str += "(";
 			str += this->root->toString();
 			str += "rt:";
 			str += this->operand->toString();
+			str += ")";
 		}
 		else{
 			str = "1";
