@@ -28,7 +28,7 @@
 vector <string> inputExpression;	// To Store the input that user entered at first
 vector <string> expressionResult;	// To store an expression result
 vector <double> result;				// To store floating point value of user's answer
-int ans;
+int ans;							// 
 
 // Prototypes
 int menu();
@@ -70,14 +70,14 @@ int menu() {
 	int selection = 0;
 	bool quit;
 	do {
-		cout << "***********************************************************" <<endl;
-		cout << "                       Calculator 2.0                      " <<endl;
-		cout << "-----------------------------------------------------------" <<endl;
-		cout << "                      << Main Menu >>                      " << endl;
-		cout << "1. Compute new expression"<<endl;
-		cout << "2. Review previous expressions" <<endl;
-		cout << "3. Help" <<endl;
-		cout << "4. Quit" <<endl <<endl;
+		cout << "*********************************************************************" << endl;
+		cout << "                            Calculator 2.0                           " << endl;
+		cout << "---------------------------------------------------------------------" << endl;
+		cout << "                           << Main Menu >>                           " << endl;
+		cout << "1. Compute new expression" << endl;
+		cout << "2. Review previous expressions" << endl;
+		cout << "3. Help" << endl;
+		cout << "4. Quit" << endl << endl;
 
 		cout << "Enter a menu choice: ";
 		cin >> selection;
@@ -125,8 +125,8 @@ bool ComputeNewOperation() {
 		// Create an object of the class Shunting yard
 		Controller* op = new Controller();
 
-		cout << "-----------------------------------------------------------" << endl;
-		cout << "                   <<   Calculate   >>                     " << endl << endl;
+		cout << "---------------------------------------------------------------------" << endl;
+		cout << "                          <<   Calculate   >>                        " << endl << endl;
 		cout << "- Type an expression to calculate: " << endl;
 		cout << "- Type \"back\" to go back to Main Menu: " << endl;
 		cout << "- Type \"quit\" to exit Calculator 2.0!: " << endl << endl;
@@ -215,11 +215,11 @@ void historyMenu() {
 	int hist;
 	
 	do {
-		cout << "-----------------------------------------------------------" << endl;
-		cout << "                    <<   History!   >>                     " << endl << endl;
+		cout << "---------------------------------------------------------------------" << endl;
+		cout << "                          <<   History!   >>                         " << endl << endl;
 		cout << "1. Display floating value" << endl;
-		cout << "2. Set ans " <<endl;
-		cout << "3. Back" <<endl << endl;
+		cout << "2. Set ans " << endl;
+		cout << "3. Back" << endl << endl;
 
 		cout << "Enter a selection: ";
 		cin >> selection;
@@ -302,8 +302,8 @@ void historyMenu() {
 // Return		none
 void help() {
 	int in = 0;
-	cout << "-----------------------------------------------------------" << endl;
-	cout << "                    << User Manual >>                      " << endl << endl;
+	cout << "---------------------------------------------------------------------" << endl;
+	cout << "                           << User Manual >>                         " << endl << endl;
 	cout << "Contents" << endl;
 	cout << "Calculator 2.0 has the following menu" << endl;
 	cout << "- Main Menu" << endl;
@@ -312,21 +312,20 @@ void help() {
 	cout << "- Help Menu" << endl << endl;
 
 	cout << "Navigating through Calculator 2.0\n";
-	cout << "- Calculate, History, and the Help Menu can only be\n";
-	cout << "access at the Main Menu by entering the number associated with\n";
-	cout << "that menu.\n" << endl;
+	cout << "- Calculate, History, and the Help Menu can only be access at the\n";
+	cout << "Main Menu by entering the number associated with that menu.\n" << endl;
 
 	cout << "Calculate Menu allows the user to enter an expression to solve.\n";
 	cout << "When inside the Calculate Meny, users are allowed to enter\n";
-	cout << "the keyword \"back\" to go back to the Main Menu, or the keyword \"quit\"\n";
-	cout << "to exit Calculator 2.0\n" << endl;
+	cout << "the keyword \"back\" to go back to the Main Menu, or the keyword\n";
+	cout << "\"quit\"\ to exit Calculator 2.0\n" << endl;
 
 	cout << "History Menu allows the user to see previous calculations computed.\n";
 	cout << "It also allows the user to see floating values of past result\n";
-	cout << "as well as selecting an answer to be used in another operations\n"<< endl;
+	cout << "as well as selecting an answer to be used in another operations\n" << endl;
 
 	cout << "Syntax\n";
-	cout << "Always use lowercase letters.\n"; 
+	cout << "Always use lowercase letters.\n";
 	cout << "Use parentheses as needed\n\n";
 
 	cout << "Basic Operations:\n";
@@ -347,22 +346,22 @@ void help() {
 
 	cout << "Other Syntax	:\n";
 	cout << "Euler's Number	: \"e\"\n";
-	cout << "Pi		: \"pi\"\n"<< endl;
+	cout << "Pi		: \"pi\"\n" << endl;
 
 	cout << "Restrictions\n";
-	cout << "Calculator 2.0 is case sensitive. To prevent error messages,\n"; 
+	cout << "Calculator 2.0 is case sensitive. To prevent error messages,\n";
 	cout << "always follow the accepted input format and avoid using any\n";
 	cout << "uppercase letters.\n";
 	cout << "Example; \"pi\" and \"Pi\" are not the same inputs\n";
-	cout << "------------------------------------------------------------------------\n" << endl;
+	cout << "---------------------------------------------------------------------\n" << endl;
 
 
 	cout << "Enter \"9\" to go back to the main menu:";
 	cin >> in;
-	while( cin.fail() || (in != 9) ) {
+	while (cin.fail() || (in != 9)) {
 		cin.clear();
 		cin.ignore(INT_MAX, '\n');
-		cout << "Wrong Input!\n"<< endl;
+		cout << "Wrong Input!\n" << endl;
 		cout << "Enter the number \"9\" if you wish to go back to the Main Menu:";
 		cin >> in;
 	}
