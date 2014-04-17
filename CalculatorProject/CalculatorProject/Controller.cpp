@@ -31,10 +31,12 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 
 		} else if(queue[i][0] == 'l'){
 
-			Number* logObject = new Log(numberVector[numberVector.size() - 1], numberVector[numberVector.size() - 2]);
+			Number* logObject = new Log(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 			logObject->simplify();
-
+		
 			numberVector.push_back(logObject);
+			numberVector.erase(numberVector.begin() + i - 1);
+			numberVector.erase(numberVector.begin() + i - 2);
 
 		} else if((queue[i][0] == '-' && queue[i][1] == 'e') || queue[i][0] == 'e'){
 
@@ -52,9 +54,9 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 
 			Number* rtObject = new Root(numberVector[numberVector.size() - 1], numberVector[numberVector.size() - 2]);
 			rtObject->simplify();
-
 			numberVector.push_back(rtObject);
-
+			numberVector.erase(numberVector.begin() + i - 1);
+			numberVector.erase(numberVector.begin() + i - 2);
 		} else if(queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
 
 			Number* opObject = new Operator(queue[i]);
@@ -167,10 +169,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 			input[i]->simplify();
 			Number* result = input[i];
 
-			input.erase(input.begin() + i - 1);
-			input.erase(input.begin() + i - 1);
-
-			input[i - 2] = result;
+			input[i] = result;
 
 			i = 0;
 
@@ -180,10 +179,7 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 			input[i]->simplify();
 			Number* result = input[i];
 
-			input.erase(input.begin() + i - 1);
-			input.erase(input.begin() + i - 1);
-
-			input[i - 2] = result;
+			input[i] = result;
 
 			i = 0;
 

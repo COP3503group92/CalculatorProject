@@ -101,7 +101,8 @@ void Log::simplify(){
 				simplify();
 
 			}
-
+		}
+	}
 			else if (this->operand->getType() == "NatE"&& this->base->getType() == "NatE"){
 				NatE* op = dynamic_cast<NatE*>(this->operand);
 				complex.push_back(new Operator("+"));
@@ -236,8 +237,7 @@ void Log::simplify(){
 				complex[i]->simplify();
 			}
 		}
-	}
-}
+
 
 bool Log::operator==(Number*a){
 	a->simplify();
