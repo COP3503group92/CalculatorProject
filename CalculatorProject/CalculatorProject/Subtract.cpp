@@ -41,6 +41,7 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Integer* second = dynamic_cast<Integer*>(b);
             int sum = first->getValue() - second->getValue();
             Integer* i = new Integer(sum);
+			i->simplify();
             return i;
         }
         else if(b->getType()=="Rational")
@@ -48,13 +49,14 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Rational* i = dynamic_cast<Rational*>(a);
             i->simplify();
             evaluate(i, b);
-            return 0;
+            return i;
         }
         else if(b->getType()=="NatE")
         {
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             ee->add(a, b, op);
+			ee->simplify();
             return ee;
         }
         else if(b->getType()=="Pi")
@@ -62,6 +64,7 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             ee->add(a, b, op);
+			ee->simplify();
             return ee;
         }
         else if(b->getType()=="Log")
@@ -69,6 +72,7 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             ee->add(a, b, op);
+			ee->simplify();
             return ee;
         }
         else if(b->getType()=="Root")
@@ -76,6 +80,7 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             ee->add(a, b, op);
+			ee->simplify();
             return ee;
         }
         else if(b->getType()=="Expression")
@@ -83,6 +88,7 @@ Number* Subtract::evaluate(Number* a, Number* b)
             Operator* op = new Operator(cl);
             Expression* ee = new Expression();
             ee->add(a, b, op);
+			ee->simplify();
             return ee;
         }
      return 0;

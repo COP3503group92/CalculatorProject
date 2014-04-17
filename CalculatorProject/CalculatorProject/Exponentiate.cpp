@@ -23,7 +23,21 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 		return result;
 
-	} // END INTEGER ^ INTEGER
+	}
+	
+	/*else if (a->getType() == "Integer" && b->getType() == "NatE"){
+
+		Integer* aCast = dynamic_cast<Integer*>(a);
+		NatE* bCast = dynamic_cast<NatE*>(b);
+
+		
+		Number* result = new Number(aCast->getValue());
+		result->setExponent(bCast);
+
+		return result;
+	}*/
+
+	// END INTEGER ^ INTEGER
 	else if (a->getType() == "Integer" && b->getType() == "Rational"){
 
 		Integer* aCast = dynamic_cast<Integer*>(a);
@@ -85,7 +99,10 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 
 		return result;
 
-	} // END RATIONAL ^ INTEGER
+	}
+
+	
+	// END RATIONAL ^ INTEGER
 	else if (a->getType() == "Rational" && b->getType() == "Rational"){
 	
 		Rational* aCast = dynamic_cast<Rational*>(a);
