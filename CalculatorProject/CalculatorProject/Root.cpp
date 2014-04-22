@@ -171,42 +171,46 @@ string Root::getType(){
 string Root::toString(){
 	simplify();
 	string str;
-	char rootsym = 251;
-	if (this->exponent->getType() != "Integer"){
-		str += "((";
-		str += this->coefficient->toString();
-		str += "(";
-		str += this->root->toString();
-		str += rootsym;
-		str += this->operand->toString();
-		str += ")^";
-		str += this->exponent->toString();
-		str += ")";
-	}
-	else{
-		Integer* a = dynamic_cast<Integer*>(this->exponent);
-		if (a->getValue() != 0 && a->getValue() != 1){
+	if (dynamic_cast<Integer*>(this->operand) == 0){
+		if (this->exponent->getType() != "Integer"){
 			str += "((";
 			str += this->coefficient->toString();
+			str += "(";
 			str += this->root->toString();
-			str += rootsym;
+			str += "rt:";
 			str += this->operand->toString();
 			str += ")^";
 			str += this->exponent->toString();
 			str += ")";
 		}
-		else if (a->getValue() == 1){
-			str += this->coefficient->toString();
-			str += "(";
-			str += this->root->toString();
-			str += rootsym;
-			str += this->operand->toString();
-			str += ")";
-		}
 		else{
-			str = "1";
-		}
+			Integer* a = dynamic_cast<Integer*>(this->exponent);
+			if (a->getValue() != 0 && a->getValue() != 1){
+				str += "((";
+				str += this->coefficient->toString();
+				str += this->root->toString();
+				str += "rt:";
+				str += this->operand->toString();
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else if (a->getValue() == 1){
+				str += this->coefficient->toString();
+				str += "(";
+				str += this->root->toString();
+				str += "rt:";
+				str += this->operand->toString();
+				str += ")";
+			}
+			else{
+				str = "1";
+			}
 
+		}
+	}
+	else{
+		Integer* op = dynamic_cast<Integer*>(this->operand);
 	}
 	return str;
 }

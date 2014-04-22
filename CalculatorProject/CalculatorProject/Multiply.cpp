@@ -641,11 +641,18 @@ Number* Multiply::evaluate(Number* a, Number* b)
 		Root* fir = dynamic_cast<Root*>(a);
 		Root* sec = dynamic_cast<Root*>(b);
 
-		Multiply* mi = new Multiply();
-		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
-		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
-		Root* e = new Root(newCo, newEx);
-		return e;
+		if (*(fir->getRoot()) == sec->getRoot()){
+			Multiply* mi = new Multiply();
+			Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
+			Number* newOp = mi->evaluate(fir->getOperand(), sec->getOperand());
+			Root* e = new Root(newOp,fir->getRoot(), newCo, fir->getExponent());
+			return e;
+		}
+		else {
+			Multiply* mi = new Multiply();
+			fir->setCoefficient(mi->evaluate(fir->getCoefficient(), sec));
+			return fir;
+		}
 	}
 	else if (a->getType() == "Expression" && b->getType() == "Expression")
 	{

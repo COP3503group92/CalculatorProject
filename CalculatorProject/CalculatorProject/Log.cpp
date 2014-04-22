@@ -65,6 +65,50 @@ void Log::simplify(){
 	this->coefficient->simplify();
 	this->operand->simplify();
 	this->base->simplify();
+	if (this->operand->getExponent()->getType() != "Integer"){
+		Multiply* mult = new Multiply();
+		this->coefficient = mult->evaluate(this->coefficient, this->operand->getExponent());
+		this->operand->setExponent(new Integer(1));
+	}
+	else{
+		Integer* opex = dynamic_cast<Integer*>(this->operand->getExponent());
+		if (opex->getValue() != 0 && opex->getValue() != 1){
+			Multiply* mult = new Multiply();
+			this->coefficient = mult->evaluate(this->coefficient, this->operand->getExponent());
+			this->operand->setExponent(new Integer(1));
+		}
+		else if (opex->getValue() == 1){
+			if (this->operand->getType() == "Integer"){
+				Integer* op = dynamic_cast<Integer*>(this->operand);
+				Exponentiate* ex = new Exponentiate();
+				for (int i = 2;; i++){
+					for (int j = 2;; j++){
+						Integer* sampInt = dynamic_cast<Integer*>(ex->evaluate(new Integer(i), new Integer(j)));
+						if (op->getValue() < sampInt->getValue()){
+							goto cont;
+						}
+						if (op->getValue() == sampInt->getValue()){
+							Multiply* mult = new Multiply();
+							this->coefficient = mult->evaluate(this->coefficient, new Integer(j));
+							this->operand = new Integer(i);
+							goto cont;
+						}
+
+						if (op->getValue() % sampInt->getValue() == 0 && op->getValue() != 0 && op->getValue() != 1){
+							op->setValue(op->getValue() / sampInt->getValue());
+							Multiply* mult = new Multiply();
+							this->operand = op;
+							this->complex.push_back(new Operator("+"));
+							this->complex.push_back(new Log(this->base, new Integer(i), new Integer(j), new Integer()));
+							goto cont;
+						}
+					}
+				}
+			}
+
+		}
+	}
+	cont:
 	if (this->base->getType() == "Integer"){
 		Integer* ba = dynamic_cast<Integer*>(this->base);
 		/*try{
@@ -106,7 +150,9 @@ void Log::simplify(){
 			else if (this->operand->getType() == "NatE"&& this->base->getType() == "NatE"){
 				NatE* op = dynamic_cast<NatE*>(this->operand);
 				complex.push_back(new Operator("+"));
-				complex.push_back(op->getExponent());
+				Multiply* mult = new Multiply();
+				Number* newAns = mult->evaluate(op->getExponent(), this->coefficient);
+				complex.push_back(newAns);
 				this->operand = op->getCoefficient();
 			}
 			else if (this->operand->getType() == "Pi"){
@@ -265,50 +311,106 @@ vector<Number*> Log::getComplex(){
 
 string Log::toString(){
 	string str;
-	if (this->exponent->getType() != "Integer"){
-		str += "((";
-		str += this->coefficient->toString();
-		str += "log_";
-		str += this->base->toString();
-		str += ":";
-		str += this->operand->toString();
-		for (int i = 0; i < this->complex.size()-1; i++){
-			str += complex[i]->toString();
-		}
-		str += ")^";
-		str += this->exponent->toString();
-		str += ")";
-	}
-	else{
-		Integer* a = dynamic_cast<Integer*>(this->exponent);
-		if (a->getValue() != 0 && a->getValue() != 1){
+	if (this->operand->getType() != "Integer"){
+		if (this->exponent->getType() != "Integer"){
 			str += "((";
 			str += this->coefficient->toString();
 			str += "log_";
 			str += this->base->toString();
 			str += ":";
 			str += this->operand->toString();
-			for (int i = 0; i < this->complex.size(); i++){
+			for (int i = 0; i < this->complex.size() - 1; i++){
 				str += complex[i]->toString();
 			}
 			str += ")^";
 			str += this->exponent->toString();
 			str += ")";
 		}
-		else if(a->getValue() == 1){
-			str += this->coefficient->toString();
-			str += "log_";
-			str += this->base->toString();
-			str += ":";
-			str += this->operand->toString();
-			for (int i = 0; i < this->complex.size(); i++){
-				str += complex[i]->toString();
+		else{
+			Integer* a = dynamic_cast<Integer*>(this->exponent);
+			if (a->getValue() != 0 && a->getValue() != 1){
+				str += "((";
+				str += this->coefficient->toString();
+				str += "log_";
+				str += this->base->toString();
+				str += ":";
+				str += this->operand->toString();
+				for (int i = 0; i < this->complex.size(); i++){
+					str += complex[i]->toString();
+				}
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else if (a->getValue() == 1){
+				str += this->coefficient->toString();
+				str += "log_";
+				str += this->base->toString();
+				str += ":";
+				str += this->operand->toString();
+				for (int i = 0; i < this->complex.size(); i++){
+					str += complex[i]->toString();
+				}
+			}
+			else{
+				str = "1";
+			}
+
+		}
+	}
+	else{
+		Integer* oper = dynamic_cast<Integer*>(this->operand);
+		if (oper->getValue() != 0 && oper->getValue() != 1){
+			if (this->exponent->getType() != "Integer"){
+				str += "((";
+				str += this->coefficient->toString();
+				str += "log_";
+				str += this->base->toString();
+				str += ":";
+				str += this->operand->toString();
+				for (int i = 0; i < this->complex.size(); i++){
+					str += complex[i]->toString();
+				}
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else{
+				Integer* a = dynamic_cast<Integer*>(this->exponent);
+				if (a->getValue() != 0 && a->getValue() != 1){
+					str += "((";
+					str += this->coefficient->toString();
+					str += "log_";
+					str += this->base->toString();
+					str += ":";
+					str += this->operand->toString();
+					for (int i = 0; i < this->complex.size(); i++){
+						str += complex[i]->toString();
+					}
+					str += ")^";
+					str += this->exponent->toString();
+					str += ")";
+				}
+				else if (a->getValue() == 1){
+					str += this->coefficient->toString();
+					str += "log_";
+					str += this->base->toString();
+					str += ":";
+					str += this->operand->toString();
+					for (int i = 0; i < this->complex.size(); i++){
+						str += complex[i]->toString();
+					}
+				}
+				else{
+					str = "1";
+				}
 			}
 		}
 		else{
-			str = "1";
+			for (int i = 1; i < this->complex.size(); i++){
+				str += complex[i]->toString();
+			}
 		}
-
 	}
 	return str;
 }

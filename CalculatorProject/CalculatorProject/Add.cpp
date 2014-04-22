@@ -86,11 +86,29 @@ Number* Add::evaluate(Number* a, Number* b)
         else if(b->getType()=="Expression")
         {
             Operator* op = new Operator(cl);
-            Expression* ee = new Expression();
-            ee->add(a, b, op);
-			ee->simplify();
-            return ee;
-        }
+			Expression* second = dynamic_cast<Expression*>(b);
+			Integer* first = dynamic_cast<Integer*>(a);
+
+
+			vector<Number*> nv = second->getExpression();
+			for (int i = 0; i < second->getExpression().size(); i++)
+			{
+				if (dynamic_cast<Root*>(second->getExpression().at(i)) != 0)
+				{
+					Add* ab = new Add();
+					nv[i] = ab->evaluate(second->getExpression().at(i), first);
+					break;
+				}
+				if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+				{
+					nv.push_back(new Operator("+"));
+					nv.push_back(first);
+				}
+			}
+			second->setExpression(nv);
+			return second;
+		}
+        
      return 0;
     }
 
@@ -568,11 +586,27 @@ Number* Add::evaluate(Number* a, Number* b)
       else if(a->getType()=="Rational" && b->getType()=="Expression")
       {
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
-        Expression* ee = new Expression();
-        ee->add(a, b, op);
-        return ee;
+		Expression* second = dynamic_cast<Expression*>(b);
+		Integer* first = dynamic_cast<Integer*>(a);
+
+
+		vector<Number*> nv = second->getExpression();
+		for (int i = 0; i < second->getExpression().size(); i++)
+		{
+			if (dynamic_cast<Root*>(second->getExpression().at(i)) != 0)
+			{
+				Add* ab = new Add();
+				nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				break;
+			}
+			if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			{
+				nv.push_back(new Operator("+"));
+				nv.push_back(first);
+			}
+		}
+		second->setExpression(nv);
+		return second;
       }
 
 
@@ -617,11 +651,27 @@ Number* Add::evaluate(Number* a, Number* b)
 	  else if (a->getType() == "Expression" && b->getType() == "Integer")
 	  {
 		  Operator* op = new Operator(cl);
-		  a->simplify();
-		  b->simplify();
-		  Expression* ee = new Expression();
-		  ee->add(a, b, op);
-		  return ee;
+		  Expression* second = dynamic_cast<Expression*>(a);
+		  Integer* first = dynamic_cast<Integer*>(b);
+
+		  vector<Number*> nv = second->getExpression();
+		  for (int i = 0; i < second->getExpression().size(); i++)
+		  {
+			  if (dynamic_cast<Root*>(second->getExpression().at(i)) != 0)
+			  {
+				  Add* ab = new Add();
+				  nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				  break;
+			  }
+			  if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			  {
+				  nv.push_back(new Operator("+"));
+				  nv.push_back(first);
+			  }
+		  }
+		  second->setExpression(nv);
+		  return second;
+		  
 	  }
       else if(a->getType()=="NatE" && b->getType()=="Rational")
       {
@@ -662,11 +712,28 @@ Number* Add::evaluate(Number* a, Number* b)
       else if(a->getType()=="Expression" && b->getType()=="Rational")
       {
         Operator* op = new Operator(cl);
-        a->simplify();
-        b->simplify();
-        Expression* ee = new Expression();
-        ee->add(a, b, op);
-        return ee;
+		Expression* first = dynamic_cast<Expression*>(a);
+		Rational* second = dynamic_cast<Rational*>(b);
+        first->simplify();
+        second->simplify();
+
+		vector<Number*> nv = first->getExpression();
+		for (int i = 0; i < first->getExpression().size(); i++)
+		{
+			if (dynamic_cast<Root*>(first->getExpression().at(i)) != 0)
+			{
+				Add* ab = new Add();
+				nv[i] = ab->evaluate(first->getExpression().at(i), second);
+				break;
+			}
+			if (i == nv.size() - 1 && nv[i]->getType() != second->getType())
+			{
+				nv.push_back(new Operator("+"));
+				nv.push_back(second);
+			}
+		}
+		first->setExpression(nv);
+		return first;
       }
 
 
@@ -765,7 +832,30 @@ Number* Add::evaluate(Number* a, Number* b)
       //ie: expression + expression
       else if(a->getType()=="Expression" && b->getType()=="Expression")
       {
-        return 0;
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  Expression* second = dynamic_cast<Expression*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+		  vector<Number*> nv = first->getExpression();
+		  for (int i = 0; i < first->getExpression().size(); i++)
+		  {
+			  if (dynamic_cast<NatE*>(first->getExpression().at(i)) != 0)
+			  {
+				  Add* ab = new Add();
+				  nv[i] = ab->evaluate(first->getExpression().at(i), second);
+				  break;
+			  }
+			  if (i == nv.size() - 1 && nv[i]->getType() != second->getType())
+			  {
+				  nv.push_back(new Operator("+"));
+				  nv.push_back(second);
+			  }
+		  }
+		  first->setExpression(nv);
+		  return first;
+        
       }
 
 
@@ -822,9 +912,24 @@ Number* Add::evaluate(Number* a, Number* b)
         Operator* op = new Operator(cl);
         first->simplify();
         second->simplify();
-        Expression* e = new Expression();
-        e->add(first, second, op);
-        return e;
+
+		vector<Number*> nv = second->getExpression();
+		for (int i = 0; i < second->getExpression().size(); i++)
+		{
+			if (dynamic_cast<NatE*>(second->getExpression().at(i)) != 0)
+			{
+				Add* ab = new Add();
+				nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				break;
+			}
+			if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			{
+				nv.push_back(new Operator("+"));
+				nv.push_back(first);
+			}
+		}
+		second->setExpression(nv);
+		return second;
       }
       //ie: pi + e
       else if(a->getType()=="Pi" && b->getType()=="NatE")
@@ -878,9 +983,24 @@ Number* Add::evaluate(Number* a, Number* b)
         Operator* op = new Operator(cl);
         first->simplify();
         second->simplify();
-        Expression* e = new Expression();
-        e->add(first, second, op);
-        return e;
+
+		vector<Number*> nv = second->getExpression();
+		for (int i = 0; i < second->getExpression().size(); i++)
+		{
+			if (dynamic_cast<Pi*>(second->getExpression().at(i)) != 0)
+			{
+				Add* ab = new Add();
+				nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				break;
+			}
+			if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			{
+				nv.push_back(new Operator("+"));
+				nv.push_back(first);
+			}
+		}
+		second->setExpression(nv);
+		return second;
       }
       //ie: log + e
       else if(a->getType()=="Log" && b->getType()=="NatE")
@@ -934,9 +1054,24 @@ Number* Add::evaluate(Number* a, Number* b)
         Operator* op = new Operator(cl);
         first->simplify();
         second->simplify();
-        Expression* e = new Expression();
-        e->add(first, second, op);
-        return e;
+
+		vector<Number*> nv = second->getExpression();
+		for (int i = 0; i < second->getExpression().size(); i++)
+		{
+			if (dynamic_cast<Log*>(second->getExpression().at(i)) != 0)
+			{
+				Add* ab = new Add();
+				nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				break;
+			}
+			if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			{
+				nv.push_back(new Operator("+"));
+				nv.push_back(first);
+			}
+		}
+		second->setExpression(nv);
+		return second;
       }
       //ie: root + e
       else if(a->getType()=="Root" && b->getType()=="NatE")
@@ -990,10 +1125,139 @@ Number* Add::evaluate(Number* a, Number* b)
         Operator* op = new Operator(cl);
         first->simplify();
         second->simplify();
-        Expression* e = new Expression();
-        e->add(first, second, op);
-        return e;
+
+		vector<Number*> nv = second->getExpression();
+		for (int i = 0; i < second->getExpression().size(); i++)
+		{
+			if (dynamic_cast<Root*>(second->getExpression().at(i)) != 0)
+			{
+				Add* ab = new Add();
+				nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				break;
+			}
+			if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			{
+				nv.push_back(new Operator("+"));
+				nv.push_back(first);
+			}
+		}
+		second->setExpression(nv);
+		return second;
+		
       }
+	  //ie: expression + NatE
+	  else if (a->getType() == "Expression" && b->getType() == "NatE")
+	  {
+
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+
+		 vector<Number*> nv = first->getExpression();
+		  for (int i = 0; i < first->getExpression().size(); i++)
+		  {
+			  if (dynamic_cast<NatE*>(first->getExpression().at(i)) != 0)
+			  {
+				  Add* ab = new Add();
+				  nv[i] =  ab->evaluate(first->getExpression().at(i), second);
+				  break;
+			 }
+			  if (i == nv.size() - 1 && nv[i]->getType() != second->getType())
+			  {
+				  nv.push_back(new Operator("+"));
+				  nv.push_back(second);
+				}
+			}
+		  first->setExpression(nv);
+		  return first;
+	  }//ie: expression + Pi
+	  else if (a->getType() == "Expression" && b->getType() == "Pi")
+	  {
+
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  Pi* second = dynamic_cast<Pi*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+
+		  vector<Number*> nv = first->getExpression();
+		  for (int i = 0; i < first->getExpression().size(); i++)
+		  {
+			  if (dynamic_cast<Pi*>(first->getExpression().at(i)) != 0)
+			  {
+				  Add* ab = new Add();
+				  nv[i] = ab->evaluate(first->getExpression().at(i), second);
+				  break;
+			  }
+			  if (i == nv.size() - 1 && nv[i]->getType() != second->getType())
+			  {
+				  nv.push_back(new Operator("+"));
+				  nv.push_back(second);
+			  }
+		  }
+		  first->setExpression(nv);
+		  return first;
+	  }//ie: expression + Log
+	  else if (a->getType() == "Expression" && b->getType() == "Log")
+	  {
+
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  Log* second = dynamic_cast<Log*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+
+		  vector<Number*> nv = first->getExpression();
+		  for (int i = 0; i < first->getExpression().size(); i++)
+		  {
+			  if (dynamic_cast<Log*>(first->getExpression().at(i)) != 0)
+			  {
+				  Add* ab = new Add();
+				  nv[i] = ab->evaluate(first->getExpression().at(i), second);
+				  break;
+			  }
+			  if (i == nv.size() - 1 && nv[i]->getType() != second->getType())
+			  {
+				  nv.push_back(new Operator("+"));
+				  nv.push_back(second);
+			  }
+		  }
+		  first->setExpression(nv);
+		  return first;
+	  }//ie: expression + Root
+	  else if (a->getType() == "Expression" && b->getType() == "Root")
+	  {
+
+		  Root* first = dynamic_cast<Root*>(b);
+		  Expression* second = dynamic_cast<Expression*>(a);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+		  
+		  vector<Number*> nv = second->getExpression();
+		  for (int i = 0; i < second->getExpression().size(); i++)
+		  {
+			  if (dynamic_cast<Root*>(second->getExpression().at(i)) != 0)
+			  {
+				  Add* ab = new Add();
+				  nv[i] = ab->evaluate(second->getExpression().at(i), first);
+				  break;
+			  }
+			  if (i == nv.size() - 1 && nv[i]->getType() != first->getType())
+			  {
+				  nv.push_back(new Operator("+"));
+				  nv.push_back(first);
+			  }
+		  }
+		  second->setExpression(nv);
+		  return second;
+	  }
 
  return 0;
 }
