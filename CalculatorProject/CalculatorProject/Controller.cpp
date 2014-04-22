@@ -199,28 +199,87 @@ vector<Number*> Controller::parseQueue(vector<string> queue){
 // SET METHODS
 void Controller::setString(string in)
 {
-	/*
-	if( in.empty() ) {
-	throw exception ("Empty expression");
+	int leftParen = 0;
+	int rightParen = 0;
+	if (in.empty()) {
+		throw exception("Error! Empty expression");
 	}
 
 	int i = 0;
-	while( i < in.length() ) {
-	if( (!isNumber(i) && in.at(i) != 'e' && in.at(i) != 'i'
-	&& in.at(i) != 'l' && in.at(i) != 'o' && in.at(i) != 'g' &&
-	in.at(i) != 'p' && in.at(i) != 'q' && in.at(i) != 'r' &&
-	in.at(i) != 's' && in.at(i) != 't' && in.at(i) != '(' &&
-	in.at(i) != ')' && !isOperator(in.at(i))) ) {
-	throw exception ("Invalid character in expression");
+	while (i < in.length()) {
+		if (in.at(i) == '(') { leftParen++; }
+		if (in.at(i) == ')') { rightParen++; }
+		
+		// Invalid Character Error Check
+		if( (isNumber(i) && (in.at(i) != 'e' || in.at(i) != 'i'
+		|| in.at(i) != 'l' || in.at(i) != 'o' || in.at(i) != 'g' ||
+		in.at(i) != 'p' || in.at(i) != 'q' || in.at(i) != 'r' ||
+		in.at(i) != 's' || in.at(i) != 't') && in.at(i) != '(' &&
+		in.at(i) != ')' && !isOperator(in.at(i))) ) {
+		throw exception ("Invalid character in expression");
+		}
+		
+		// Logaritm Syntax Error Check
+		if (in.at(i) == 'l') {
+			string temp = "";
+			// If a character is 'l.' It must be log: log_ or ln:
+			while ((i < in.length()) && (in.at(i) != '(' && in.at(i) != 'e' && in.at(i) != 'p' && !isNumber(in.at(i)))) {
+				temp.push_back(in.at(i));
+				i++;
+			}
+			if (temp != "log:" && temp != "log_" && temp != "ln:") {
+				throw exception("Logarithm Syntax Error!");
+			}
+		}
+		// Square Root Syntax Error
+		if (in.at(i) == 's') {
+			string temp = "";
+			int j = 0;
+			while ((i + j) < in.length() && j < 5) {
+				temp.push_back(in.at(i + j));
+				j++;
+			}
+			if (temp != "sqrt:") {
+				throw exception("Square Root Syntax Error");
+			}
+			i = i + j;
+		}
+		// Root Error Check
+		if (in.at(i) == 'r') {
+			if (i == 0 && in.at(i) == 'r') {
+				throw exception("Error! nth root not specified");
+			}
+			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i) != ')') {
+				throw exception("Error! nth root not specified");
+			}
+
+			string temp = "";
+			int j = 0;
+			while (((i + j) < in.length()) && (j < 3)) {
+				temp.push_back(in.at(i + j));
+				j++;
+			}
+			if (temp != "rt:") {
+				throw exception("nth root syntax Error");
+			}
+		}
+		// Operator error check
+		if ((i + 1 < in.length()) && isOperator(in.at(i) && isOperator(in.at(i + 1))) && in.at(i + 1) != '-') {
+			throw exception("Operator Error");
+		}
+		// Dividing by zero error
+		if ((i >= 0) && (i + 1 < in.length()) && (in.at(i) == '/' && in.at(i + 1) == '0')) {
+			throw invalid_argument("Error! Cannot divide by zero");
+		}
+		i++;
 	}
 
-	// if( (i >= 0) && (in.at(i-1) == 'l' && (in.at(i) != 'o' && in.at(i) != 'n')) ) {
-	//throw ("Syntax Error");
-	//}
-
+	if (leftParen < rightParen) {
+		throw exception("Error! Missing \"(\"");
 	}
-	*/
-
+	if (leftParen > rightParen) {
+		throw exception("Error! Missing \")\"");
+	}
 	s = in;
 }
 void Controller::setQueue(vector<string> input)
@@ -446,7 +505,7 @@ void Controller::finalStringCleanUp()
 	int i = 0;
 	while (i < s.length())
 	{
-		if ((i == 1) && (s.at(i - 1) == '-') && (isNumber(s.at(i)) || s.at(i) == 'p' || s.at(i) == 'e')) {
+		if ((i >= 1) && (s.at(i - 1) == '-') && (isNumber(s.at(i)) || s.at(i) == 'p' || s.at(i) == 'e')) {
 			out = "";
 			out.push_back('(');
 			out.push_back('-');
@@ -475,7 +534,7 @@ void Controller::finalStringCleanUp()
 				out.push_back(s.at(i));
 				i++;
 			}
-			if (s.at(i) == 'l') {
+			if ( (i < s.length()) && s.at(i) == 'l') {
 				out.push_back(')');
 				out.push_back('*');
 			}
