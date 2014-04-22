@@ -65,6 +65,48 @@ void Log::simplify(){
 	this->coefficient->simplify();
 	this->operand->simplify();
 	this->base->simplify();
+	if (this->operand->getExponent()->getType() != "Integer"){
+		Multiply* mult = new Multiply();
+		this->coefficient = mult->evaluate(this->coefficient, this->operand->getExponent());
+		this->operand->setExponent(new Integer(1));
+	}
+	else{
+		Integer* opex = dynamic_cast<Integer*>(this->operand->getExponent());
+		if (opex->getValue() != 0 && opex->getValue() != 1){
+			Multiply* mult = new Multiply();
+			this->coefficient = mult->evaluate(this->coefficient, this->operand->getExponent());
+			this->operand->setExponent(new Integer(1));
+		}
+		else if (opex->getValue() == 1){
+			if (this->operand->getType() == "Integer"){
+				Integer* op = dynamic_cast<Integer*>(this->operand);
+				Exponentiate* ex = new Exponentiate();
+				for (int i = 2;; i++){
+					for (int j = 2;; j++){
+						Integer* sampInt = dynamic_cast<Integer*>(ex->evaluate(new Integer(i), new Integer(j)));
+						if (op->getValue() < sampInt->getValue()){
+							break;
+						}
+						if (op->getValue() == sampInt->getValue()){
+							Multiply* mult = new Multiply();
+							this->coefficient = mult->evaluate(this->coefficient, new Integer(j));
+							this->operand = new Integer(i);
+							break;
+						}
+
+						if (op->getValue() % sampInt->getValue() == 0 && op->getValue() != 0 && op->getValue() != 1){
+							op->setValue(op->getValue() / sampInt->getValue());
+							Multiply* mult = new Multiply();
+							this->operand = op;
+							this->complex.push_back(new Operator("+"));
+							this->complex.push_back(new Log(this->base, new Integer(i), new Integer(j), new Integer()));
+						}
+					}
+				}
+			}
+
+		}
+	}
 	if (this->base->getType() == "Integer"){
 		Integer* ba = dynamic_cast<Integer*>(this->base);
 		/*try{
