@@ -85,13 +85,13 @@ void Log::simplify(){
 					for (int j = 2;; j++){
 						Integer* sampInt = dynamic_cast<Integer*>(ex->evaluate(new Integer(i), new Integer(j)));
 						if (op->getValue() < sampInt->getValue()){
-							break;
+							goto cont;
 						}
 						if (op->getValue() == sampInt->getValue()){
 							Multiply* mult = new Multiply();
 							this->coefficient = mult->evaluate(this->coefficient, new Integer(j));
 							this->operand = new Integer(i);
-							break;
+							goto cont;
 						}
 
 						if (op->getValue() % sampInt->getValue() == 0 && op->getValue() != 0 && op->getValue() != 1){
@@ -100,6 +100,7 @@ void Log::simplify(){
 							this->operand = op;
 							this->complex.push_back(new Operator("+"));
 							this->complex.push_back(new Log(this->base, new Integer(i), new Integer(j), new Integer()));
+							goto cont;
 						}
 					}
 				}
@@ -107,6 +108,7 @@ void Log::simplify(){
 
 		}
 	}
+	cont:
 	if (this->base->getType() == "Integer"){
 		Integer* ba = dynamic_cast<Integer*>(this->base);
 		/*try{
@@ -307,50 +309,106 @@ vector<Number*> Log::getComplex(){
 
 string Log::toString(){
 	string str;
-	if (this->exponent->getType() != "Integer"){
-		str += "((";
-		str += this->coefficient->toString();
-		str += "log_";
-		str += this->base->toString();
-		str += ":";
-		str += this->operand->toString();
-		for (int i = 0; i < this->complex.size()-1; i++){
-			str += complex[i]->toString();
-		}
-		str += ")^";
-		str += this->exponent->toString();
-		str += ")";
-	}
-	else{
-		Integer* a = dynamic_cast<Integer*>(this->exponent);
-		if (a->getValue() != 0 && a->getValue() != 1){
+	if (this->operand->getType() != "Integer"){
+		if (this->exponent->getType() != "Integer"){
 			str += "((";
 			str += this->coefficient->toString();
 			str += "log_";
 			str += this->base->toString();
 			str += ":";
 			str += this->operand->toString();
-			for (int i = 0; i < this->complex.size(); i++){
+			for (int i = 0; i < this->complex.size() - 1; i++){
 				str += complex[i]->toString();
 			}
 			str += ")^";
 			str += this->exponent->toString();
 			str += ")";
 		}
-		else if(a->getValue() == 1){
-			str += this->coefficient->toString();
-			str += "log_";
-			str += this->base->toString();
-			str += ":";
-			str += this->operand->toString();
-			for (int i = 0; i < this->complex.size(); i++){
-				str += complex[i]->toString();
+		else{
+			Integer* a = dynamic_cast<Integer*>(this->exponent);
+			if (a->getValue() != 0 && a->getValue() != 1){
+				str += "((";
+				str += this->coefficient->toString();
+				str += "log_";
+				str += this->base->toString();
+				str += ":";
+				str += this->operand->toString();
+				for (int i = 0; i < this->complex.size(); i++){
+					str += complex[i]->toString();
+				}
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else if (a->getValue() == 1){
+				str += this->coefficient->toString();
+				str += "log_";
+				str += this->base->toString();
+				str += ":";
+				str += this->operand->toString();
+				for (int i = 0; i < this->complex.size(); i++){
+					str += complex[i]->toString();
+				}
+			}
+			else{
+				str = "1";
+			}
+
+		}
+	}
+	else{
+		Integer* oper = dynamic_cast<Integer*>(this->operand);
+		if (oper->getValue() != 0 && oper->getValue() != 1){
+			if (this->exponent->getType() != "Integer"){
+				str += "((";
+				str += this->coefficient->toString();
+				str += "log_";
+				str += this->base->toString();
+				str += ":";
+				str += this->operand->toString();
+				for (int i = 0; i < this->complex.size(); i++){
+					str += complex[i]->toString();
+				}
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else{
+				Integer* a = dynamic_cast<Integer*>(this->exponent);
+				if (a->getValue() != 0 && a->getValue() != 1){
+					str += "((";
+					str += this->coefficient->toString();
+					str += "log_";
+					str += this->base->toString();
+					str += ":";
+					str += this->operand->toString();
+					for (int i = 0; i < this->complex.size(); i++){
+						str += complex[i]->toString();
+					}
+					str += ")^";
+					str += this->exponent->toString();
+					str += ")";
+				}
+				else if (a->getValue() == 1){
+					str += this->coefficient->toString();
+					str += "log_";
+					str += this->base->toString();
+					str += ":";
+					str += this->operand->toString();
+					for (int i = 0; i < this->complex.size(); i++){
+						str += complex[i]->toString();
+					}
+				}
+				else{
+					str = "1";
+				}
 			}
 		}
 		else{
-			str = "1";
+			for (int i = 1; i < this->complex.size(); i++){
+				str += complex[i]->toString();
+			}
 		}
-
 	}
 	return str;
 }
