@@ -1,5 +1,5 @@
 // LIBRARY INCLUDES
-#include "LibraryIncludes.h"
+#include <iostream>
 
 // CONTROLLER
 #include "Controller.h"
@@ -24,6 +24,11 @@
 #include "Expression.h"
 #include "Operator.h"
 
+// Main
+#include<fstream>
+
+// using namespace std;
+
 // Storage
 vector <string> inputExpression;	// To Store the input that user entered at first
 vector <string> expressionResult;	// To store an expression result
@@ -31,25 +36,38 @@ vector <double> result;				// To store floating point value of user's answer
 int ans;							// 
 
 // Prototypes
+void LoadOperation();
 int menu();
 bool ComputeNewOperation();
 void help();
 void historyMenu();
 
+using namespace std;
 
 int main() {
 	bool terminateProgram = false;
 	int menuChoice = 0;
+
+	cout << "Welcome! Calculator 2.0 is very  easy to use and in less than a minute" << endl;
+	cout << "you can become a master at operating the calculator to it full funtion" << endl;
+	cout << "ality but before doing so. You must first do one important things" << endl << endl;
+	cout << "Select option 3 to learn the correct syntax " << endl;
+	cout << "---------------------------------------------------------------------" << endl << endl;
 	
 	while(terminateProgram == false) {
 		menuChoice = menu();
 		cout << endl;
+
 		switch(menuChoice){
 		case 1: terminateProgram = ComputeNewOperation();
 			break;
 		case 2: historyMenu();
 			break;
-		case 3: help();
+		case 3: LoadOperation();
+			break;
+		case 4: help();
+			break;
+		case 5: help();
 			break;
 		case 0: terminateProgram = true;
 			break;
@@ -76,8 +94,10 @@ int menu() {
 		cout << "                           << Main Menu >>                           " << endl;
 		cout << "1. Compute new expression" << endl;
 		cout << "2. Review previous expressions" << endl;
-		cout << "3. Help" << endl;
-		cout << "4. Quit" << endl << endl;
+		cout << "3. Load operations from file" << endl;
+		cout << "4. Save operations to file" << endl;
+		cout << "5. Help" << endl;
+		cout << "0. Quit" << endl << endl;
 
 		cout << "Enter a menu choice: ";
 		cin >> selection;
@@ -90,7 +110,7 @@ int menu() {
 			cout << "Enter and integer\n" <<endl;
 			quit = false;
 		}
-		else if ((selection < 1) || (selection > 4)) {
+		else if ((selection < 0) || (selection > 5)) {
 			cout << "Invalid Input!"<<endl;
 			cout << "Enter a choice (1-4)\n" <<endl;
 			quit = false;
@@ -202,6 +222,71 @@ bool ComputeNewOperation() {
 	return quit;
 }
 
+void LoadOperation() {
+	// These vectors will be used to copy the inputs of the storage vectors
+	vector<string> file_inputs;
+	vector<string> file_results;
+	vector<double> file_floatresults;
+
+	while (!inputExpression.empty() && !expressionResult.empty() && !result.empty()) {
+		// Access the last element in array to copy over
+		file_inputs.push_back(inputExpression.back());
+		file_results.push_back(expressionResult.back());
+		file_floatresults.push_back(result.back());
+
+		// Remove last element (Technically decrementing counter)
+		inputExpression.pop_back();
+		expressionResult.pop_back();
+		result.pop_back();
+	}
+
+	string fileName = "";
+	ifstream textFile;
+
+	cout << "Enter the name of a file (.txt) to read from: ";
+	cin >> fileName;
+	cout << endl;
+
+	textFile.open(fileName);
+	while (!textFile.is_open()) {
+		cout << "Invalid File name!" << endl;
+		cout << "Enter a valid file name: ";
+		cin >> fileName;
+		cout << endl;
+	}
+
+	// For test purposes
+	cout << "Vector size before load: " << file_inputs.size() << endl;
+
+	// Read file until the end of file is reached
+	while (!textFile.eof()) {
+		string temp;
+		string temp1;
+		double temp2;
+		textFile >> temp >> temp1 >> temp2;
+		inputExpression.push_back(temp);
+		expressionResult.push_back(temp1);
+		result.push_back(temp2);
+	}
+
+	// add the temporary vector back to the orginal
+	while (!file_inputs.empty() && !file_results.empty() && !file_floatresults.empty()) {
+		// Access the last element in array to copy over
+		inputExpression.push_back(file_inputs.back());
+		expressionResult.push_back(file_results.back());
+		result.push_back(file_floatresults.back());
+
+		// Remove last element (Technically decrementing counter)
+		file_inputs.pop_back();
+		file_results.pop_back();
+		file_floatresults.pop_back();
+	}
+
+	// For test purposes
+	cout << "Vector size after load: " << file_inputs.size() << endl;
+
+	textFile.close();
+}
 
 // Function:	historyMenu()
 // Parameter:	None
@@ -323,6 +408,12 @@ void help() {
 	cout << "History Menu allows the user to see previous calculations computed.\n";
 	cout << "It also allows the user to see floating values of past result\n";
 	cout << "as well as selecting an answer to be used in another operations\n" << endl;
+
+	cout << "Loading and Saving Operations\n";
+	cout << "Load and Save are not submenu. Load is used to load operations\n";
+	cout << "from a file provided that the correct filename is entered and the\n";
+	cout << "file is not empty\n";
+	cout << "Save can used to save update the open file or save to a new file.\n"<< endl;
 
 	cout << "Syntax\n";
 	cout << "Always use lowercase letters.\n";
