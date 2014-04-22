@@ -10,6 +10,7 @@
 #include "Root.h"
 #include "Expression.h"
 #include "Operator.h"
+#include "Number.h"
 
 class Multiply : public Operations
 {
