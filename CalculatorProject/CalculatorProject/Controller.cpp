@@ -646,10 +646,10 @@ void Controller::reversePolish()
 				operations.pop();
 				operations.push(expression.at(i));
 			}
-			else if ((!operations.empty()) && (precedence(operations.top()) > precedence(expression.at(i)))) {
+			else if ((!operations.empty()) && (precedence(operations.top()) >= precedence(expression.at(i)))) {
 				// Remove until operation top <= current operator or pararentheses
 				while ((!operations.empty()) && !isOpenParen(operations.top()) && operations.top() != "log_" &&
-					operations.top() != "rt" && ((precedence(operations.top()) > precedence(expression.at(i))))) {
+					operations.top() != "rt" && ((precedence(operations.top()) >= precedence(expression.at(i))))) {
 					queue.push_back(operations.top());
 					operations.pop();
 				}
