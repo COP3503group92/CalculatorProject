@@ -210,7 +210,7 @@ void Controller::setString(string in)
 		if (in.at(i) == '(') { leftParen++; }
 		if (in.at(i) == ')') { rightParen++; }
 		
-		// Invalid Character Error Check
+		/*/ Invalid Character Error Check
 		if( (isNumber(i) && (in.at(i) != 'e' || in.at(i) != 'i'
 		|| in.at(i) != 'l' || in.at(i) != 'o' || in.at(i) != 'g' ||
 		in.at(i) != 'p' || in.at(i) != 'q' || in.at(i) != 'r' ||
@@ -218,7 +218,8 @@ void Controller::setString(string in)
 		in.at(i) != ')' && !isOperator(in.at(i))) ) {
 		throw exception ("Invalid character in expression");
 		}
-		
+		*/
+
 		// Logaritm Syntax Error Check
 		if (in.at(i) == 'l') {
 			string temp = "";
