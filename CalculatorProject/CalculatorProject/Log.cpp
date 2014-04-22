@@ -150,7 +150,9 @@ void Log::simplify(){
 			else if (this->operand->getType() == "NatE"&& this->base->getType() == "NatE"){
 				NatE* op = dynamic_cast<NatE*>(this->operand);
 				complex.push_back(new Operator("+"));
-				complex.push_back(op->getExponent());
+				Multiply* mult = new Multiply();
+				Number* newAns = mult->evaluate(op->getExponent(), this->coefficient);
+				complex.push_back(newAns);
 				this->operand = op->getCoefficient();
 			}
 			else if (this->operand->getType() == "Pi"){
