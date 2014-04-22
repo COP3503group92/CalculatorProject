@@ -184,8 +184,8 @@ bool ComputeNewOperation() {
 			// Call to the correponding operations goes inside
 			// this block
 			op->removeSpaces();
-			op->addMissingOPerator();
-			op->finalStringCleanUp();
+			op->addMissingOPerator();/*
+			op->finalStringCleanUp();*/
 
 			op->toVector();
 			op->reversePolish();

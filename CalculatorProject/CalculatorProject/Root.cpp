@@ -27,10 +27,10 @@ void Root::simplify(){
 		Exponentiate* ex = new Exponentiate();
 		for (int i = 1;; i++){
 			Integer* sampInt = dynamic_cast<Integer*>(ex->evaluate(new Integer(i), this->root));
-			if (op->getValue() < sampInt->getValue()){
+			if (abs(op->getValue()) < sampInt->getValue()){
 				break;
 			}
-			if (op->getValue() % sampInt->getValue() == 0&& op->getValue()!=0&&op->getValue()!=1){
+			if (abs(op->getValue()) % sampInt->getValue() == 0&& op->getValue()!=0&&op->getValue()!=1){
 				op->setValue(op->getValue() / sampInt->getValue());
 				Multiply* mult = new Multiply();
 				this->operand = op;
