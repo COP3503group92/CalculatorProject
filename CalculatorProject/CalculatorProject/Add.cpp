@@ -994,6 +994,59 @@ Number* Add::evaluate(Number* a, Number* b)
         e->add(first, second, op);
         return e;
       }
+	  //ie: expression + NatE
+	  else if (a->getType() == "Expression" && b->getType() == "NatE")
+	  {
+
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  NatE* second = dynamic_cast<NatE*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+		  Expression* e = new Expression();
+		  e->add(first, second, op);
+		  return e;
+	  }//ie: expression + Pi
+	  else if (a->getType() == "Expression" && b->getType() == "Pi")
+	  {
+
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  Pi* second = dynamic_cast<Pi*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+		  Expression* e = new Expression();
+		  e->add(first, second, op);
+		  return e;
+	  }//ie: expression + Log
+	  else if (a->getType() == "Expression" && b->getType() == "Log")
+	  {
+
+		  Expression* first = dynamic_cast<Expression*>(a);
+		  Log* second = dynamic_cast<Log*>(b);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+		  Expression* e = new Expression();
+		  e->add(first, second, op);
+		  return e;
+	  }//ie: expression + Root
+	  else if (a->getType() == "Expression" && b->getType() == "Root")
+	  {
+
+		  Root* first = dynamic_cast<Root*>(b);
+		  Expression* second = dynamic_cast<Expression*>(a);
+
+		  Operator* op = new Operator(cl);
+		  first->simplify();
+		  second->simplify();
+		  Expression* e = new Expression();
+		  e->add(first, second, op);
+		  return e;
+	  }
 
  return 0;
 }
