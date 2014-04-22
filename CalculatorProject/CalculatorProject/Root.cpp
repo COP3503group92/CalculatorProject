@@ -211,8 +211,49 @@ string Root::toString(){
 	}
 	else{
 		Integer* op = dynamic_cast<Integer*>(this->operand);
+		if (op->getValue() != 0 && op->getValue() != 1){
+			if (this->exponent->getType() != "Integer"){
+				str += "((";
+				str += this->coefficient->toString();
+				str += "(";
+				str += this->root->toString();
+				str += "rt:";
+				str += this->operand->toString();
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else{
+				Integer* a = dynamic_cast<Integer*>(this->exponent);
+				if (a->getValue() != 0 && a->getValue() != 1){
+					str += "((";
+					str += this->coefficient->toString();
+					str += this->root->toString();
+					str += "rt:";
+					str += this->operand->toString();
+					str += ")^";
+					str += this->exponent->toString();
+					str += ")";
+				}
+				else if (a->getValue() == 1){
+					str += this->coefficient->toString();
+					str += "(";
+					str += this->root->toString();
+					str += "rt:";
+					str += this->operand->toString();
+					str += ")";
+				}
+				else{
+					str = "1";
+				}
+			}
+		}
+		else if (op->getValue() == 1){
+			str += this->coefficient->toString();
+		}
+
+		return str;
 	}
-	return str;
 }
 Number* Root::getRoot(){
 	return this->root;

@@ -84,6 +84,23 @@ string Expression::toString(){
 		str += this->exponent->toString();
 
 	}
+	for (int i = 0; i < str.size(); i++){
+		if (str.at(i) == '0'){
+			if (str.at(i - 1) == '('){
+				str.erase(i, 1);
+			}
+			else{
+				str.erase(i - 1, 2);
+			}
+		}
+	}
+	for (int i = 0; i < str.size(); i++){
+		if (str.at(i) == '+'){
+			if (str.at(i - 1) == '('){
+				str.erase(i, 1);
+			}
+		}
+	}
 	return str;
 }
 bool Expression::operator==(Number* a){
@@ -136,8 +153,16 @@ void Expression::simplify(){
 			}
 		}
 	}
-	for (int i = 0; i < this->expr.size() - 1; i++){
-		this->expr[i]->simplify();
+	for (int i = 0; i < this->expr.size(); i++){
+		if (this->expr[i]->getType() == "Operator"){
+			Operator* opera = dynamic_cast<Operator*>(this->expr[i]);
+			if (opera->getOperator() == "-"){
+				this->expr[i] = new Operator("+");
+				Multiply mult = Multiply();
+				this->expr[i + 1] = mult.evaluate(this->expr[i + 1], new Integer(-1));
+			}
+			this->expr[i]->simplify();
+		}
 	}
 }
 				
