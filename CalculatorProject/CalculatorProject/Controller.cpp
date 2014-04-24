@@ -250,7 +250,7 @@ void Controller::setString(string in)
 			if (i == 0 && in.at(i) == 'r') {
 				throw exception("Error! nth root not specified");
 			}
-			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i) != ')') {
+			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i - 1) != ')') {
 				throw exception("Error! nth root not specified");
 			}
 
