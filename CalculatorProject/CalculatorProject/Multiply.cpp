@@ -656,17 +656,30 @@ Number* Multiply::evaluate(Number* a, Number* b)
 	}
 	else if (a->getType() == "Expression" && b->getType() == "Expression")
 	{
-		Expression* fir = dynamic_cast<Expression*>(a);
-		Expression* sec = dynamic_cast<Expression*>(b);
+		Expression* first = dynamic_cast<Expression*>(a);
+		Expression* second = dynamic_cast<Expression*>(b);
 
-		Multiply* mi = new Multiply();
-		Number* newCo = mi->evaluate(fir->getCoefficient(), sec->getCoefficient());
-		Number* newEx = mi->evaluate(fir->getExponent(), sec->getExponent());
-		Expression* e = new Expression();
-		e->add(fir, sec, new Operator(cl));
-		e->setCoefficient(newCo);
-		e->setExponent(newEx);
-		return e;
+		Operator* op = new Operator(cl);
+		first->simplify();
+		second->simplify();
+		vector<Number*> nv ;
+
+		for (int i = 0; i < first->getExpression().size(); i++)
+		{
+			if (first->getExpression().at(i)->getType() != "Operator")
+			{
+				for (int j = 0; j < second->getExpression().size(); j++)
+				{
+					if (second->getExpression().at(j)->getType() != "Operator")
+					//checks if the elements of each expression are the same type
+					{
+						nv.push_back(evaluate(first->getExpression().at(i), second->getExpression().at(j)));					
+					}
+				}
+			}
+		}
+		Expression* newEx = new Expression();
+		return newEx;
 	}
 	
 		
