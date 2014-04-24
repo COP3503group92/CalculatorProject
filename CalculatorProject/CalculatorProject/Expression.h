@@ -20,6 +20,7 @@ class Expression :
 public:
 	Expression();
 	~Expression();
+	void add(Number* first);
 	void add(Number* first, Number* second, Number* op);
 	string getType();
 	vector<Number*> getExpression();

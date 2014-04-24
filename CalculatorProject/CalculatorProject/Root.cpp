@@ -21,7 +21,27 @@ Root::Root(Number* operand, Number* root, Number* coefficient, Number* exponent)
 	this->operand = operand;
 	this->root = root;
 }
-void Root::simplify(){	
+void Root::simplify(){
+	if (this->root->getCoefficient()->getType() == "Integer"){
+		Integer* rt = dynamic_cast<Integer*>(this->root->getCoefficient());
+		if (rt->getValue() < 0){
+			rt->setValue(rt->getValue()* -1);
+			this->root = rt;
+			Multiply* mult = new Multiply();
+			this->exponent = mult->evaluate(this->exponent, new Integer(-1));
+		}
+	}
+	else if (this->root->getCoefficient()->getType() == "Rational"){
+		Rational* rt = dynamic_cast<Rational*>(this->root->getCoefficient());
+		if (rt->getNumerator()->getCoefficient()->getType() == "Integer"){
+			Integer* intt = dynamic_cast<Integer*>(rt->getNumerator()->getCoefficient());
+			if (intt->getValue()<0){
+				Multiply* mult = new Multiply();
+				this->root = mult->evaluate(this->root, new Integer(-1));
+				this->exponent = mult->evaluate(this->exponent, new Integer(-1));
+			}
+		}
+	}
 	if (this->operand->getType() == "Integer"&&this->root->getType()=="Integer"){
 		Integer*op = dynamic_cast<Integer*>(this->operand);
 		Exponentiate* ex = new Exponentiate();
