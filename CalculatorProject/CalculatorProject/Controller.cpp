@@ -61,10 +61,11 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 		else if (queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
 			if (queue[i][0] == '^'){
 				Exponentiate* exp = new Exponentiate();
-				Number* expObject = exp->evaluate(numberVector[i - 2], numberVector[i - 1]);
+				Number* expObject = exp->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 				numberVector.push_back(expObject);
-				numberVector.erase(numberVector.begin() + i - 1);
-				numberVector.erase(numberVector.begin() + i - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
 			}
 			else if (queue[i][0] == '+'){
 				/*Number* opObject = new Operator(queue[i]);
@@ -74,32 +75,34 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 				Keeping it in case we give up with complex cases
 				*/
 				Add* add = new Add();
-				Number* sum = add->evaluate(numberVector[i - 2], numberVector[i - 1]);
+				Number* sum = add->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 				numberVector.push_back(sum);
-				numberVector.erase(numberVector.begin() + i - 1);
-				numberVector.erase(numberVector.begin() + i - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
 
 			}
 			else if (queue[i][0] == '-'){
 				Subtract* sub = new Subtract();
-				Number* dif = sub->evaluate(numberVector[i - 2], numberVector[i - 1]);
+				Number* dif = sub->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 				numberVector.push_back(dif);
-				numberVector.erase(numberVector.begin() + i - 1);
-				numberVector.erase(numberVector.begin() + i - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
 			}
 			else if (queue[i][0]=='*'){
 				Multiply* mult = new Multiply();
-				Number* product = mult->evaluate(numberVector[i - 2],numberVector[i - 1]);
+				Number* product = mult->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 				numberVector.push_back(product);
-				numberVector.erase(numberVector.begin() + i - 1);
-				numberVector.erase(numberVector.begin() + i - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
 			}
 			else if (queue[i][0] == '/'){
-				Number* ans = new Rational(numberVector[i - 2], numberVector[i - 1]);
+				Number* ans = new Rational(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 				ans->simplify();
 				numberVector.push_back(ans);
-				numberVector.erase(numberVector.begin() + i - 1);
-				numberVector.erase(numberVector.begin() + i - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
 			}
 		} else {
 
@@ -111,6 +114,7 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 
 	}
 
+	numberVector[0]->simplify();
 	return numberVector;
 
 }
