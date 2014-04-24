@@ -57,7 +57,8 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 			numberVector.push_back(rtObject);
 			numberVector.erase(numberVector.begin() + numberVector.size() - 2);
 			numberVector.erase(numberVector.begin() + numberVector.size() - 2);
-		} else if(queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
+		}
+		else if (queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
 			if (queue[i][0] == '^'){
 				Exponentiate* exp = new Exponentiate();
 				Number* expObject = exp->evaluate(numberVector[i - 2], numberVector[i - 1]);
@@ -65,10 +66,40 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 				numberVector.erase(numberVector.begin() + i - 1);
 				numberVector.erase(numberVector.begin() + i - 2);
 			}
-			else{
-				Number* opObject = new Operator(queue[i]);
+			else if (queue[i][0] == '+'){
+				/*Number* opObject = new Operator(queue[i]);
 
 				numberVector.push_back(opObject);
+				Joe's original code for the entire operator section. 
+				Keeping it in case we give up with complex cases
+				*/
+				Add* add = new Add();
+				Number* sum = add->evaluate(numberVector[i - 2], numberVector[i - 1]);
+				numberVector.push_back(sum);
+				numberVector.erase(numberVector.begin() + i - 1);
+				numberVector.erase(numberVector.begin() + i - 2);
+
+			}
+			else if (queue[i][0] == '-'){
+				Subtract* sub = new Subtract();
+				Number* dif = sub->evaluate(numberVector[i - 2], numberVector[i - 1]);
+				numberVector.push_back(dif);
+				numberVector.erase(numberVector.begin() + i - 1);
+				numberVector.erase(numberVector.begin() + i - 2);
+			}
+			else if (queue[i][0]=='*'){
+				Multiply* mult = new Multiply();
+				Number* product = mult->evaluate(numberVector[i - 2],numberVector[i - 1]);
+				numberVector.push_back(product);
+				numberVector.erase(numberVector.begin() + i - 1);
+				numberVector.erase(numberVector.begin() + i - 2);
+			}
+			else if (queue[i][0] == '/'){
+				Number* ans = new Rational(numberVector[i - 2], numberVector[i - 1]);
+				ans->simplify();
+				numberVector.push_back(ans);
+				numberVector.erase(numberVector.begin() + i - 1);
+				numberVector.erase(numberVector.begin() + i - 2);
 			}
 		} else {
 
@@ -210,7 +241,7 @@ void Controller::setString(string in)
 		if (in.at(i) == '(') { leftParen++; }
 		if (in.at(i) == ')') { rightParen++; }
 		
-		// Invalid Character Error Check
+		/*/ Invalid Character Error Check
 		if( (isNumber(i) && (in.at(i) != 'e' || in.at(i) != 'i'
 		|| in.at(i) != 'l' || in.at(i) != 'o' || in.at(i) != 'g' ||
 		in.at(i) != 'p' || in.at(i) != 'q' || in.at(i) != 'r' ||
@@ -218,7 +249,8 @@ void Controller::setString(string in)
 		in.at(i) != ')' && !isOperator(in.at(i))) ) {
 		throw exception ("Invalid character in expression");
 		}
-		
+		*/
+
 		// Logaritm Syntax Error Check
 		if (in.at(i) == 'l') {
 			string temp = "";
@@ -249,7 +281,7 @@ void Controller::setString(string in)
 			if (i == 0 && in.at(i) == 'r') {
 				throw exception("Error! nth root not specified");
 			}
-			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i) != ')') {
+			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i - 1) != ')') {
 				throw exception("Error! nth root not specified");
 			}
 

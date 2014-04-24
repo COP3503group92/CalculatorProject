@@ -23,7 +23,7 @@ string Operator::getType(){
 }
 
 string Operator::toString(){
-	return " "+this->op+ " ";
+	return this->op;
 }
 void Operator::simplify(){
 }

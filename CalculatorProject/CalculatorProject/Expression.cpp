@@ -2,6 +2,9 @@
 
 Expression::Expression()
 {
+	this->coefficent = new Integer();
+	this->exponent = new Integer();
+	this->expr;
 }
 
 
@@ -9,7 +12,13 @@ Expression::~Expression()
 {
 }
 
+void Expression::add(Number* first){
+	this->expr.push_back(new Operator("+"));
+	this->expr.push_back(first);
+}
+
 void Expression::add(Number* first, Number* second, Number* op){
+	this->expr.push_back(new Operator("+"));
 	this->expr.push_back(first);
 	this->expr.push_back(op);
 	this->expr.push_back(second);
@@ -84,6 +93,23 @@ string Expression::toString(){
 		str += this->exponent->toString();
 
 	}
+	for (int i = 0; i < str.size(); i++){
+		if (str.at(i) == '0'){
+			if (str.at(i - 1) == '('){
+				str.erase(i, 1);
+			}
+			else{
+				str.erase(i - 1, 2);
+			}
+		}
+	}
+	for (int i = 0; i < str.size(); i++){
+		if (str.at(i) == '+'){
+			if (str.at(i - 1) == '('){
+				str.erase(i, 1);
+			}
+		}
+	}
 	return str;
 }
 bool Expression::operator==(Number* a){
@@ -105,7 +131,7 @@ bool Expression::operator==(Number* a){
 }
 void Expression::simplify(){
 	this->coefficent->simplify();
-	Number* common = this->expr[0]->getCoefficient();
+	Number* common = this->expr[1]->getCoefficient();
 	int count;
 	int opCount;
 	for (int j = 0; j < this->expr.size() - 1; j++){
@@ -136,8 +162,16 @@ void Expression::simplify(){
 			}
 		}
 	}
-	for (int i = 0; i < this->expr.size() - 1; i++){
-		this->expr[i]->simplify();
+	for (int i = 0; i < this->expr.size(); i++){
+		if (this->expr[i]->getType() == "Operator"){
+			Operator* opera = dynamic_cast<Operator*>(this->expr[i]);
+			if (opera->getOperator() == "-"){
+				this->expr[i] = new Operator("+");
+				Multiply mult = Multiply();
+				this->expr[i + 1] = mult.evaluate(this->expr[i + 1], new Integer(-1));
+			}
+			this->expr[i]->simplify();
+		}
 	}
 }
 				

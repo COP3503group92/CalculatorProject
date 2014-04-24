@@ -21,16 +21,36 @@ Root::Root(Number* operand, Number* root, Number* coefficient, Number* exponent)
 	this->operand = operand;
 	this->root = root;
 }
-void Root::simplify(){	
+void Root::simplify(){
+	if (this->root->getCoefficient()->getType() == "Integer"){
+		Integer* rt = dynamic_cast<Integer*>(this->root->getCoefficient());
+		if (rt->getValue() < 0){
+			rt->setValue(rt->getValue()* -1);
+			this->root = rt;
+			Multiply* mult = new Multiply();
+			this->exponent = mult->evaluate(this->exponent, new Integer(-1));
+		}
+	}
+	else if (this->root->getCoefficient()->getType() == "Rational"){
+		Rational* rt = dynamic_cast<Rational*>(this->root->getCoefficient());
+		if (rt->getNumerator()->getCoefficient()->getType() == "Integer"){
+			Integer* intt = dynamic_cast<Integer*>(rt->getNumerator()->getCoefficient());
+			if (intt->getValue()<0){
+				Multiply* mult = new Multiply();
+				this->root = mult->evaluate(this->root, new Integer(-1));
+				this->exponent = mult->evaluate(this->exponent, new Integer(-1));
+			}
+		}
+	}
 	if (this->operand->getType() == "Integer"&&this->root->getType()=="Integer"){
 		Integer*op = dynamic_cast<Integer*>(this->operand);
 		Exponentiate* ex = new Exponentiate();
 		for (int i = 1;; i++){
 			Integer* sampInt = dynamic_cast<Integer*>(ex->evaluate(new Integer(i), this->root));
-			if (op->getValue() < sampInt->getValue()){
+			if (abs(op->getValue()) < sampInt->getValue()){
 				break;
 			}
-			if (op->getValue() % sampInt->getValue() == 0&& op->getValue()!=0&&op->getValue()!=1){
+			if (abs(op->getValue()) % sampInt->getValue() == 0&& op->getValue()!=0&&op->getValue()!=1){
 				op->setValue(op->getValue() / sampInt->getValue());
 				Multiply* mult = new Multiply();
 				this->operand = op;
@@ -211,8 +231,49 @@ string Root::toString(){
 	}
 	else{
 		Integer* op = dynamic_cast<Integer*>(this->operand);
+		if (op->getValue() != 0 && op->getValue() != 1){
+			if (this->exponent->getType() != "Integer"){
+				str += "((";
+				str += this->coefficient->toString();
+				str += "(";
+				str += this->root->toString();
+				str += "rt:";
+				str += this->operand->toString();
+				str += ")^";
+				str += this->exponent->toString();
+				str += ")";
+			}
+			else{
+				Integer* a = dynamic_cast<Integer*>(this->exponent);
+				if (a->getValue() != 0 && a->getValue() != 1){
+					str += "((";
+					str += this->coefficient->toString();
+					str += this->root->toString();
+					str += "rt:";
+					str += this->operand->toString();
+					str += ")^";
+					str += this->exponent->toString();
+					str += ")";
+				}
+				else if (a->getValue() == 1){
+					str += this->coefficient->toString();
+					str += "(";
+					str += this->root->toString();
+					str += "rt:";
+					str += this->operand->toString();
+					str += ")";
+				}
+				else{
+					str = "1";
+				}
+			}
+		}
+		else if (op->getValue() == 1){
+			str += this->coefficient->toString();
+		}
+
+		return str;
 	}
-	return str;
 }
 Number* Root::getRoot(){
 	return this->root;

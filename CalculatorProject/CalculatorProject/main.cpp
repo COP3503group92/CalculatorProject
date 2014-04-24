@@ -36,7 +36,8 @@ vector <double> result;				// To store floating point value of user's answer
 int ans;							// 
 
 // Prototypes
-void LoadOperation();
+string LoadOperations();
+void SaveOperations();
 int menu();
 bool ComputeNewOperation();
 void help();
@@ -45,13 +46,16 @@ void historyMenu();
 using namespace std;
 
 int main() {
+	string ans_value = "";
+	string defaultSave = "";
 	bool terminateProgram = false;
 	int menuChoice = 0;
+	ofstream outFile;
 
 	cout << "Welcome! Calculator 2.0 is very  easy to use and in less than a minute" << endl;
 	cout << "you can become a master at operating the calculator to it full funtion" << endl;
 	cout << "ality but before doing so. You must first do one important things" << endl << endl;
-	cout << "Select option 3 to learn the correct syntax " << endl;
+	cout << "Select option 5 to learn the correct syntax " << endl;
 	cout << "---------------------------------------------------------------------" << endl << endl;
 	
 	while(terminateProgram == false) {
@@ -63,9 +67,9 @@ int main() {
 			break;
 		case 2: historyMenu();
 			break;
-		case 3: LoadOperation();
+		case 3: defaultSave = LoadOperations();
 			break;
-		case 4: help();
+		case 4: SaveOperations();
 			break;
 		case 5: help();
 			break;
@@ -73,6 +77,19 @@ int main() {
 			break;
 		}// Close switch statement
 	}
+
+	if(!defaultSave.empty()) {
+		// Saving equations to file
+		outFile.open(defaultSave);
+		int i = 0;
+		while (i < inputExpression.size()) {
+			outFile << inputExpression.at(i) << endl;
+			outFile << expressionResult.at(i) << endl;
+			outFile << result.at(i) << endl;
+		}
+		outFile.close();
+	}
+
 	cout << "\nGoodbye!" <<endl << endl; 
 	system("pause");
 	return 0;
@@ -155,13 +172,19 @@ bool ComputeNewOperation() {
 		getline(cin, input);
 
 		if (input == "ans") {
-			if( !result.empty() ) {
+			// If the answer is empty then set answer to last operation
+			if( ans == 0 && !result.empty() ) {
 				ans = result.back();
 				cout << "Enter an expression: ans ";
 				getline(cin, input);
 			}
+			else if (ans == 0 && result.empty()) {
+				cout << "Error!\nNo operations have been performed yet!" << endl << endl;
+			}
 			else {
-				cout << "Error!\nNo operations have been performed yet!"<<endl <<endl;
+				// whatever that is in ans add it to
+				cout << "Enter an expression: ans ";
+				getline(cin, input);
 			}
 		}
 		else if(input == "quit") {
@@ -179,40 +202,38 @@ bool ComputeNewOperation() {
 			}
 			catch( exception &e ) {
 				cout << e.what() << endl;
+				bad_input = true;
 			}
 			if(!bad_input) {	
-			// Call to the correponding operations goes inside
-			// this block
-			op->removeSpaces();
-			op->addMissingOPerator();
-			op->finalStringCleanUp();
+				// Call to the correponding operations goes inside
+				// this block
+				op->removeSpaces();
+				op->addMissingOPerator();
+				op->finalStringCleanUp();
 
-			op->toVector();
-			op->reversePolish();
-			op->printInfo();
+				op->toVector();
+				op->reversePolish();
+				op->printInfo();
 
-			vector<Number*> queue = op->parseQueue(op->getQueue());
+				vector<Number*> queue = op->parseQueue(op->getQueue());
 
-			cout << endl << endl;
+				cout << endl << endl;
 
-			for (int sizeCount = 0; sizeCount < queue.size(); sizeCount++){
+				for (int sizeCount = 0; sizeCount < queue.size(); sizeCount++){
 
-				cout << "Result [" << sizeCount << "] = " << queue[sizeCount]->toString() << endl;
+					cout << "Result [" << sizeCount << "] = " << queue[sizeCount]->toString() << endl;
 
-			}
+				}
 
-			expressionResult.push_back("hah");
-			expressionResult.push_back("lmao");
-			expressionResult.push_back("seriously");
+				// Add expression
+				inputExpression.push_back(input);
+				expressionResult.push_back(queue[0]->toString());
+				result.push_back(0);
 
-			result.push_back(45);
-			result.push_back(75);
-			result.push_back(65);
-
-			// This is the  end of the block to the operations
-			cout << endl;
-			// Delete the ShuntingYard object using the destructor
-			op->~Controller();
+				// This is the  end of the block to the operations
+				cout << endl;
+				// Delete the ShuntingYard object using the destructor
+				op->~Controller();
 			}
 			cout << endl;
 		}
@@ -222,7 +243,7 @@ bool ComputeNewOperation() {
 	return quit;
 }
 
-void LoadOperation() {
+string LoadOperations() {
 	// These vectors will be used to copy the inputs of the storage vectors
 	vector<string> file_inputs;
 	vector<string> file_results;
@@ -286,6 +307,55 @@ void LoadOperation() {
 	cout << "Vector size after load: " << file_inputs.size() << endl;
 
 	textFile.close();
+	return fileName;
+}
+
+void SaveOperations(){
+	int choice;
+	ofstream outFile;
+
+	cout << "---------------------------------------------------------------------" << endl;
+	cout << "                          <<   Save Menu   >>                        " << endl << endl;
+
+	cout << "1. Save" << endl;
+	cout << "2. Save As" << endl << endl;
+
+	cout << "Enter a choice: ";
+	cin >> choice;
+
+	while (cin.fail() || (choice < 0 && choice > 2)) {
+		cin.clear();
+		cin.ignore(INT_MAX, '\n');
+
+		cout << "Invalid input!!" << endl;
+		cout << "Enter (1 or 2)";
+		cin >> choice;
+	}
+	if (choice == 2) {
+		string temp = "";
+		cout << "Save as: ";
+		cin >> temp;
+
+		if (temp != "cancel") {
+			// Add extension to name
+			temp = temp + string(".txt");
+
+			// Saving equations to file
+			outFile.open(temp);
+			int i = 0;
+			while (i < inputExpression.size()) {
+				outFile << inputExpression.at(i) << endl;
+				outFile << expressionResult.at(i) << endl;
+				outFile << result.at(i) << endl;
+			}
+			outFile.close();
+			cout << "Operations saved to file \"" << temp << ".\"" << endl << endl;
+		}
+	}
+	else {
+		// Just save to what was opened
+		cout << "Operations saved to file" << endl << endl;
+	}
 }
 
 // Function:	historyMenu()
@@ -299,6 +369,19 @@ void historyMenu() {
 	int selection;
 	int hist;
 	
+	cout << "---------------------------------------------------------------------" << endl;
+	cout << "                          <<   History!   >>                         " << endl << endl;
+	
+	// First print out the inputs witht the result in expression format
+	int print = 1;
+	int counter = inputExpression.size() - 1;
+	while (counter >= 0) {
+		cout << print << "\t" << inputExpression.at(counter)
+			<< "\t\t" << expressionResult.at(counter) << endl;
+		counter--;
+		print++;
+	}
+
 	do {
 		cout << "---------------------------------------------------------------------" << endl;
 		cout << "                          <<   History!   >>                         " << endl << endl;
@@ -308,6 +391,7 @@ void historyMenu() {
 
 		cout << "Enter a selection: ";
 		cin >> selection;
+		cout << endl;
 
 		if(cin.fail()) {
 			cin.clear();
@@ -321,43 +405,19 @@ void historyMenu() {
 			cout << "Enter a choice (1-3)\n" <<endl;
 		}
 		else if (selection == 1) {
-			cout << "Display floating value (Y or N): ";
-			cin >> floating;
-	
-			while( cin.fail() || (floating != 'y') && (floating != 'n') && (floating != 'Y') && (floating != 'N') ) {
-				cin.clear();
-				cin.ignore(INT_MAX, '\n');
-				cout << "Wrong Input!\n"<< endl;
-				cout << "Enter Y for yes and N for No: ";
-				cin >> floating;
-			}
-		
-
-			if( !inputExpression.empty() && (floating == 'y' || floating == 'Y') ) {
-				int print = 1;
-				int counter = inputExpression.size() - 1;
-				while( counter >= 0 ) {
-					cout << print << "\t" << inputExpression.at(counter) 
-						<<"\t\t"  << expressionResult.at(counter) <<"\t\t"  << result.at(counter) << endl;
-					counter--;
-					print++;
-				}
-			}
-			else if( !inputExpression.empty() && (floating == 'n' || floating == 'N') ) {
-				int print = 1;
-				int counter = inputExpression.size() - 1;
-				while( counter >= 0 ) {
-					cout << print << "\t" << inputExpression.at(counter) 
-						<<"\t\t"  << expressionResult.at(counter)<< endl;
-					counter--;
-					print++;
-				}
+			if(inputExpression.empty()){
+				cout << "No operations have been performed yet" << endl;
 			}
 			else {
-				cout << "No operations has been performed yet" << endl;
-				cout << "No history available yet" << endl << endl;
+				int print = 1;
+				int counter = inputExpression.size() - 1;
+				while (counter >= 0) {
+					cout << print << "\t" << inputExpression.at(counter)
+						<< "\t\t" << expressionResult.at(counter) << "\t\t" << result.at(counter) << endl;
+					counter--;
+					print++;
+				}
 			}
-
 		}
 		else if(selection == 2) {
 			int sel;
