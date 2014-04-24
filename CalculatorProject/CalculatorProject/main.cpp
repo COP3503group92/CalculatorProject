@@ -55,7 +55,7 @@ int main() {
 	cout << "Welcome! Calculator 2.0 is very  easy to use and in less than a minute" << endl;
 	cout << "you can become a master at operating the calculator to it full funtion" << endl;
 	cout << "ality but before doing so. You must first do one important things" << endl << endl;
-	cout << "Select option 3 to learn the correct syntax " << endl;
+	cout << "Select option 5 to learn the correct syntax " << endl;
 	cout << "---------------------------------------------------------------------" << endl << endl;
 	
 	while(terminateProgram == false) {
