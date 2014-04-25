@@ -182,22 +182,21 @@ bool ComputeNewOperation(string ans) {
 				// Update input to 
 				input = ans + tempInput;
 				// Reset answer to Null
-				ans.clear();
+				ans = "";
 			}
 			else if (ans.empty() && expressionResult.empty()) {
 				cout << "Error!\nNo operations have been performed yet!" << endl << endl;
 			}
 			else {
 				// Answer is already loaded with values from the history
+				ans = "(" + ans + ")";
 				string tempInput = "";
-				ans = "(" + expressionResult.back() + ")";
 				cout << "Enter an expression: ans ";
-				getline(cin, tempInput);
-
+				cin >> tempInput;
 				// Update input to 
 				input = ans + tempInput;
 				// Reset answer to Null
-				ans.clear();
+				ans = "";
 			}
 		}
 		if(input == "quit") {
@@ -262,7 +261,7 @@ string LoadOperations() {
 	vector<string> file_results;
 	vector<double> file_floatresults;
 
-	while (!inputExpression.empty() && !expressionResult.empty() && !result.empty()) {
+	while (!inputExpression.empty() && !expressionResult.empty()) {
 		// Access the last element in array to copy over
 		file_inputs.push_back(inputExpression.back());
 		file_results.push_back(expressionResult.back());
@@ -289,9 +288,6 @@ string LoadOperations() {
 		cout << endl;
 	}
 
-	// For test purposes
-	cout << "Vector size before load: " << file_inputs.size() << endl;
-
 	// Read file until the end of file is reached
 	while (!textFile.eof()) {
 		string temp;
@@ -317,7 +313,7 @@ string LoadOperations() {
 	}
 
 	// For test purposes
-	cout << "Vector size after load: " << file_inputs.size() << endl;
+	cout << "Files loaded!" << endl;
 
 	textFile.close();
 	return fileName;
@@ -390,8 +386,8 @@ string historyMenu() {
 	int print = 1;
 	int counter = inputExpression.size() - 1;
 	while (counter >= 0) {
-		cout << print << "\t" << inputExpression.at(counter)
-			<< "\t\t" << expressionResult.at(counter) << endl;
+		cout << print << setw(12) << inputExpression.at(counter)
+			<< setw(20) << expressionResult.at(counter) << endl;
 		counter--;
 		print++;
 	}
@@ -426,8 +422,8 @@ string historyMenu() {
 				int print = 1;
 				int counter = inputExpression.size() - 1;
 				while (counter >= 0) {
-					cout << print << "\t" << inputExpression.at(counter)
-						<< "\t\t" << expressionResult.at(counter) << "\t\t" << result.at(counter) << endl;
+					cout << print << setw(12) << inputExpression.at(counter)
+						<< setw(20) << expressionResult.at(counter) << setw(20) << result.at(counter) << endl;
 					counter--;
 					print++;
 				}
@@ -438,9 +434,11 @@ string historyMenu() {
 			int sel;
 			cout << "Enter the history to set to \"ans\": ";
 			cin >> sel;
+			sel = sel - 1;
 
+			int count = expressionResult.size() - 1;
 			if(!expressionResult.empty() && (sel < expressionResult.size()) ) {
-				ans = result.at((result.size() - sel - 1));
+				ans = expressionResult.at((count - sel));
 			}
 			else {
 				cout << "No operations have been performed yet"<< endl;

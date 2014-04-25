@@ -843,6 +843,13 @@ void Controller::reversePolish()
 			else if ((!operations.empty()) && isOpenParen(operations.top())) {
 				operations.push(expression.at(i));
 			}
+			// Else if
+			else if (!operations.empty() && 
+				((operations.top() == "log_" && removeLog) || (operations.top() == "rt" && removeRt)) ){
+				queue.push_back(operations.top());
+				operations.pop();
+				operations.push(expression.at(i));
+			}
 			else if ((!operations.empty()) && operations.top() == "log_" && removeLog && expression.at(i) != "^") {
 				queue.push_back(operations.top());
 				operations.pop();
