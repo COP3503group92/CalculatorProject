@@ -45,11 +45,12 @@ Number* Add::evaluate(Number* a, Number* b)
         }
         else if(b->getType()=="Rational")
         {
-            Rational* i = dynamic_cast<Rational*>(a);
-            i->simplify();
-            evaluate(i, b);
-			
-			return i;
+			b->simplify();
+			Rational* i = new Rational(a);
+			i->simplify();
+			Number* result = evaluate(i, b);
+			result->simplify();
+			return result;
         }
         else if(b->getType()=="NatE")
         {

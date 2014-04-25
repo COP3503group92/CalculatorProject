@@ -57,18 +57,52 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 			numberVector.push_back(rtObject);
 			numberVector.erase(numberVector.begin() + numberVector.size() - 2);
 			numberVector.erase(numberVector.begin() + numberVector.size() - 2);
-		} else if(queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
+		}
+		else if (queue[i][0] == '+' || (queue[i][0] == '-' && queue[i].size() == 1) || queue[i][0] == '*' || queue[i][0] == '/' || queue[i][0] == '^'){
 			if (queue[i][0] == '^'){
 				Exponentiate* exp = new Exponentiate();
-				Number* expObject = exp->evaluate(numberVector[i - 2], numberVector[i - 1]);
+				Number* expObject = exp->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
 				numberVector.push_back(expObject);
-				numberVector.erase(numberVector.begin() + i - 1);
-				numberVector.erase(numberVector.begin() + i - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
 			}
-			else{
-				Number* opObject = new Operator(queue[i]);
+			else if (queue[i][0] == '+'){
+				/*Number* opObject = new Operator(queue[i]);
 
 				numberVector.push_back(opObject);
+				Joe's original code for the entire operator section. 
+				Keeping it in case we give up with complex cases
+				*/
+				Add* add = new Add();
+				Number* sum = add->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
+				numberVector.push_back(sum);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
+			}
+			else if (queue[i][0] == '-'){
+				Subtract* sub = new Subtract();
+				Number* dif = sub->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
+				numberVector.push_back(dif);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
+			}
+			else if (queue[i][0]=='*'){
+				Multiply* mult = new Multiply();
+				Number* product = mult->evaluate(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
+				numberVector.push_back(product);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+
+			}
+			else if (queue[i][0] == '/'){
+				Number* ans = new Rational(numberVector[numberVector.size() - 2], numberVector[numberVector.size() - 1]);
+				ans->simplify();
+				numberVector.push_back(ans);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
+				numberVector.erase(numberVector.begin() + numberVector.size() - 2);
 			}
 		} else {
 
@@ -80,6 +114,7 @@ vector<Number*> Controller::convertToNumberVector(vector<string> queue){
 
 	}
 
+	numberVector[0]->simplify();
 	return numberVector;
 
 }
@@ -451,6 +486,7 @@ int Controller::precedence(std::string operation)
 // Method:		addMissingOperator(string)
 void Controller::addMissingOPerator()
 {
+	// NEW UPDATED CODES
 	string out = "";
 	int par = 0;
 	bool leftPar = false;
@@ -536,6 +572,52 @@ void Controller::addMissingOPerator()
 	if (leftPar) {
 		out.push_back(')');
 	}
+	
+	// OLD CODES TO ADD THE MISSING OPERATOR =====================================================
+	/*
+	string out = "";
+	for (int i = 0; i < s.length(); i++) {
+		// For cases like this -(9)
+		// Change to (-1)*(9)
+		if ((i == 0) && (i + 1 < s.length()) && (s.at(i) == '-') &&
+			((isNumber(s.at(i + 1))) || (s.at(i + 1) == 'e') || (s.at(i + 1) == 'p')
+			|| (isOpenParen(s.at(i + 1))))) {
+			out.push_back('(');
+			out.push_back(s.at(i));
+			out.push_back('1');
+			out.push_back(')');
+			out.push_back('*');
+			i++;
+		}
+		else if ((i == 0) && (i + 1 < s.length()) && (s.at(i) == '-') && (s.at(i + 1) == '-')) {
+			i = i + 2;
+		}
+		else if ((i >= 0) && (i - 1 >= 0) && ((s.at(i) == '-')) && ((i + 2 < s.length()) &&
+			(s.at(i + 1) == '-') && (s.at(i - 1) != '^'))) {
+			if (s.at(i - 1) != '(') {
+				out.push_back('+');
+			}
+			i = i + 2;
+		}
+		//else if( (i + 1 < s.length()) && s.at(i) == '^' && s.at(i+1) == '-' ) {
+
+		//}
+		// This is for cases like e() or 4(67)
+		// If the previous character is a number or special
+		if ((i > 0) && (s.at(i) == '(') &&
+			(isNumber(s.at(i - 1)) || (s.at(i - 1) == 'p') || (s.at(i - 1) == 'e'))) {
+			out.push_back('*');
+		}
+		else if ((i > 0) && (s.at(i - 1) == ')') && (s.at(i) == '(')) {
+			out.push_back('*');
+		}
+		else if ((i > 0) && (s.at(i - 1) == ')') && !isOperator(s.at(i)) &&
+			(s.at(i) != '(') && (s.at(i) != ')') && (s.at(i) != ':')) {
+			out.push_back('*');
+		}
+		out.push_back(s.at(i));
+	} */
+	// END OF OLD CODES =================================================================================
 	std::cout << "Missing Operator Check\n" << out << endl << endl;
 	s = out;
 }
@@ -546,6 +628,7 @@ void Controller::addMissingOPerator()
 //				Example: if the user entered 2*-7
 void Controller::finalStringCleanUp()
 {
+	// NEW UPDATED CODES ================================================================================
 	string out = "";
 	int i = 0;
 	while (i < s.length()) {
@@ -559,21 +642,13 @@ void Controller::finalStringCleanUp()
 		}
 		i++;
 	}
-	// OLD STUFF ============================================================================
+	
+	// OLD CODES ========================================================================================
 	/*
+	string out = "";
+	int i = 0;
 	while (i < s.length())
 	{
-		// Taking care of the negative number
-		if ((i-1)>= 0 && s.at(i) == '-') {
-			string temp = "(";
-			while ((i+1)<s.length() && !isOperator(s.at(i+1)) && 
-				s.at(i+1) != 'l' && s.at(i+1) != 'r' && s.at(i+1) != 's') {
-				temp.push_back(s.at(i));
-				i++;
-			}
-			temp.push_back(')');
-			out = out + temp;
-		}
 		if ((i >= 1) && (s.at(i - 1) == '-') && (isNumber(s.at(i)) || s.at(i) == 'p' || s.at(i) == 'e')) {
 			out = "";
 			out.push_back('(');
@@ -617,6 +692,8 @@ void Controller::finalStringCleanUp()
 		}
 	}
 	*/
+	// END OF OLD CODES ==========================================================================
+	
 	// If prarmeter is removed, uncommment
 	// s = out;
 	cout << "Final Clean Up Check\n" << out << endl << endl;

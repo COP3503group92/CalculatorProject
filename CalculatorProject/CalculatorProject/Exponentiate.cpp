@@ -19,6 +19,9 @@ Number* Exponentiate::evaluate(Number* a, Number* b)
 		int base = aCast->getValue();
 		int exponent = bCast->getValue();
 
+		if (exponent < 0){
+			exponent *= -1;
+		}
 		Number* result = new Integer((int)pow(base, exponent));
 
 		return result;

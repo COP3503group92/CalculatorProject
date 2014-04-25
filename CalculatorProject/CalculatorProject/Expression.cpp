@@ -2,6 +2,9 @@
 
 Expression::Expression()
 {
+	this->coefficent = new Integer();
+	this->exponent = new Integer();
+	this->expr;
 }
 
 
@@ -9,7 +12,13 @@ Expression::~Expression()
 {
 }
 
+void Expression::add(Number* first){
+	this->expr.push_back(new Operator("+"));
+	this->expr.push_back(first);
+}
+
 void Expression::add(Number* first, Number* second, Number* op){
+	this->expr.push_back(new Operator("+"));
 	this->expr.push_back(first);
 	this->expr.push_back(op);
 	this->expr.push_back(second);
@@ -122,7 +131,7 @@ bool Expression::operator==(Number* a){
 }
 void Expression::simplify(){
 	this->coefficent->simplify();
-	Number* common = this->expr[0]->getCoefficient();
+	Number* common = this->expr[1]->getCoefficient();
 	int count;
 	int opCount;
 	for (int j = 0; j < this->expr.size() - 1; j++){
