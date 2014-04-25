@@ -228,6 +228,7 @@ void Controller::setString(string in)
 				temp.push_back(in.at(i));
 				i++;
 			}
+			i--;
 			if (temp != "log:" && temp != "log_" && temp != "ln:") {
 				throw exception("Logarithm Syntax Error!");
 			}
@@ -250,7 +251,7 @@ void Controller::setString(string in)
 			if (i == 0 && in.at(i) == 'r') {
 				throw exception("Error! nth root not specified");
 			}
-			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i) != ')') {
+			if ((i - 1 >= 0) && !isNumber(in.at(i - 1)) && in.at(i - 1) != ')') {
 				throw exception("Error! nth root not specified");
 			}
 
@@ -451,46 +452,89 @@ int Controller::precedence(std::string operation)
 void Controller::addMissingOPerator()
 {
 	string out = "";
+	int par = 0;
+	bool leftPar = false;
 	for (int i = 0; i < s.length(); i++) {
 		// For cases like this -(9)
 		// Change to (-1)*(9)
-		if ((i == 0) && (i + 1 < s.length()) && (s.at(i) == '-') &&
-			((isNumber(s.at(i + 1))) || (s.at(i + 1) == 'e') || (s.at(i + 1) == 'p')
-			|| (isOpenParen(s.at(i + 1))))) {
+		if ( (i == 0) && (s.at(i) == '-') ) {
 			out.push_back('(');
 			out.push_back(s.at(i));
-			out.push_back('1');
-			out.push_back(')');
-			out.push_back('*');
-			i++;
+			leftPar = true;
 		}
-		else if ((i == 0) && (i + 1 < s.length()) && (s.at(i) == '-') && (s.at(i + 1) == '-')) {
-			i = i + 2;
+		// Negative cases with the log: rt:
+		else if (s.at(i) == '-' && !out.empty() && out.back() == ':') {
+			out.push_back('(');
+			out.push_back(s.at(i));
+			leftPar = true;
 		}
-		else if ((i >= 0) && (i - 1 >= 0) && ((s.at(i) == '-')) && ((i + 2 < s.length()) &&
-			(s.at(i + 1) == '-') && (s.at(i - 1) != '^'))) {
-			if (s.at(i - 1) != '(') {
+		// Cases for --
+		else if (!out.empty() && out.back() == '-' && s.at(i) == '-') {
+			// Case: --9 should yield 9
+			if (s.at(0) == '-') {
+				// Remove previous negative from out
+				out.pop_back();
+			}
+			// Case 6--9 should yield 6+9
+			else {
+				// Replace -- by +
+				out.pop_back();
 				out.push_back('+');
 			}
-			i = i + 2;
 		}
-		//else if( (i + 1 < s.length()) && s.at(i) == '^' && s.at(i+1) == '-' ) {
-
-		//}
-		// This is for cases like e() or 4(67)
-		// If the previous character is a number or special
-		if ((i > 0) && (s.at(i) == '(') &&
-			(isNumber(s.at(i - 1)) || (s.at(i - 1) == 'p') || (s.at(i - 1) == 'e'))) {
+		// cases like 3^-4 or 4/-5 or need to be taken into account
+		else if ( (i-1 >= 0) && s.at(i) == '-' && !out.empty() && isOperator(out.back()) ) {
+			if (leftPar && par == 0){
+				par++;
+			}
+			out.push_back('(');
+			out.push_back(s.at(i));
+			leftPar = true;
+		}
+		// to add corresponding parenthese
+		else if (isOperator(s.at(i)) && leftPar && par == 0) {
+			out.push_back(')');
+			out.push_back(s.at(i));
+			leftPar = false;
+		}
+		// For log or ln or sqrt
+		else if ((s.at(i) == 'l' || s.at(i) == 's') && i != 0) {
+			if (leftPar && par == 0){ 
+				out.push_back(')');
+				leftPar = false;
+			}
 			out.push_back('*');
+			out.push_back(s.at(i));
 		}
-		else if ((i > 0) && (s.at(i - 1) == ')') && (s.at(i) == '(')) {
-			out.push_back('*');
+		// For rt
+		else if (s.at(i) == 'r' && leftPar && par == 0) {
+			out.push_back(')');
+			out.push_back(s.at(i));
+			leftPar = false;
 		}
-		else if ((i > 0) && (s.at(i - 1) == ')') && !isOperator(s.at(i)) &&
-			(s.at(i) != '(') && (s.at(i) != ')') && (s.at(i) != ':')) {
-			out.push_back('*');
+		// If left parenthese
+		else if (s.at(i) == '(') {
+			out.push_back(s.at(i));
+			par++;
 		}
-		out.push_back(s.at(i));
+		else if (s.at(i) == ')') {
+			out.push_back(s.at(i));
+			par--;
+			if (par == 0 && leftPar && (i+1) == s.length()){
+				out.push_back(')');
+				leftPar = false;
+			}
+		}
+		else {
+			out.push_back(s.at(i));
+		}
+	}
+	while (par != 0) {
+		out.push_back(')');
+		par--;
+	}
+	if (leftPar) {
+		out.push_back(')');
 	}
 	std::cout << "Missing Operator Check\n" << out << endl << endl;
 	s = out;
@@ -504,8 +548,32 @@ void Controller::finalStringCleanUp()
 {
 	string out = "";
 	int i = 0;
+	while (i < s.length()) {
+		if ((i - 1) >= 0 && s.at(i) == '-' && 
+			(isOperator(s.at(i-1)) || s.at(i-1) == '(')) {
+				out = out + string("(-1)*");
+				
+			}
+		else {
+			out.push_back(s.at(i));
+		}
+		i++;
+	}
+	// OLD STUFF ============================================================================
+	/*
 	while (i < s.length())
 	{
+		// Taking care of the negative number
+		if ((i-1)>= 0 && s.at(i) == '-') {
+			string temp = "(";
+			while ((i+1)<s.length() && !isOperator(s.at(i+1)) && 
+				s.at(i+1) != 'l' && s.at(i+1) != 'r' && s.at(i+1) != 's') {
+				temp.push_back(s.at(i));
+				i++;
+			}
+			temp.push_back(')');
+			out = out + temp;
+		}
 		if ((i >= 1) && (s.at(i - 1) == '-') && (isNumber(s.at(i)) || s.at(i) == 'p' || s.at(i) == 'e')) {
 			out = "";
 			out.push_back('(');
@@ -548,6 +616,7 @@ void Controller::finalStringCleanUp()
 			i++;
 		}
 	}
+	*/
 	// If prarmeter is removed, uncommment
 	// s = out;
 	cout << "Final Clean Up Check\n" << out << endl << endl;
@@ -795,12 +864,22 @@ void Controller::reversePolish()
 				temp = operations.top() + expression.at(i);
 				operations.pop();
 				queue.push_back(temp);
+				// Cases like log_(2rt:-4):(7-3)
+				if (removeRt && !operations.empty() && (operations.top() == "rt")) {
+					queue.push_back(operations.top());
+					operations.pop();
+				}
 				i++;
 			}
 			else {
 				// It must be a number or a special number 
 				// Add to queue
 				queue.push_back(expression.at(i));
+				// Cases like log_(2rt:4):(7-3)
+				if (removeRt && !operations.empty() && (operations.top() == "rt")) {
+					queue.push_back(operations.top());
+					operations.pop();
+				}
 				i++;
 			}
 		}

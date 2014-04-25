@@ -26,6 +26,7 @@
 
 // Main
 #include<fstream>
+#include<iomanip>
 
 // using namespace std;
 
@@ -33,15 +34,14 @@
 vector <string> inputExpression;	// To Store the input that user entered at first
 vector <string> expressionResult;	// To store an expression result
 vector <double> result;				// To store floating point value of user's answer
-int ans;							// 
 
 // Prototypes
 string LoadOperations();
 void SaveOperations();
 int menu();
-bool ComputeNewOperation();
+bool ComputeNewOperation(string ans);
 void help();
-void historyMenu();
+string historyMenu();
 
 using namespace std;
 
@@ -63,9 +63,9 @@ int main() {
 		cout << endl;
 
 		switch(menuChoice){
-		case 1: terminateProgram = ComputeNewOperation();
+		case 1: terminateProgram = ComputeNewOperation(ans_value);
 			break;
-		case 2: historyMenu();
+		case 2: ans_value = historyMenu();
 			break;
 		case 3: defaultSave = LoadOperations();
 			break;
@@ -145,13 +145,13 @@ int menu() {
 //				to get the answers in expression as well as in decimal
 //				value
 // return:		None
-bool ComputeNewOperation() {
+bool ComputeNewOperation(string ans) {
 	
 	// Local variables
 	string input;
 	bool quit = false;
 	bool exitCompute = false;
-	bool ans = false;
+	// bool ans = false;
 	bool bad_input = false;
 	
 
@@ -172,22 +172,35 @@ bool ComputeNewOperation() {
 		getline(cin, input);
 
 		if (input == "ans") {
-			// If the answer is empty then set answer to last operation
-			if( ans == 0 && !result.empty() ) {
-				ans = result.back();
+			// If the ans is empty then set answer to last operation
+			if( ans.empty() && !expressionResult.empty() ) {
+				string tempInput = "";
+				ans = "(" + expressionResult.back() + ")";
 				cout << "Enter an expression: ans ";
-				getline(cin, input);
+				getline(cin, tempInput);
+
+				// Update input to 
+				input = ans + tempInput;
+				// Reset answer to Null
+				ans.clear();
 			}
-			else if (ans == 0 && result.empty()) {
+			else if (ans.empty() && expressionResult.empty()) {
 				cout << "Error!\nNo operations have been performed yet!" << endl << endl;
 			}
 			else {
-				// whatever that is in ans add it to
+				// Answer is already loaded with values from the history
+				string tempInput = "";
+				ans = "(" + expressionResult.back() + ")";
 				cout << "Enter an expression: ans ";
-				getline(cin, input);
+				getline(cin, tempInput);
+
+				// Update input to 
+				input = ans + tempInput;
+				// Reset answer to Null
+				ans.clear();
 			}
 		}
-		else if(input == "quit") {
+		if(input == "quit") {
 			quit = true;
 			exitCompute = true;
 		}
@@ -209,7 +222,7 @@ bool ComputeNewOperation() {
 				// this block
 				op->removeSpaces();
 				op->addMissingOPerator();
-				op->finalStringCleanUp();
+				// op->finalStringCleanUp();
 
 				op->toVector();
 				op->reversePolish();
@@ -363,11 +376,12 @@ void SaveOperations(){
 // Description:	This method works perfectly so far except it is missing the option 
 //				to ask user whether her or she needs decimal values
 // return:		none
-void historyMenu() {
+string historyMenu() {
 	char floating;
 	int in;
 	int selection;
 	int hist;
+	string ans = "";
 	
 	cout << "---------------------------------------------------------------------" << endl;
 	cout << "                          <<   History!   >>                         " << endl << endl;
@@ -419,13 +433,14 @@ void historyMenu() {
 				}
 			}
 		}
+		// If user wishes to set a result as the keyword "ans"
 		else if(selection == 2) {
 			int sel;
 			cout << "Enter the history to set to \"ans\": ";
 			cin >> sel;
 
-			if(!result.empty()) {
-				ans = result.at((result.size() - sel));
+			if(!expressionResult.empty() && (sel < expressionResult.size()) ) {
+				ans = result.at((result.size() - sel - 1));
 			}
 			else {
 				cout << "No operations have been performed yet"<< endl;
@@ -437,6 +452,7 @@ void historyMenu() {
 			// Do nothing. Just got back to main menu
 		}
 	}while(selection != 3);
+	return ans;
 }
 
 // Function:	void help()
