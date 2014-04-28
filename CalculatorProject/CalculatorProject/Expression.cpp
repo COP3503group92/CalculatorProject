@@ -98,7 +98,7 @@ string Expression::toString(){
 			if (str.at(i - 1) == '('){
 				str.erase(i, 1);
 			}
-			else{
+			else if (str.at(i-1)=='+'){
 				str.erase(i - 1, 2);
 			}
 		}

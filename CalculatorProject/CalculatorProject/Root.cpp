@@ -190,7 +190,7 @@ string Root::getType(){
 
 string Root::toString(){
 	simplify();
-	string str;
+	string str="";
 	if (dynamic_cast<Integer*>(this->operand) == 0){
 		if (this->exponent->getType() != "Integer"){
 			str += "((";
@@ -231,7 +231,7 @@ string Root::toString(){
 	}
 	else{
 		Integer* op = dynamic_cast<Integer*>(this->operand);
-		if (op->getValue() != 0 && op->getValue() != 1){
+		if (op->getValue() != 0 && op->getValue() != 1&&op->getValue()!=-1){
 			if (this->exponent->getType() != "Integer"){
 				str += "((";
 				str += this->coefficient->toString();
@@ -269,12 +269,61 @@ string Root::toString(){
 			}
 		}
 		else if (op->getValue() == 1){
-			str += this->coefficient->toString();
+			if (this->exponent->getType() == "Integer"){
+				Integer* exp = dynamic_cast<Integer*>(this->exponent);
+				if (exp->getValue() < 0){
+					str += "(1/" + this->coefficient->toString() + ")";
+				}
+			}
+			else{
+				str += this->coefficient->toString();
+			}
+		}
+		else if (op->getValue() == -1){
+			if (this->root->getType() != "Integer"){
+				str += "(" + this->coefficient->toString();
+				str += "(" + this->root->toString() + "rt:";
+				str += op->toString() + ")";
+				if (this->exponent->getType() != "Integer"){
+					str += "^" + this->exponent->toString() + ")";
+				}
+			}
+				else{
+					Integer* root = dynamic_cast<Integer*>(this->root);
+					if (root->getValue() != 0 && root->getValue() != 1){
+						if (root->getValue() % 2 == 0){
+							str += "(" + this->coefficient->toString();
+							str += "(i)";
+							if (this->exponent->getType() != "Integer"){
+								str += "^" + this->exponent->toString();
+							}
+							else{
+								Integer* a = dynamic_cast<Integer*>(this->exponent);
+								if (a->getValue() != 0 && a->getValue() != 1){
+									str += "^" + this->exponent->toString();
+								}
+								else if (a->getValue() == 1){
+									str += ")";
+								}
+								else{
+									str = this->coefficient->toString();
+								}
+						}
+					}
+						else{
+							Multiply* mult = new Multiply();
+							this->coefficient = mult->evaluate(this->coefficient, new Integer(-1));
+							str += this->coefficient->toString();
+						}
+					}
+				}
+			}
+
 		}
 
 		return str;
 	}
-}
+
 Number* Root::getRoot(){
 	return this->root;
 }
