@@ -1162,8 +1162,7 @@ Number* Add::evaluate(Number* a, Number* b)
 		  {
 			  if (dynamic_cast<NatE*>(first->getExpression().at(i)) != 0)
 			  {
-				  Add* ab = new Add();
-				  nv[i] =  ab->evaluate(first->getExpression().at(i), second);
+				  nv[i] = evaluate(first->getExpression().at(i), second);
 				  break;
 			 }
 			  if (i == nv.size() - 1 && nv[i]->getType() != second->getType())
