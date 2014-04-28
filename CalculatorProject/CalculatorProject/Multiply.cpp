@@ -679,6 +679,11 @@ Number* Multiply::evaluate(Number* a, Number* b)
 			}
 		}
 		Expression* newEx = new Expression();
+		newEx->add(nv[0]);
+		Add* add = new Add();
+		for (int i = 1; i < nv.size(); i++){
+			add->evaluate(newEx, nv[i]);
+		}
 		return newEx;
 	}
 	
