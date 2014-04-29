@@ -232,7 +232,7 @@ bool ComputeNewOperation(string ans) {
 				cout << endl << endl;
 
 				for (int sizeCount = 0; sizeCount < queue.size(); sizeCount++){
-
+					queue[sizeCount]->simplify();
 					cout << "Result [" << sizeCount << "] = " << queue[sizeCount]->toString() << endl;
 
 				}
